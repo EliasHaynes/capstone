@@ -6,12 +6,7 @@ const port = 5000;
 
 app.use(cors())
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "M@renco23",
-    database: "capstone"
-})
+
 
 app.get('/', (req,res) => {
     const sql = "SELECT * FROM users";
