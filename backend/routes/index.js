@@ -6,6 +6,8 @@ const repairLogRoute = require('./RepairLog')
 
 
 router.post('/create', repairLogRoute)
+router.put('/update/:id',repairLogRoute)
+router.delete('/delete/:id', repairLogRoute)
 
     
 module.exports = router;
