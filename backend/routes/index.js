@@ -4,7 +4,8 @@ const repairLogRoute = require('./RepairLog')
 
 //Default Route
 
-router.get('/repairLog', repairLogRoute)
+
+router.post('/create', repairLogRoute)
 
     
 module.exports = router;
