@@ -16,6 +16,34 @@ const createRepair = (req,res) => {
     })
 }
 
+const updateRepair = (req,res) => {
+    const sql = "update users set first_name = ?, last_name = ? where id = ?"
+    const id = req.params.id;
+    const values = [
+        req.body.fName,
+        req.body.lName
+    ]
+    pool.query(sql, [...values, id], (err,data) => {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+}
+
+const deleteRepair = (req,res) => {
+    const sql = "DELETE FROM users WHERE id = ?"
+    const id = req.params.id;
+    const values = [
+        req.body.fName,
+        req.body.lName
+    ]
+    pool.query(sql, [id], (err,data) => {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+}
+
 module.exports = {
-    createRepair
+    createRepair,
+    updateRepair,
+    deleteRepair
 }
