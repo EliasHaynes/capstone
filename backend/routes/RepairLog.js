@@ -3,6 +3,7 @@ const repairLogController = require('../controllers/RepairLog')
 const router = express.Router()
 
 //GET all repairs
-router.get('/repairLog', repairLogController.getRepairs)
+
+router.post('/create', repairLogController.createRepair)
 
 module.exports = router;
