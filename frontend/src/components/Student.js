@@ -13,7 +13,12 @@ function Student() {
         })
         .catch(err => console.log(err))
     }, [])
-    console.log("student:", student)
+
+    const handleDelete =  async (id) => {
+        await axios.delete('http://localhost:5000/delete/'+id)
+        .then(window.location.reload())
+        .catch(err => console.log(err))
+    }
 
     return (
 
@@ -26,8 +31,8 @@ function Student() {
                         <p>{stud.first_name}</p>
                         <p>{stud.last_name}</p>
                         
-                        <Link to='/update'>Update</Link>
-                        <Link to='/delete'>Delete</Link>
+                        <Link to={`update/${stud.id}`}>Update</Link>
+                        <button onClick={e => handleDelete(stud.id)}>Delete</button>
                     </span>
                 ))
             }
