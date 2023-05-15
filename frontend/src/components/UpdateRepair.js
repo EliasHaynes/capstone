@@ -1,26 +1,30 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useParams} from 'react-router-dom'
 
 
-function AddStudent() {
+function UpdateRepair() {
     const [fName,setFName] = useState('')
     const [lName, setLName] = useState('')
     const navigate = useNavigate()
 
+    const {id} = useParams();
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/create', {fName,lName})
+        axios.put('http://localhost:5000/update/' +id, {id,fName,lName})
         .then((res) => {
             console.log(res)
-            navigate('/')
+            navigate('/repair')
         })
         .catch(err => console.log(err))
 
     }
     console.log()
     return (
+
         <form onSubmit={handleSubmit}>
+            <h2>Update Student</h2>
             <input 
                 name='firstName' 
                 placeholder='first name'
@@ -37,11 +41,9 @@ function AddStudent() {
                     console.log(e.target.value)
                 }}>
             </input>
-            <button type='submit'></button>
+            <button type='submit'>Update</button>
         </form>
     )
 }
 
-export default AddStudent;
-
-
+export default UpdateRepair

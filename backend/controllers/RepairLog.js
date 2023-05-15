@@ -2,13 +2,24 @@ const mysql = require('mysql2')
 const pool = require('../mysql/connection')
 const {errorOccured} = require('../mysql/error')
 
-
+const showRepairs = (req,res) => {
+    const sql = "SELECT * FROM repairlog";
+    pool.query(sql, (err,data) => {
+        if (err) return res.json("Error");
+        return res.json(data)
+    })
+}
 
 const createRepair = (req,res) => {
-    const sql = "INSERT INTO users (`first_name`, `last_name`) VALUES (?)"
+    const sql = "INSERT INTO repairlog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
     const values = [
-        req.body.fName,
-        req.body.lName
+        req.body.mileage,
+        req.body.maintenance,
+        req.body.performedBy,
+        req.body.contact,
+        req.body.material,
+        req.body.labor,
+        req.body.other
     ]
     pool.query(sql, [values], (err,data) => {
         if(err) return res.json(err)
@@ -43,6 +54,7 @@ const deleteRepair = (req,res) => {
 }
 
 module.exports = {
+    showRepairs,
     createRepair,
     updateRepair,
     deleteRepair
