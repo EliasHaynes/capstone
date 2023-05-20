@@ -57,9 +57,9 @@ function RepairLog() {
             </TableHead>
             <TableBody>
             {repairs.map((rep,idx) => (
-                <TableRow key={rep.idx}>
+                <TableRow key={idx}>
                     <TableCell component="th" scope="row">
-                        {rep.idx}
+                        {rep.id}
                     </TableCell>
                     <TableCell>{rep.date}</TableCell>
                     <TableCell>{rep.mileage}</TableCell>
@@ -73,10 +73,9 @@ function RepairLog() {
                     <TableCell>
                         <DeleteIcon
                             // add onClick method here
-                            onClick={e => handleDelete(rep.id)}
+                            onClick={e => handleDelete(idx)}
                             className="icon text-red" />
-                        <EditIcon>
-                            <Link to={`update/${rep.id}`} />
+                        <EditIcon onClick={() => navigate(`/update/${idx}`)}>
                         </EditIcon>
                             
                     </TableCell>

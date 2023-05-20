@@ -28,11 +28,16 @@ const createRepair = (req,res) => {
 }
 
 const updateRepair = (req,res) => {
-    const sql = "update users set first_name = ?, last_name = ? where id = ?"
+    const sql = "UPDATE repairlog SET mileage = ?, maintenance = ?, performedBy = ?, contact = ?, material = ?, labor =?, other =?   WHERE id = ?"
     const id = req.params.id;
     const values = [
-        req.body.fName,
-        req.body.lName
+        req.body.mileage,
+        req.body.maintenance,
+        req.body.performedBy,
+        req.body.contact,
+        req.body.material,
+        req.body.labor,
+        req.body.other
     ]
     pool.query(sql, [...values, id], (err,data) => {
         if(err) return res.json(err)
