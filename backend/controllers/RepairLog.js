@@ -30,6 +30,7 @@ const createRepair = (req,res) => {
 const updateRepair = (req,res) => {
     const sql = "UPDATE repairlog SET mileage = ?, maintenance = ?, performedBy = ?, contact = ?, material = ?, labor =?, other =?   WHERE id = ?"
     const id = req.params.id;
+
     const values = [
         req.body.mileage,
         req.body.maintenance,
@@ -46,13 +47,11 @@ const updateRepair = (req,res) => {
 }
 
 const deleteRepair = (req,res) => {
-    const sql = "DELETE FROM users WHERE id = ?"
-    const id = req.params.id;
-    const values = [
-        req.body.fName,
-        req.body.lName
-    ]
-    pool.query(sql, [id], (err,data) => {
+    const sql = "DELETE FROM repairlog WHERE id = ?; ALTER TABLE repairlog AUTO_INCREMENT = ?;"
+    let id = req.params.id;
+    id = parseInt(id,10) +1;
+    
+    pool.query(sql, [id,id], (err,data) => {
         if(err) return res.json(err)
         return res.json(data)
     })

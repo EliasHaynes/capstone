@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from "react"
 import axios from 'axios'
-import { Link, Navigate, useNavigate} from "react-router-dom"
+import { Link, Navigate, useNavigate, useParams} from "react-router-dom"
 import {
     Container,
     Table,
@@ -16,6 +16,8 @@ import AddRepair from "./AddRepair";
 
 function RepairLog() {
     const navigate = useNavigate()
+
+
     const [repairs,setRepairs] = useState([])
 
     useEffect(()=> {
@@ -27,9 +29,11 @@ function RepairLog() {
         .catch(err => console.log(err))
     }, [])
 
-    const handleDelete =  async (id) => {
-        await axios.delete('http://localhost:5000/delete/'+id)
-        .then(window.location.reload())
+    const handleDelete =  (id) => {
+
+        
+        axios.delete('http://localhost:5000/delete/'+id)
+        .then(setRepairs(repairs.filter(rep => rep.id !== id)))
         .catch(err => console.log(err))
     }
 
@@ -71,12 +75,13 @@ function RepairLog() {
                     <TableCell>{rep.other}</TableCell>
                     <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
                     <TableCell>
+                        <EditIcon onClick={() => navigate(`/update/${idx}`)}/>
                         <DeleteIcon
                             // add onClick method here
-                            onClick={e => handleDelete(idx)}
+                            onClick={() => handleDelete(rep.id)}
                             className="icon text-red" />
-                        <EditIcon onClick={() => navigate(`/update/${idx}`)}>
-                        </EditIcon>
+                        
+                        
                             
                     </TableCell>
                 </TableRow>
