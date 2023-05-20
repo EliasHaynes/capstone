@@ -13,6 +13,9 @@ function AddRepair() {
     const [other,setOther] = useState(0)
 
     const navigate = useNavigate()
+    const useEffect = () => {
+        axios.get()
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -84,7 +87,7 @@ function AddRepair() {
                 }}>
             </input>
 
-            <button type='submit'></button>
+            <button type='submit'>Add Repair</button>
         </form>
     )
 }
