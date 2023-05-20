@@ -12,6 +12,7 @@ function UpdateRepair() {
     const [labor,setLabor] = useState(0)
     const [other,setOther] = useState(0)
 
+    
     let {id} = useParams();
     id = parseInt(id,10) +1
    
