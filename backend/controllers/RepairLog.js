@@ -1,6 +1,5 @@
 const mysql = require('mysql2')
 const pool = require('../mysql/connection')
-const {errorOccured} = require('../mysql/error')
 
 const showRepairs = (req,res) => {
     const sql = "SELECT * FROM repairlog";
@@ -12,6 +11,7 @@ const showRepairs = (req,res) => {
 
 const createRepair = (req,res) => {
     const sql = "INSERT INTO repairlog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
+
     const values = [
         req.body.mileage,
         req.body.maintenance,
@@ -21,6 +21,7 @@ const createRepair = (req,res) => {
         req.body.labor,
         req.body.other
     ]
+
     pool.query(sql, [values], (err,data) => {
         if(err) return res.json(err)
         return res.json(data)

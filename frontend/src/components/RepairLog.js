@@ -29,9 +29,7 @@ function RepairLog() {
         .catch(err => console.log(err))
     }, [])
 
-    const handleDelete =  (id) => {
-
-        
+    const handleDelete =  (id) => {        
         axios.delete('http://localhost:5000/delete/'+id)
         .then(setRepairs(repairs.filter(rep => rep.id !== id)))
         .catch(err => console.log(err))
