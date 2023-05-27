@@ -4,11 +4,13 @@ const cors = require('cors')
 const mysql = require('mysql2')
 const pool = require('./mysql/connection')
 const port = 5000;
-const routes = require('./routes')
+const routes = require('./routes');
+const { checkJwt } = require('./middleware');
 
 app.use(cors())
 app.use(express.json())
 app.use(routes)
+
 
 
 
@@ -18,6 +20,10 @@ app.get('/', (req,res) => {
         if (err) return res.json("Error");
         return res.json(data)
     })
+})
+
+app.get('/protected', (req,res) => {
+    res.send('protected route')
 })
 
 

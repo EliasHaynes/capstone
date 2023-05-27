@@ -12,26 +12,38 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddRepair from "./AddRepair";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 function RepairLog() {
     const navigate = useNavigate()
-
+    const {
+        isAuthenticated,
+        getAccessTokenSilently
+      } = useAuth0()
 
     const [repairs,setRepairs] = useState([])
 
-    useEffect(()=> {
-        axios.get('http://localhost:5000/repair')
-        .then((res) => {
-            setRepairs(res.data)
-            console.log(res.data)
-        })
-        .catch(err => console.log(err))
-    }, [])
+    useEffect(() => {
+        const fetchRepairData = async () => {
+          try {
+            const token = await getAccessTokenSilently();
+            const response = await axios.get('http://localhost:5000/repair', {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+            setRepairs(response.data);
+            console.log(response.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchRepairData();
+      }, []);
 
-    const handleDelete =  (id) => {
-
-        
+    const handleDelete =  (id) => {        
         axios.delete('http://localhost:5000/delete/'+id)
         .then(setRepairs(repairs.filter(rep => rep.id !== id)))
         .catch(err => console.log(err))
