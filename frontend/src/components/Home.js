@@ -26,6 +26,7 @@ function Home() {
         try {
 
             const token = await getAccessTokenSilently()
+            console.log("Tokens here:", token)
             const response = await axios.get('http://localhost:5000/protected', {
                 headers: {
                     authorization: `Bearer ${token}`

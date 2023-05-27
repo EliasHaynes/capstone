@@ -34,7 +34,7 @@ function Router() {
             <Route path="/userMaintenace" element={ScheduledMaintenance} />
     
             {/* Repair Components */}
-            <Route path="/repair" element={RepairLog} />
+            <Route path="/repair" element={<RepairLog/>} />
             <Route path='/create' element={<AddRepair />} />
             <Route path="/update/:id" element={<UpdateRepair/>} />
     
