@@ -17,44 +17,34 @@ import ScheduledMaintenance from "./components/ScheduledMaintenance";
 
 
 //Frontend Login Auth
-const checkAuth =() => {
-    const cookies = cookie.parse(document.cookie);
-    console.log(cookies)
-    return cookies["loggedIn"] ? true : false;
-}
 
-const ProtectedRoute =(props) => {
 
-    const {component: Component, ...rest} =props;
 
-    return(
-        checkAuth() === true ? (<Component {...rest} />): (<Navigate to='/login' />)
-    )
-}
 
 
 function Router() {
-    return (
-        <Routes>
-        {/* Home */}
-        <Route path="/" element={<ProtectedRoute component={Home} />} />
 
-        {/* API Components */}
-        <Route path="/vindecode" element={<ProtectedRoute component={VinDecode} />} />
-        <Route path="/userMaintenace" element={<ProtectedRoute component={ScheduledMaintenance} />} />
-
-        {/* Repair Components */}
-        <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
-        <Route path='/create' element={<AddRepair />} />
-        <Route path="/update/:id" element={<UpdateRepair/>} />
-
-        {/* Auth Components */}
-        <Route path="/login" element={<Login/>} />
-        <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />
-        <Route path="/registerUser" element={<RegisterUser/>} />
-        
-    </Routes>
-    )
+        return (
+            <Routes>
+            {/* Home */}
+            <Route path="/" element={<Home/>} />
+    
+            {/* API Components */}
+            <Route path="/vindecode" element={VinDecode} />
+            <Route path="/userMaintenace" element={ScheduledMaintenance} />
+    
+            {/* Repair Components */}
+            <Route path="/repair" element={<RepairLog/>} />
+            <Route path='/create' element={<AddRepair />} />
+            <Route path="/update/:id" element={<UpdateRepair/>} />
+    
+            {/* Auth Components */}
+            <Route path="/login" element={<Login/>} />
+            <Route path="/registerCar" element={RegisterCar} />
+            <Route path="/registerUser" element={<RegisterUser/>} />
+            
+        </Routes>
+        )
 }
 
 export default Router;
