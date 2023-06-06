@@ -1,44 +1,58 @@
 import React, {useState} from "react"
+import { TextField, Button, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 
 function RegisterCar() {
-    const [vinForm,setVinForm] = useState([{
-        vinClicked: false,
-        vin: "",
-        mileage: ""
-    }])
+    const navigate = useNavigate();
 
+    const [vin, setVin] = useState('')
+    const [mileage,setMileage] = useState('')
 
-
-    const handleVinSubmit = (e) => {
-        e.preventDefault()
-        setVinForm( {vinClicked: true} )
-        console.log('vin')
-    }
-    
-
-    const handleVinTextChange = (e) => {
-        const newState = {...vinForm }
-        newState[e.target.id] = e.target.value
-        setVinForm(newState)
-    }
-
-
-
-
+  
+    const login = (e) => {
+      e.preventDefault();
+      document.cookie = "loggedIn=true;Max-Age=1800";
+      navigate("/");
+    };
+  
     return (
-            <div>
-                <h1>This is where to register a new car and save to database</h1>
-                <span>
-                    <form onSubmit={handleVinSubmit}>
-                        <input name="vin" placeholder="vin #" onChange={handleVinTextChange}></input>
-                        <input name="mileage" placeholder="mileage #" onChange={handleVinTextChange}></input>
-                        <button type="submit">Submit Vin</button>
-                    </form>
-                </span>
-        </div>
-    )
-}
+      <div className="App">
+        <Container maxWidth="sm">
+          <form className="login-form" onSubmit={login}>
+            <TextField
+              required
+            onChange={(e) => {
+              setVin(e.target.value)
+              console.log(vin)
+            }}
+              name="vin"
+              label="vin"
+              type="text"
+            />
+            <TextField
+              required
+              onChange={(e) => {
+                  setMileage(e.target.value)
+                console.log(mileage)
+              }}
+              name="mileage"
+              label="mileage"
+            />
+            <Button
+              type="submit"
+              className="login-button"
+              variant="contained"
+              color="primary"
+            >
+              Submit Info
+            </Button>
+          </form>
+        </Container>
+      </div>
+    );
+};
+
 
 export default RegisterCar;
