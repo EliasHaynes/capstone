@@ -1,31 +1,43 @@
 import React, {useState} from "react"
-import { TextField, Button, Container } from "@mui/material";
+import { TextField, Button, Container, useThemeProps } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { saveVin,saveMileage } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux"; 
 
 
 
-function RegisterCar() {
+const RegisterCar = (props) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch() 
 
-    const [vin, setVin] = useState('')
-    const [mileage,setMileage] = useState('')
+    const mileage = useSelector(state => state.mileage)
+    
+    
+
+    const [vinNum, setVin] = useState('')
+    const [mile,setMileage] = useState('')
 
   
     const login = (e) => {
       e.preventDefault();
-      document.cookie = "loggedIn=true;Max-Age=1800";
-      navigate("/");
+      // document.cookie = "loggedIn=true;Max-Age=1800";
+      // navigate("/");
+      dispatch(saveVin(vinNum))
+      dispatch(saveMileage(mile))
+
     };
+
+
   
     return (
       <div className="App">
+        <p>{vinNum}{mileage}</p>
         <Container maxWidth="sm">
           <form className="login-form" onSubmit={login}>
             <TextField
               required
             onChange={(e) => {
               setVin(e.target.value)
-              console.log(vin)
             }}
               name="vin"
               label="vin"
@@ -34,8 +46,7 @@ function RegisterCar() {
             <TextField
               required
               onChange={(e) => {
-                  setMileage(e.target.value)
-                console.log(mileage)
+                setMileage(e.target.value)
               }}
               name="mileage"
               label="mileage"

@@ -14,7 +14,8 @@ function UpdateRepair() {
 
     
     let {id} = useParams();
-    id = parseInt(id,10) +1
+    id = parseInt(id,10)
+    console.log("THE ID:", id)
    
 
     const navigate = useNavigate()
