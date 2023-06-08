@@ -15,7 +15,6 @@ function Home() {
         getAccessTokenSilently
       } = useAuth0()
     
-    
 
     
       async function callProtectedApi() {

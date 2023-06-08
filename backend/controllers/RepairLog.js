@@ -10,13 +10,11 @@ const showRepairs = (req,res) => {
 }
 
 const showRepairById = (req,res) => {
+    const id = req.params.id
     
-    const sql = "SELECT FROM repairlog WHERE id=?"
+    const sql = "SELECT * FROM repairlog WHERE id=?"
 
-    const values = [
-        req.body.id
-    ]
-    pool.query(sql, (err,data) => {
+    pool.query(sql, id, (err,data) => {
         if(err) return res.json("Error");
         return res.json(data)
     })
