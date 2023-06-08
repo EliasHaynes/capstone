@@ -11,6 +11,7 @@ const RegisterCar = (props) => {
     const dispatch = useDispatch() 
 
     const mileage = useSelector(state => state.mileage)
+    const vin = useSelector(state => state.vin)
     
     
 
@@ -31,7 +32,8 @@ const RegisterCar = (props) => {
   
     return (
       <div className="App">
-        <p>{vinNum}{mileage}</p>
+        <p>{vin}</p>
+        <p>{mileage}</p>
         <Container maxWidth="sm">
           <form className="login-form" onSubmit={login}>
             <TextField
