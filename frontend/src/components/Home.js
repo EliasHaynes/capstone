@@ -15,18 +15,12 @@ function Home() {
         getAccessTokenSilently
       } = useAuth0()
     
-    
-      function callApi() {
-        axios.get('http://localhost:3000/')
-        .then(response => console.log(response.data))
-        .catch(error => console.log(error))
-      }
+
     
       async function callProtectedApi() {
         try {
 
             const token = await getAccessTokenSilently()
-            console.log("Tokens here:", token)
             const response = await axios.get('http://localhost:5000/protected', {
                 headers: {
                     authorization: `Bearer ${token}`
@@ -44,11 +38,6 @@ function Home() {
       return (
         <div>
           <h1>{isAuthenticated ? "Logged in" : "Logged Out"}</h1>
-          <ul>
-            <button onClick={loginWithRedirect}>Login</button>
-            <button onClick={logout}>Logout</button>
-          </ul>
-          <button onClick={callProtectedApi}>Call Protected Api</button>
           {isAuthenticated && (
             <pre>{JSON.stringify(user,null,2)}</pre>
           )}
