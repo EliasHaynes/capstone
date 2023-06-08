@@ -1,44 +1,71 @@
 import React, {useState} from "react"
+import { TextField, Button, Container, useThemeProps } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { saveVin,saveMileage } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux"; 
 
 
 
-function RegisterCar() {
-    const [vinForm,setVinForm] = useState([{
-        vinClicked: false,
-        vin: "",
-        mileage: ""
-    }])
+const RegisterCar = (props) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch() 
 
-
-
-    const handleVinSubmit = (e) => {
-        e.preventDefault()
-        setVinForm( {vinClicked: true} )
-        console.log('vin')
-    }
+    const mileage = useSelector(state => state.mileage)
+    const vin = useSelector(state => state.vin)
+    
     
 
-    const handleVinTextChange = (e) => {
-        const newState = {...vinForm }
-        newState[e.target.id] = e.target.value
-        setVinForm(newState)
-    }
+    const [vinNum, setVin] = useState('')
+    const [mile,setMileage] = useState('')
+
+  
+    const login = (e) => {
+      e.preventDefault();
+      // document.cookie = "loggedIn=true;Max-Age=1800";
+      // navigate("/");
+      dispatch(saveVin(vinNum))
+      dispatch(saveMileage(mile))
+
+    };
 
 
-
-
+  
     return (
-            <div>
-                <h1>This is where to register a new car and save to database</h1>
-                <span>
-                    <form onSubmit={handleVinSubmit}>
-                        <input name="vin" placeholder="vin #" onChange={handleVinTextChange}></input>
-                        <input name="mileage" placeholder="mileage #" onChange={handleVinTextChange}></input>
-                        <button type="submit">Submit Vin</button>
-                    </form>
-                </span>
-        </div>
-    )
-}
+      <div className="App">
+        <p>{vin}</p>
+        <p>{mileage}</p>
+        <Container maxWidth="sm">
+          <form className="login-form" onSubmit={login}>
+            <TextField
+              required
+            onChange={(e) => {
+              setVin(e.target.value)
+            }}
+              name="vin"
+              label="vin"
+              type="text"
+            />
+            <TextField
+              required
+              onChange={(e) => {
+                setMileage(e.target.value)
+              }}
+              name="mileage"
+              label="mileage"
+            />
+            <Button
+              type="submit"
+              className="login-button"
+              variant="contained"
+              color="primary"
+            >
+              Submit Info
+            </Button>
+          </form>
+        </Container>
+      </div>
+    );
+};
+
 
 export default RegisterCar;

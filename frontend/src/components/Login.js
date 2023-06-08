@@ -5,15 +5,12 @@ import { TextField, Button, Container } from "@mui/material";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
-// const Login = () => {
+const Login = () => {
 //   const navigate = useNavigate();
 
-//   const [username, setUsername] = useState('')
-//   const [password,setPassword] = useState('')
-//   const [state, setState] = useState({
-//     username: "",
-//     password: "",
-//   });
+//   const [vin, setVin] = useState('')
+//   const [mileage,setMileage] = useState('')
+
 
 //   // const handleTextChange = (e) => {
 //   //   const { name, value } = e.target;
@@ -27,15 +24,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 //   const login = (e) => {
 //     e.preventDefault();
-//     axios.post('http://localhost:5000/login', {username, password})
-//         .then((res) => {
-//             console.log("The PUT:", res)
-//             navigate('/repair')
-
-//         })
-//         .catch(err => console.log(err))
-//     // set cookie here
-//     // set loggedIn = true and max-age = 60*1000
 //     document.cookie = "loggedIn=true;Max-Age=1800";
 //     navigate("/");
 //   };
@@ -47,22 +35,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 //           <TextField
 //             required
 //           onChange={(e) => {
-//             setUsername(e.target.value)
-//             console.log(username)
+//             setVin(e.target.value)
+//             console.log(vin)
 //           }}
-//             name="username"
-//             label="Username"
+//             name="vin"
+//             label="vin"
 //             type="text"
 //           />
 //           <TextField
 //             required
 //             onChange={(e) => {
-//               setPassword(e.target.value)
-//               console.log(password)
+//                 setMileage(e.target.value)
+//               console.log(mileage)
 //             }}
-//             name="password"
-//             label="Password"
-//             type="password"
+//             name="mileage"
+//             label="mileage"
 //           />
 //           <Button
 //             type="submit"
@@ -70,51 +57,51 @@ import { useAuth0 } from "@auth0/auth0-react";
 //             variant="contained"
 //             color="primary"
 //           >
-//             Login
+//             Submit Info
 //           </Button>
 //         </form>
 //       </Container>
 //     </div>
 //   );
-// };
-
-// export default Login;
-
-function Login() {
-//   const {
-//     loginWithRedirect, 
-//     logout, 
-//     user, 
-//     isAuthenticated,
-//     getAccessTokenSilently
-//   } = useAuth0()
-
-
-//   function callApi() {
-//     axios.get('http://localhost:3000/')
-//     .then(response => console.log(response.data))
-//     .catch(error => console.log(error))
-//   }
-
-//   async function callProtectedApi() {
-//     const token = await getAccessTokenSilently
-//     console.log(token)
-//   }
-
-//   console.log(isAuthenticated)
-//   return (
-//     <div>
-//       <h1>{isAuthenticated ? "Logged in" : "Logged Out"}</h1>
-//       <ul>
-//         <button onClick={loginWithRedirect}>Login</button>
-//         <button onClick={logout}>Logout</button>
-//       </ul>
-//       <button onClick={callProtectedApi}>Call Protected Api</button>
-//       {isAuthenticated && (
-//         <pre>{JSON.stringify(user,null,2)}</pre>
-//       )}
-//     </div>
-//   )
-}
+};
 
 export default Login;
+
+// function Login() {
+// //   const {
+// //     loginWithRedirect, 
+// //     logout, 
+// //     user, 
+// //     isAuthenticated,
+// //     getAccessTokenSilently
+// //   } = useAuth0()
+
+
+// //   function callApi() {
+// //     axios.get('http://localhost:3000/')
+// //     .then(response => console.log(response.data))
+// //     .catch(error => console.log(error))
+// //   }
+
+// //   async function callProtectedApi() {
+// //     const token = await getAccessTokenSilently
+// //     console.log(token)
+// //   }
+
+// //   console.log(isAuthenticated)
+// //   return (
+// //     <div>
+// //       <h1>{isAuthenticated ? "Logged in" : "Logged Out"}</h1>
+// //       <ul>
+// //         <button onClick={loginWithRedirect}>Login</button>
+// //         <button onClick={logout}>Logout</button>
+// //       </ul>
+// //       <button onClick={callProtectedApi}>Call Protected Api</button>
+// //       {isAuthenticated && (
+// //         <pre>{JSON.stringify(user,null,2)}</pre>
+// //       )}
+// //     </div>
+// //   )
+// }
+
+// export default Login;

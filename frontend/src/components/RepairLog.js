@@ -43,6 +43,8 @@ function RepairLog() {
         fetchRepairData();
       }, []);
 
+    
+
     const handleDelete =  (id) => {        
         axios.delete('http://localhost:5000/delete/'+id)
         .then(setRepairs(repairs.filter(rep => rep.id !== id)))
@@ -75,7 +77,7 @@ function RepairLog() {
             {repairs.map((rep,idx) => (
                 <TableRow key={idx}>
                     <TableCell component="th" scope="row">
-                        {rep.id}
+                        {idx +1}
                     </TableCell>
                     <TableCell>{rep.date}</TableCell>
                     <TableCell>{rep.mileage}</TableCell>
@@ -87,7 +89,7 @@ function RepairLog() {
                     <TableCell>{rep.other}</TableCell>
                     <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
                     <TableCell>
-                        <EditIcon onClick={() => navigate(`/update/${idx}`)}/>
+                        <EditIcon onClick={() => navigate(`/update/${rep.id}`)}/>
                         <DeleteIcon
                             // add onClick method here
                             onClick={() => handleDelete(rep.id)}

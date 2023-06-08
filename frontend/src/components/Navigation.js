@@ -3,9 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import cookie from "cookie";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navigation = () => {
   const navigate = useNavigate();
+
+  const {
+    loginWithRedirect,
+    isAuthenticated,
+    logout,
+    getAccessTokenSilently
+  } = useAuth0()
 
   return (
     <AppBar position="relative">
@@ -35,17 +43,8 @@ const Navigation = () => {
           <li className="nav-list-item">
             <Link to="/repair">Repair Log</Link>
           </li>
-
-          <li
-            className="nav-list-item"
-            onClick={() => {
-              document.cookie = cookie.serialize("loggedIn", null, {
-                maxAge: 0
-              });
-              navigate("/login");
-            }}
-          >
-            Logout
+          <li>
+            {isAuthenticated ? <button onClick={logout}>Logout</button> : <button onClick={loginWithRedirect} >Login</button> }
           </li>
         </ul>
       </Toolbar>

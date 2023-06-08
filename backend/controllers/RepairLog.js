@@ -9,6 +9,17 @@ const showRepairs = (req,res) => {
     })
 }
 
+const showRepairById = (req,res) => {
+    const id = req.params.id
+    
+    const sql = "SELECT * FROM repairlog WHERE id=?"
+
+    pool.query(sql, id, (err,data) => {
+        if(err) return res.json("Error");
+        return res.json(data)
+    })
+}
+
 const createRepair = (req,res) => {
     const sql = "INSERT INTO repairlog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
 
@@ -60,6 +71,7 @@ const deleteRepair = (req,res) => {
 
 module.exports = {
     showRepairs,
+    showRepairById,
     createRepair,
     updateRepair,
     deleteRepair

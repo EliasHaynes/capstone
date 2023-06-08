@@ -5,6 +5,7 @@ const router = express.Router()
 
 //RepairLog Routes
 router.get('/repair', repairLogController.showRepairs)
+router.get('/repair/:id', repairLogController.showRepairById)
 router.post('/create', repairLogController.createRepair)
 router.put('/update/:id', repairLogController.updateRepair)
 router.delete('/delete/:id', repairLogController.deleteRepair)
