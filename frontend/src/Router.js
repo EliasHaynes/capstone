@@ -5,8 +5,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 // Imported Components
 import Home from "./components/Home";
-import Login from "./components/Login";
-import RegisterUser from "./components/RegisterUser";
 import RegisterCar from "./components/RegisterCar";
 import RepairLog from "./components/RepairLog";
 import AddRepair from "./components/AddRepair";
@@ -27,24 +25,6 @@ import ScheduledMaintenance from "./components/ScheduledMaintenance";
     )
 }
 
-// const checkCarRegistered = () => {
-//     const cookies = cookie.parse(document.cookie);
-//     console.log(cookies)
-//     return cookies["loggedIn"] ? true : false;
-// }
-
-// const carInfoSubmitted= (props) => {
-    
-//     const {component: Component, ...rest} =props;
-
-//     return(
-//         checkCarRegistered() === true ? (<Component {...rest} />): (<Navigate to='/' />)
-//     )
-// }
-
-
-
-
 function Router() {
 
         return (
@@ -62,7 +42,6 @@ function Router() {
             <Route path="/update/:id" element={<ProtectedRoute component={UpdateRepair} />} />
     
             {/* Auth Components */}
-            <Route path="/login" element={<ProtectedRoute component={Login}/>} />
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />
             
         </Routes>

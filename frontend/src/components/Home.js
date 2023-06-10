@@ -7,42 +7,16 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Home() {
-    const {
-        loginWithRedirect, 
-        logout, 
-        user, 
-        isAuthenticated,
-        getAccessTokenSilently
-      } = useAuth0()
-    
 
-    
-      async function callProtectedApi() {
-        try {
-
-            const token = await getAccessTokenSilently()
-            const response = await axios.get('http://localhost:5000/protected', {
-                headers: {
-                    authorization: `Bearer ${token}`
-                }
-            })
-            console.log(response.data)
-        }
-        catch (error) {
-            console.log(error)
-        }
-        
-    }
-    
-      console.log(isAuthenticated)
-      return (
-        <div>
-          <h1>{isAuthenticated ? "Logged in" : "Logged Out"}</h1>
-          {isAuthenticated && (
-            <pre>{JSON.stringify(user,null,2)}</pre>
-          )}
-        </div>
-      )
+  const navigate = useNavigate()
+  return (
+       <div>
+        <h2>Lets Get Started!</h2>
+        <button onClick={() => {
+          navigate('/registercar')
+        }}> Register Car</button>
+       </div> 
+  )
 }
 
 export default Home;
