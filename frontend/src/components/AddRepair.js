@@ -19,7 +19,7 @@ function AddRepair() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/create', {mileage,maintenance, performedBy, contact, material, labor, other })
+        axios.post('https://capstone-kohl.vercel.app/create', {mileage,maintenance, performedBy, contact, material, labor, other })
         .then((res) => {
             console.log(res)
             navigate('/repair')
