@@ -17,7 +17,7 @@ function ScheduledMaintenance(props) {
         const fetchRepairData = async () => {
             try {
                 const token = await getAccessTokenSilently();
-                const response = await axios.get('http://localhost:5000/repair', {
+                const response = await axios.get('https://capstone-kohl.vercel.app/repair', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
