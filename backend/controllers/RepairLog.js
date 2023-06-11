@@ -2,9 +2,9 @@ const mysql = require('mysql2')
 const pool = require('../mysql/connection')
 
 const showRepairs = (req,res) => {
-    const sql = "SELECT * FROM repairlog";
+    const sql = "SELECT * FROM repairLog";
     pool.query(sql, (err,data) => {
-        if (err) return res.json("Error");
+        if (err) return res.json(err);
         return res.json(data)
     })
 }
@@ -12,7 +12,7 @@ const showRepairs = (req,res) => {
 const showRepairById = (req,res) => {
     const id = req.params.id
     
-    const sql = "SELECT * FROM repairlog WHERE id=?"
+    const sql = "SELECT * FROM repairLog WHERE id=?"
 
     pool.query(sql, id, (err,data) => {
         if(err) return res.json("Error");
@@ -21,7 +21,7 @@ const showRepairById = (req,res) => {
 }
 
 const createRepair = (req,res) => {
-    const sql = "INSERT INTO repairlog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
+    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
 
     const values = [
         req.body.mileage,
@@ -40,7 +40,7 @@ const createRepair = (req,res) => {
 }
 
 const updateRepair = (req,res) => {
-    const sql = "UPDATE repairlog SET mileage = ?, maintenance = ?, performedBy = ?, contact = ?, material = ?, labor =?, other =?   WHERE id = ?"
+    const sql = "UPDATE repairLog SET mileage = ?, maintenance = ?, performedBy = ?, contact = ?, material = ?, labor =?, other =?   WHERE id = ?"
     const id = req.params.id;
 
     const values = [
@@ -59,7 +59,7 @@ const updateRepair = (req,res) => {
 }
 
 const deleteRepair = (req,res) => {
-    const sql = "DELETE FROM repairlog WHERE id = ?; ALTER TABLE repairlog AUTO_INCREMENT = ?;"
+    const sql = "DELETE FROM repairLog WHERE id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;"
     let id = req.params.id;
     id = parseInt(id,10) +1;
     
