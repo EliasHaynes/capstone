@@ -4,10 +4,9 @@ import {useSelector } from "react-redux";
 import VinDecodeMore from "./VinDecodeMore";
 
 function VinDecode(props) {
+
     const mileage = useSelector(state => state.mileage)
     const vin = useSelector(state => state.vin)
-
-
     
     return (
         <div>
@@ -20,7 +19,9 @@ function VinDecode(props) {
             </div>
             <button >Full Details</button>
             {/* Map this component for each vin decode more */}
-            <VinDecodeMore></VinDecodeMore>
+            <div style={{width: "50%", display: "flex", alignItems: "center"}}>
+                <VinDecodeMore ></VinDecodeMore>
+            </div>
         </div>
     )
 }
