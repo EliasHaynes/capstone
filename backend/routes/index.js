@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const repairLogRoute = require('./RepairLog')
 const { checkJwt } = require('../middleware')
-const authRoute = require('./auth')
 
 
 //Repair Log Routes
