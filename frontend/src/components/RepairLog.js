@@ -28,7 +28,7 @@ function RepairLog() {
         const fetchRepairData = async () => {
           try {
             const token = await getAccessTokenSilently();
-            const response = await axios.get('http://localhost:5000/repair', {
+            const response = await axios.get('https://capstone-kohl.vercel.app/repair', {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -46,8 +46,11 @@ function RepairLog() {
     
 
     const handleDelete =  (id) => {        
-        axios.delete('http://localhost:5000/delete/'+id)
-        .then(setRepairs(repairs.filter(rep => rep.id !== id)))
+        axios.delete('https://capstone-kohl.vercel.app/delete/'+id)
+        .then(response => {
+            console.log(response, 'this is the id', id)
+          setRepairs(repairs.filter(rep => rep.id !== id))
+        })
         .catch(err => console.log(err))
     }
 
