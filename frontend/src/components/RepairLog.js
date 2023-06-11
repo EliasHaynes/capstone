@@ -49,7 +49,9 @@ function RepairLog() {
         axios.delete('https://capstone-kohl.vercel.app/delete/'+id)
         .then(response => {
             console.log(response, 'this is the id', id)
-          setRepairs(repairs.filter(rep => rep.id !== id))
+            const newArr = repairs.filter(rep => rep.id !== id)
+            console.log(newArr)
+          setRepairs(newArr)
         })
         .catch(err => console.log(err))
     }
