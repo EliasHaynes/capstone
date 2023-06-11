@@ -31,7 +31,7 @@ function UpdateRepair() {
         const fetchRepairDataById = async () => {
             try {           
                 const token = await getAccessTokenSilently();
-                const response = await axios.get(`http://localhost:5000/repair/${id}`, {
+                const response = await axios.get(`https://capstone-kohl.vercel.app/repair/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -55,7 +55,7 @@ function UpdateRepair() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:5000/update/' +id, {id,mileage,maint, performedBy, contact, material, labor, other })
+        axios.put('https://capstone-kohl.vercel.app/update/' +id, {id,mileage,maint, performedBy, contact, material, labor, other })
         .then((res) => {
             console.log("The PUT:", res)
             navigate('/repair')
