@@ -19,6 +19,7 @@ function RepairLog() {
     const navigate = useNavigate()
     const {
         isAuthenticated,
+        user,
         getAccessTokenSilently
       } = useAuth0()
 
@@ -28,7 +29,9 @@ function RepairLog() {
         const fetchRepairData = async () => {
           try {
             const token = await getAccessTokenSilently();
-            const response = await axios.get('https://capstone-kohl.vercel.app/repair', {
+            console.log("The Token:", token)
+            console.log("The user:", user.sub.split('|')[1])
+            const response = await axios.get(`http://localhost:5000/repair/${user.sub.split('|')[1]}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }

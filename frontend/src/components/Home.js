@@ -50,7 +50,7 @@ function Home() {
         </ul>
         <button onClick={callProtectedApi}>Call Protected Api</button>
         {isAuthenticated && (
-          <pre>{JSON.stringify(user,null,2)}</pre>
+          <pre>{JSON.stringify(user.sub,null,2)}</pre>
         )}
       </div>
     )

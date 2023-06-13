@@ -19,6 +19,7 @@ function UpdateRepair() {
     const navigate = useNavigate()
     const {
         isAuthenticated,
+        user,
         getAccessTokenSilently
       } = useAuth0()
 
@@ -29,13 +30,10 @@ function UpdateRepair() {
 
     useEffect(() => {
         const fetchRepairDataById = async () => {
-            try {           
+            try {
+                const auth0_id = user.sub.split('|')[1]          
                 const token = await getAccessTokenSilently();
-                const response = await axios.get(`https://capstone-kohl.vercel.app/repair/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-            });
+                const response = await axios.get(`https://capstone-kohl.vercel.app/repair/${id}/${auth0_id}`, {auth0_id});
             console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
                 console.log("REPAIR BY ID:", response.data[0])

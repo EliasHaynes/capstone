@@ -2,7 +2,7 @@ const mysql = require('mysql2')
 const pool = require('../mysql/connection')
 
 const showRepairs = (req,res) => {
-    const sql = "SELECT * FROM repairLog";
+    const sql = "SELECT * FROM repairLog WHERE userid = ?";
     pool.query(sql, (err,data) => {
         if (err) return res.json(err);
         return res.json(data)
@@ -12,7 +12,7 @@ const showRepairs = (req,res) => {
 const showRepairById = (req,res) => {
     const id = req.params.id
     
-    const sql = "SELECT * FROM repairLog WHERE id=?"
+    const sql = "SELECT * FROM repairLog WHERE auth0_id = ?"
 
     pool.query(sql, id, (err,data) => {
         if(err) return res.json("Error");
@@ -21,7 +21,7 @@ const showRepairById = (req,res) => {
 }
 
 const createRepair = (req,res) => {
-    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other) VALUES (?)"
+    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other, auth0_id) VALUES (?)"
 
     const values = [
         req.body.mileage,
@@ -30,7 +30,8 @@ const createRepair = (req,res) => {
         req.body.contact,
         req.body.material,
         req.body.labor,
-        req.body.other
+        req.body.other,
+        req.body.auth0_id
     ]
 
     pool.query(sql, [values], (err,data) => {
