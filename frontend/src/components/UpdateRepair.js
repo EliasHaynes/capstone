@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useNavigate,useParams} from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
+import { autocompleteClasses } from '@mui/material'
 
 
 function UpdateRepair() {
@@ -17,23 +18,18 @@ function UpdateRepair() {
     console.log("The repair state:", repair)
 
     const navigate = useNavigate()
-    const {
-        isAuthenticated,
-        user,
-        getAccessTokenSilently
-      } = useAuth0()
 
-    let {id} = useParams();
-    id = parseInt(id,10)
-    console.log("THE ID:", id)
+
+    let {auth0_id,id} = useParams();
+    id = parseInt(id,10) 
+    console.log("THE auth id:", auth0_id)
+    console.log("The ID:", id)
 
 
     useEffect(() => {
         const fetchRepairDataById = async () => {
             try {
-                const auth0_id = user.sub.split('|')[1]          
-                const token = await getAccessTokenSilently();
-                const response = await axios.get(`https://capstone-kohl.vercel.app/repair/${id}/${auth0_id}`, {auth0_id});
+            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}/${id}`);
             console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
                 console.log("REPAIR BY ID:", response.data[0])
@@ -53,10 +49,10 @@ function UpdateRepair() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('https://capstone-kohl.vercel.app/update/' +id, {id,mileage,maint, performedBy, contact, material, labor, other })
+        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maint, performedBy, contact, material, labor, other})
         .then((res) => {
             console.log("The PUT:", res)
-            navigate('/repair')
+            navigate(`/repair`)
 
         })
         .catch(err => console.log(err))
