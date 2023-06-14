@@ -6,34 +6,34 @@ import { useAuth0 } from "@auth0/auth0-react";
 import '../index.css';
 
 function ScheduledMaintenance(props) {
-    const {
-        isAuthenticated,
-        getAccessTokenSilently
-      } = useAuth0()
+    // const {
+    //     isAuthenticated,
+    //     getAccessTokenSilently
+    //   } = useAuth0()
 
-      const [repairs, setRepairs] = useState([])
+    //   const [repairs, setRepairs] = useState([])
 
-      useEffect(() => {
-        const fetchRepairData = async () => {
-            try {
-                const token = await getAccessTokenSilently();
-                const response = await axios.get('https://capstone-kohl.vercel.app/repair', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                setRepairs(response.data)
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-        fetchRepairData()
-      },[])
+    //   useEffect(() => {
+    //     const fetchRepairData = async () => {
+    //         try {
+    //             const token = await getAccessTokenSilently();
+    //             const response = await axios.get('https://capstone-kohl.vercel.app/repair', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`
+    //                 }
+    //             })
+    //             setRepairs(response.data)
+    //         }
+    //         catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     fetchRepairData()
+    //   },[])
 
       return (
         <div style={{  display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-around', alignItems: 'center'}}>
-            {repairs.map((rep,idx) => (
+            {/* {repairs.map((rep,idx) => (
                 <Card style={{ width: '18rem'}} key={idx}>
                     <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
                     <Card.Body>
@@ -52,7 +52,7 @@ function ScheduledMaintenance(props) {
                         <Card.Link href="#">Another Link</Card.Link>
                     </Card.Body>
                 </Card>
-            ))}
+            ))} */}
         </div>
       )
 
