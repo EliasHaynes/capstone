@@ -29,7 +29,7 @@ function UpdateRepair() {
     useEffect(() => {
         const fetchRepairDataById = async () => {
             try {
-            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}/${id}`);
+            const response = await axios.get(`https://capstone-sis4.vercel.app/repair/${auth0_id}/${id}`);
             console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
                 console.log("REPAIR BY ID:", response.data[0])
@@ -49,7 +49,7 @@ function UpdateRepair() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maint, performedBy, contact, material, labor, other})
+        axios.put(`https://capstone-sis4.vercel.app/update/${auth0_id}/${id}`, {mileage,maint, performedBy, contact, material, labor, other})
         .then((res) => {
             console.log("The PUT:", res)
             navigate(`/repair`)
