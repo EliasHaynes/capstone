@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 function AddRepair() {
@@ -12,6 +13,11 @@ function AddRepair() {
     const [labor,setLabor] = useState(0)
     const [other,setOther] = useState(0)
 
+    const {
+        isAuthenitcated,
+        user
+    } = useAuth0()
+
     const navigate = useNavigate()
     const useEffect = () => {
         axios.get()
@@ -19,7 +25,9 @@ function AddRepair() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('https://capstone-kohl.vercel.app/create', {mileage,maintenance, performedBy, contact, material, labor, other })
+        const auth0_id = user.sub.split('|')[1]
+        console.log(auth0_id, 'saving record under this auth0 id')
+        axios.post('http://localhost:5000/create', {mileage,maintenance, performedBy, contact, material, labor, other, auth0_id })
         .then((res) => {
             console.log(res)
             navigate('/repair')

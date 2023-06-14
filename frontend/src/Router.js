@@ -17,7 +17,10 @@ import ScheduledMaintenance from "./components/ScheduledMaintenance";
 
 //Protecting Routes w/ Auth0
   const ProtectedRoute =(props) => {
-    const {isAuthenticated} = useAuth0();
+    const {
+        isAuthenticated,
+        user
+    } = useAuth0();
     const {component: Component, ...rest} =props;
 
     return(
@@ -39,7 +42,7 @@ function Router() {
             {/* Repair Components */}
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
             <Route path='/create' element={<ProtectedRoute component={AddRepair} />} />
-            <Route path="/update/:id" element={<ProtectedRoute component={UpdateRepair} />} />
+            <Route path="/update/:auth0_id/:id" element={<ProtectedRoute component={UpdateRepair} />} />
     
             {/* Auth Components */}
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />
