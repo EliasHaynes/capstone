@@ -42,7 +42,7 @@ function Router() {
             {/* Repair Components */}
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
             <Route path='/create' element={<ProtectedRoute component={AddRepair} />} />
-            <Route path="/update/:id" element={<ProtectedRoute component={UpdateRepair} />} />
+            <Route path="/update/:auth0_id/:id" element={<ProtectedRoute component={UpdateRepair} />} />
     
             {/* Auth Components */}
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />

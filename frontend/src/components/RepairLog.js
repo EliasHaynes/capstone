@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from "react"
 import axios from 'axios'
-import { Link, Navigate, useNavigate, useParams} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import {
     Container,
     Table,
@@ -23,19 +23,15 @@ function RepairLog() {
         getAccessTokenSilently
       } = useAuth0()
 
+      const auth0_id = user.sub.split('|')[1]
+
     const [repairs,setRepairs] = useState([])
 
     useEffect(() => {
         const fetchRepairData = async () => {
           try {
-            const token = await getAccessTokenSilently();
-            console.log("The Token:", token)
             console.log("The user:", user.sub.split('|')[1])
-            const response = await axios.get(`http://localhost:5000/repair/${user.sub.split('|')[1]}`, {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            });
+            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}`, {auth0_id});
             setRepairs(response.data);
             console.log(response.data);
           } catch (error) {
@@ -49,7 +45,7 @@ function RepairLog() {
     
 
     const handleDelete =  (id) => {        
-        axios.delete('https://capstone-kohl.vercel.app/delete/'+id)
+        axios.delete(`https://capstone-kohl.vercel.app/delete/${auth0_id}`+id)
         .then(response => {
             console.log(response, 'this is the id', id)
             const newArr = repairs.filter(rep => rep.id !== id)
@@ -97,7 +93,7 @@ function RepairLog() {
                     <TableCell>{rep.other}</TableCell>
                     <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
                     <TableCell>
-                        <EditIcon onClick={() => navigate(`/update/${rep.id}`)}/>
+                        <EditIcon onClick={() => navigate(`/update/${auth0_id}/${rep.id}`)}/>
                         <DeleteIcon
                             // add onClick method here
                             onClick={() => handleDelete(rep.id)}
