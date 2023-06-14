@@ -23,7 +23,7 @@ function UpdateRepair() {
     let {auth0_id,id} = useParams();
     id = parseInt(id,10) 
     console.log("THE auth id:", auth0_id)
-    console.log("The ID:", id)
+    console.log("The ID", id)
 
 
     useEffect(() => {
@@ -43,7 +43,7 @@ function UpdateRepair() {
 
     
 
-   
+
 
    
 
