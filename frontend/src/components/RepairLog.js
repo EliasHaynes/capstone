@@ -45,7 +45,7 @@ function RepairLog() {
     
 
     const handleDelete =  (id) => {        
-        axios.delete(`https://capstone-kohl.vercel.app/delete/${auth0_id}`+id)
+        axios.delete(`http://localhost:5000/delete/`+id , {auth0_id})
         .then(response => {
             console.log(response, 'this is the id', id)
             const newArr = repairs.filter(rep => rep.id !== id)
