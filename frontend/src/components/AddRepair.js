@@ -30,7 +30,7 @@ function AddRepair() {
         axios.post('http://localhost:5000/create', {mileage,maintenance, performedBy, contact, material, labor, other, auth0_id })
         .then((res) => {
             console.log(res)
-            navigate('/')
+            navigate('/repair')
         })
         .catch(err => console.log(err))
 

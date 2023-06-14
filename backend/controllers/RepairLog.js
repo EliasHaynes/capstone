@@ -75,9 +75,9 @@ const updateRepair = (req,res) => {
 
 const deleteRepair = (req,res) => {
     const sql = "DELETE FROM repairLog WHERE id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;"
-    let id = req.params.id;
+    let id = req.params.id; 
     id = parseInt(id,10);
-    console.log("THE ID:", id)
+    const auth0_id = req.body.auth0_id;
     
     pool.query(sql, [id,id], (err,data) => {
         if(err) return res.json(err)
