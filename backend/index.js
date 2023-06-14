@@ -24,9 +24,6 @@ app.get('/', (req,res) => {
     })
 })
 
-app.get('/protected', (req,res) => {
-    res.send('protected route')
-})
 
 
 app.listen(port, () => {
