@@ -12,7 +12,6 @@ function Home() {
       logout, 
       user, 
       isAuthenticated,
-      getAccessTokenSilently
     } = useAuth0()
   
   
