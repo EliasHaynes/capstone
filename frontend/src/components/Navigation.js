@@ -33,9 +33,6 @@ const Navigation = () => {
           <li className="nav-list-item">
             <Link to="/userMaintenace">Maintenance</Link>
           </li>
-          <li className="nav-list-item">
-            <Link to="/registerUser">Register User</Link>
-          </li>
           <li>
             <Link to="/registerCar"> Register Car</Link>
           </li>

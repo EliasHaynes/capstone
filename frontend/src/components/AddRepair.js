@@ -27,7 +27,7 @@ function AddRepair() {
         e.preventDefault()
         const auth0_id = user.sub.split('|')[1]
         console.log(auth0_id, 'saving record under this auth0 id')
-        axios.post('https://capstone-sis4.vercel.app/create', {mileage,maintenance, performedBy, contact, material, labor, other, auth0_id })
+        axios.post('http://localhost:5000/create', {mileage,maintenance, performedBy, contact, material, labor, other, auth0_id })
         .then((res) => {
             console.log(res)
             navigate('/repair')
