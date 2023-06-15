@@ -53,7 +53,7 @@ function VinDecode(props) {
   }
     
     return (
-        <div>
+        <div className="home">
             <button onClick={() => {
               handleClick();
               toggleDisplay(true)
