@@ -17,6 +17,7 @@ const RegisterCar = (props) => {
 
     const [vinNum, setVin] = useState('')
     const [mile,setMileage] = useState('')
+    const [open, toggleOpen] = useState(false)
 
   
     const login = (e) => {
@@ -35,7 +36,11 @@ const RegisterCar = (props) => {
         <p>{vin}</p>
         <p>{mileage}</p>
         <Container maxWidth="sm">
-          <form className="login-form" onSubmit={login}>
+          <form className="login-form" 
+            onSubmit={(e) => {
+              login(e)
+              toggleOpen(true)
+            }}>
             <TextField
               required
             onChange={(e) => {
@@ -63,7 +68,14 @@ const RegisterCar = (props) => {
             </Button>
           </form>
         </Container>
-      </div>
+        {open &&(
+          <div className="home" style={{marginTop: "100px"}}>
+
+          <h4> Find your Vehicle Specs</h4>
+          <button onClick={() => navigate('/vindecode')}>Click Here</button>
+          </div>
+        )}
+        </div>
     );
 };
 

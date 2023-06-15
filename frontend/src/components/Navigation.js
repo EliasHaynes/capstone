@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navigation = () => {
-
+  const navigate = useNavigate()
   const {
     loginWithRedirect,
     isAuthenticated,
@@ -20,7 +20,7 @@ const Navigation = () => {
         <IconButton color="inherit">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" style={{ flexGrow: "1" }}>
+        <Typography  onClick={() => navigate('/')} variant="h6" style={{ flexGrow: "1", cursor: "pointer" }}>
           Maintenance App
         </Typography>
         <ul className="nav-list">

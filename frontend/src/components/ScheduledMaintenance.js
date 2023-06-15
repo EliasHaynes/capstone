@@ -6,8 +6,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import '../index.css';
 import {useSelector } from "react-redux";
 import MapScheduledMaintenance from "./MapScheduledMaintenance";
+import { useNavigate } from "react-router-dom";
 
 function ScheduledMaintenance(props) {
+
+    const navigate = useNavigate()
+
     const [repairs, setRepairs] = useState([])
     const [open, toggleOpen] = useState(false)
     const mileage = useSelector(state => state.mileage)
@@ -39,16 +43,18 @@ function ScheduledMaintenance(props) {
       return (
         <div>
             <div>
-                <button onClick={() => {
+                <button
+                onClick={() => {
                     toggleOpen(true)
                     handleClick()
                     }}>Fetch Maintenace +-10,000 miles</button>
             </div>
             <div>
                 {open && (
-                    <div style={{  display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-around', alignItems: 'center'}}>
-                    
+                    <div style={{  display: 'flex', flexFlow: "row", justifyContent: 'space-around'}}>
+                        
                     <div>
+                        <button onClick={() => navigate('/repair')}>View Repair Log</button>
                             {repairs.map((rep,idx) => (
         
                                 <Card style={{ width: '18rem'}} key={idx}>
