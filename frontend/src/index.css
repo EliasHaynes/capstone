@@ -18,3 +18,51 @@ code {
   justify-content: space-around;
   align-items: center;
 }
+
+.home {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.icon-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 150px;
+}
+
+@media (max-width: 768px) {
+  /* Adjust grid properties for smaller screens */
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+  }
+}
+
+.box1 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.box2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.box3 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.box4 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.icons {
+  display: "flex";
+ flex-flow: "column"; 
+ justify-content: "center";
+ cursor: pointer;
+
+}
+
+

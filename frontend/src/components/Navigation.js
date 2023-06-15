@@ -37,7 +37,7 @@ const Navigation = () => {
             <Link to="/registerCar"> Register Car</Link>
           </li>
           <li className="nav-list-item">
-            <Link to={`/repair`}>Repair Log</Link>
+            <Link to="/repair">Repair Log</Link>
           </li>
           <li>
             {isAuthenticated ? <button onClick={logout}>Logout</button> : <button onClick={loginWithRedirect} >Login</button> }
