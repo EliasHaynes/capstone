@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth0 } from "@auth0/auth0-react";
+import styled from "styled-components";
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -47,5 +48,7 @@ const Navigation = () => {
     </AppBar>
   );
 };
+
+
 
 export default Navigation;

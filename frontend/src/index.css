@@ -1,3 +1,8 @@
+html {
+  width:100vw;
+  height: 100vh;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,6 +16,119 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.home {
+  width: 100vw;
+  height: 100vh;
+}
+
+.beforeLogin {
+  width: 90%;
+  height: 100%;
+}
+
+
+ .svg-container {
+  margin: 30px auto;
+  border-radius:10px;
+  background: #003653;
+  overflow: hidden;
+}
+
+.svg-container,
+.back,
+.mid,
+.fore {
+  width: 600px;
+  height: 350px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+}
+
+.back {
+  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/back.svg");
+  -webkit-animation: bk 20s -5s linear infinite;
+  animation: bk 20s -5s linear infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.mid {
+  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/mid.svg");
+  -webkit-animation: bk 12s -5s linear infinite;
+  animation: bk 12s -5s linear infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.fore {
+  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/fore.svg");
+  -webkit-animation: bk 5s -5s linear infinite;
+  animation: bk 5s -5s linear infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.figure {
+  width:50%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/fig.svg") no-repeat;
+  -webkit-animation: cr 15s -5s linear infinite;
+  animation: cr 15s -5s linear infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  background-position: left 82%;
+}
+
+@-webkit-keyframes bk {
+  100% {
+      background-position: 200% 0;
+  }
+}
+
+@keyframes bk {
+  100% {
+      background-position: 200% 0;
+  }
+}
+
+@-webkit-keyframes cr {
+  from {
+      -webkit-transform: translateX(-10%);
+      transform: translateX(-10%);
+  }
+  to {
+      -webkit-transform: translateX(120%);
+      transform: translateX(120%);
+  }
+}
+
+@keyframes cr {
+  from {
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+  }
+  to {
+      -webkit-transform: translateX(120%);
+      transform: translateX(120%);
+  }
+}
+
+
+@media (max-width:600px){
+.svg-container{
+  width:90%;
+}
+}
+
 
 .cardd {
   display: flex;

@@ -23,17 +23,50 @@ function Home() {
     return (
     <div className="home">
       {!isAuthenticated ? 
-        <div>
+        <div className="beforeLogin">
           <h1> Must Register/Login First</h1>
           <button onClick={loginWithRedirect}>Login</button>
+          <div className="svg-container">
+    
+    <div className="back">
+        <div className="mid">
+            <div className="fore">
+                <div className="figure"></div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</div>
+          {/* <h2 className="home" style={{marginTop: "100px"}}>Features of this app:</h2>
+        <div className="icon-grid-container" style={{marginTop: "50px"}}>
+          
+          <div className="icons home">
+            <FontAwesomeIcon  onClick={() => navigate('/registerCar')} className="box1" icon={faFileLines} size="10x"  fontSize={"200px"} style={{color: "#1e57b8"}}> <Link to={'/registerCar'}></Link> </FontAwesomeIcon>
+            <h3>Register Your Car</h3>
+          </div>
+          <div className="icons home">
+            <FontAwesomeIcon onClick={() => navigate('/vindecode')} className="box2" icon={faCircleInfo} size="10x"  fontSize={"200px"} style={{color: "#1e57b8"}} />
+            <h3> Get specs on your vehicle</h3>
+          </div>
+          <div className="icons home">
+            <FontAwesomeIcon onClick={() => navigate('/userMaintenace')} className="box3" icon={faClipboardList} size="10x"  fontSize={"200px"} style={{color: "#1e57b8"}} />
+            <h3>Get relative scheduled maintenace</h3>
+          </div>
+          <div className="icons home">
+            <FontAwesomeIcon onClick={() => navigate('/repair')} className="box4" icon={faScrewdriverWrench} size="10x"  fontSize={"200px"} style={{color: "#1e57b8"}}/>
+            <h3> Document repairs on a log</h3>
+          </div>
+          </div> */}
           </div>
           :
           <div>
-          <div className="home">
+          
           <h1 style={{alignItems:"center"}}>Lets Get Started!</h1>
           <h4> Head to this form and get informed (Required)</h4>
           <button onClick={() => navigate('/registerCar')}>Register Car</button>
-        </div>
+        
         <h2 className="home" style={{marginTop: "100px"}}>Features of this app:</h2>
         <div className="icon-grid-container" style={{marginTop: "50px"}}>
           
