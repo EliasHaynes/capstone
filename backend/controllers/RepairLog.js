@@ -67,7 +67,9 @@ const updateRepair = (req,res) => {
         req.body.labor,
         req.body.other,
     ]
-    pool.query(sql, [...values,auth0_id,id], (err,data) => {
+
+    console.log("The Values:", values)
+    pool.query(sql, [...values, auth0_id, id], (err,data) => {
         if(err) return res.json(err)
         return res.json(data)
     })

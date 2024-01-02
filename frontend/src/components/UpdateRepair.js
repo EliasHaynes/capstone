@@ -7,7 +7,7 @@ import { autocompleteClasses } from '@mui/material'
 
 function UpdateRepair() {
     const [mileage,setMileage] = useState(0)
-    const [maint, setMaintenance] = useState('')
+    const [maintenance, setMaintenance] = useState('')
     const [performedBy,setPerformedBy] = useState('')
     const [contact,setContact] = useState('')
     const [material,setMaterial] = useState(0)
@@ -22,8 +22,7 @@ function UpdateRepair() {
 
     let {auth0_id,id} = useParams();
     id = parseInt(id,10) 
-    console.log("THE auth id:", auth0_id)
-    console.log("The ID", id)
+
 
 
     useEffect(() => {
@@ -32,7 +31,14 @@ function UpdateRepair() {
             const response = await axios.get(`http://localhost:5000/repair/${auth0_id}/${id}`);
             console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
-                console.log("REPAIR BY ID:", response.data[0])
+                console.log("REPAIR BY ID:", response.data[0].mileage)
+                setMileage(response.data[0].mileage);
+                setMaintenance(response.data[0].maintenance);
+                setPerformedBy(response.data[0].performedBy);
+                setContact(response.data[0].contact);
+                setMaterial(response.data[0].material);
+                setLabor(response.data[0].labor);
+                setOther(response.data[0].other);
             }
             catch (error) {
                 console.log(error)
@@ -41,24 +47,25 @@ function UpdateRepair() {
         fetchRepairDataById();
     },[])
 
-    
 
-
-
-   
-
+      
+      
+      
+      
+      
+      
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maint, performedBy, contact, material, labor, other})
+ 
+        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maintenance, performedBy, contact, material, labor,other})
         .then((res) => {
             console.log("The PUT:", res)
             navigate(`/repair`)
 
         })
         .catch(err => console.log(err))
-
     }
-    console.log()
+
     return (
         <form onSubmit={handleSubmit}>
             <input 
