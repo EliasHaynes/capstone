@@ -1,151 +1,233 @@
+@media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+
+}
+
+@media (min-width: 769px) {
+  .mobile {
+    display: none;
+  }
+}
+
+
 html {
-  width:100vw;
-  height: 100vh;
+  overflow-x: hidden;
+  height:100vh;
+  width: 100vw;
 }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
-/* ---------- Landin Page (Before/After Register) ---------- */
-.home {
-  width: 100vw;
-  height: 100%;
+/* ---------- Nav Bar ---------- */
+
+.nav-list {
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width:80%;
+  align-items: flex-end;
+
+  @media (max-width:768px){
+    display:none;
+    }
 }
 
-.beforeLogin {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+.mobile-login {
+  display: none;
+
+  @media (max-width: 768px) {
+    display:block;
+  }
 }
 
- .svg-container {
+.burgerMenu {
+  padding-right: 5%;
+}
+
+.nav-list-item {
+  border-right: 2px dashed rgb(65, 68, 70);
+  width: 10%;
+  color:white;
+  cursor: pointer;
+}
+
+.nav-list-item  a{
+  color:white;
+  text-decoration: none;
+}
+
+
+
+/* ---------- Landin Page (Before Register/Login) ---------- */
+
+.landing-main-display {
   display: flex;
   justify-content: center;
-  height: 50%;
-  border-radius:10px;
-  background: #003653;
-  overflow: hidden;
-}
-
-.svg-container,
-.back,
-.mid,
-.fore {
-  width: 600px;
-  height: 350px;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-}
-
-.back {
-  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/back.svg");
-  -webkit-animation: bk 20s -5s linear infinite;
-  animation: bk 20s -5s linear infinite;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-.mid {
-  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/mid.svg");
-  -webkit-animation: bk 12s -5s linear infinite;
-  animation: bk 12s -5s linear infinite;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-.fore {
-  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/fore.svg");
-  -webkit-animation: bk 5s -5s linear infinite;
-  animation: bk 5s -5s linear infinite;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-.figure {
-  width:50%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  background: url("https://cdn.rawgit.com/Gaurav2107/SVG-Stripe-Car-Animation/158ed495/fig.svg") no-repeat;
-  -webkit-animation: cr 15s -5s linear infinite;
-  animation: cr 15s -5s linear infinite;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  background-position: left 82%;
-}
-
-@-webkit-keyframes bk {
-  100% {
-      background-position: 200% 0;
-  }
-}
-
-@keyframes bk {
-  100% {
-      background-position: 200% 0;
-  }
-}
-
-@-webkit-keyframes cr {
-  from {
-      -webkit-transform: translateX(-10%);
-      transform: translateX(-10%);
-  }
-  to {
-      -webkit-transform: translateX(120%);
-      transform: translateX(120%);
-  }
-}
-
-@keyframes cr {
-  from {
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-  }
-  to {
-      -webkit-transform: translateX(120%);
-      transform: translateX(120%);
-  }
-}
-
-
-@media (max-width:600px){
-.svg-container{
-  width:90%;
-}
-}
-
-
-/* .cardd {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
   align-items: center;
-} */
+  width:100%;
+  height: 90vh;
+  background-image: url(./assets/future-car-for-main-display.jpg);  
+  background-repeat: no-repeat;
+   
+  background-size: 100% 100%;
+    background-position: 30% 0;
+
+
+}
+
+
+
+.landing-main-display button {
+  background-color: #0d6efd;
+  color: white;
+  border: 1px solid white;
+  width:20%;
+  height:10%;
+  border-radius: 25px;
+  @media (max-width: 768px) {
+    margin-top: 50%;
+  }
+}
+
+.services {
+  display:flex;
+  justify-content: center;
+  margin-top: 5%;
+  width:100%;
+  background-color: #0d6efd;
+  color: white;
+  margin-bottom: 3%;
+}
+
+.wrap-page-buttons {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-buttons {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 80%;
+  height:auto;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.page-buttons section {
+  display:flex;
+  flex-flow: row nowrap;
+  height:50vh;
+  margin-bottom: 3%;
+  @media (max-width:768px) {
+    width:100%;
+    height:80vh;
+  }
+}
+
+.landing-alternate-background {
+  background-color: lightgray;
+}
+
+.page-buttons-text-box {
+  margin-left: 3%;
+  padding: 5%;
+}
+
+.page-buttons-text-box h3 {
+  @media (max-width:768px) {
+    background-color:#0d6efd;
+    font-weight: 1000;
+  }
+}
+
+.page-buttons-text-box p{
+  @media (max-width:768px) {
+    background-color:#0d6efd;
+    font-weight: 1000;
+  }
+}
+
+.page-buttons div {
+  width:50%;
+}
+
+.page-buttons-img-container-left {
+  display:flex;
+  background-color: black;
+  width:50%;
+}
+
+.first-pic {
+  background-image: url(./assets/Image1_HowtoResgisterYourCar_Filling_out_vehicle_registration_forms.webp);
+  background-repeat: no-repeat;
+  height:auto;
+  background-size: 100% 100%;
+  background-position: 30% 0;
+}
+
+.second-pic {
+  background-image: url(./assets/IMG_6943.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 40% 80%;
+}
+
+.third-pic {
+  background-image: url(./assets/bmtechblogimagenov.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 30% 0;
+}
+
+.fourth-pic {
+  background-image: url(assets/Scanner-Diagnostic-Review-corauto.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 30% 0;
+}
+
+.page-buttons-img-container-right {
+  display:flex;
+  background-color: black;
+  width:50%;
+  justify-content: flex-end;
+}
+
+/* ---------- Landin Page (After Register/Login) ---------- */
+
+.page-buttons-anchors {
+  color:#0d6efd;
+  text-decoration: underline;
+  cursor: pointer;
+  @media (max-width:768px) {
+    background-color:#0d6efd;
+    font-weight: 1000;
+    color:black;
+  }
+}
+
+
 
 .icon-grid-heading {
   display:flex;
-  
-
 }
 
 
@@ -171,7 +253,7 @@ code {
   } */
 
 
-.box1 {
+/* .box1 {
   width:50%;
   height:50%;
   grid-column: 1/2;
@@ -195,14 +277,14 @@ code {
   width:50%;
   height:50%;
   grid-area: 2 / 2 / 3 / 3;
-}
+} */
 
 .icons {
   display: "flex";
  flex-flow: "column"; 
  justify-content: "center";
  cursor: pointer;
-
 }
+
 
 
