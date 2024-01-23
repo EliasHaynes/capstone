@@ -1,6 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  function NoVehicles() {
+    return (
+      <div className="no-vehicle-profiles">
+        <div>
+          <img/>
+        </div>
+        <h2>No current vehicle profiles registered...</h2>
+        <button>Click here to register a vehicle</button>
+      </div>
+    )
+  };
+  
   return (
     <div>
       <div className="wrapper-dashboard">
@@ -15,7 +30,7 @@ function Dashboard() {
           <img></img>
         </div>
       </div>
-      <button>Manage Vehicle Profiles</button>
+      <button onClick={() => navigate("/vehicleprofiles")}>Manage Vehicle Profiles</button>
     </div>
   );
 }
