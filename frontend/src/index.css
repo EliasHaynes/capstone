@@ -211,7 +211,7 @@ code {
   justify-content: flex-end;
 }
 
-/* ---------- Landin Page (After Register/Login) ---------- */
+/* ---------- Landing Page (After Register/Login) ---------- */
 
 .page-buttons-anchors {
   color:#0d6efd;
@@ -286,6 +286,31 @@ code {
  cursor: pointer;
 }
 
+/* ---------- Dashboard ---------- */
+
+.wrapper-dashboard {
+  display:flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.root-dashboard {
+  display:flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicle-info-container {
+  display:flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Vehicle Profiles ---------- */
+
 .vehicle-profile-wrap-container {
   display: flex;
   flex-flow: column nowrap;
@@ -301,7 +326,7 @@ code {
   padding: 5%;
 }
 
-.vehicle-profile-container form{
+.vehicle-profile-container form {
   display:flex;
   flex-flow: column nowrap;
   align-items: center;

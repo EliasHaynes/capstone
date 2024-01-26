@@ -17,7 +17,7 @@ function Dashboard() {
   };
   
   return (
-    <div>
+    <div className="root-dashboard">
       <div className="wrapper-dashboard">
         <div className="vehicle-info-container">
           <h1>Your Current Vehicle Profile</h1>
