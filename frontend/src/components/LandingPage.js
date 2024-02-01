@@ -21,11 +21,17 @@ function LandingPage() {
 
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
+  // const saveUser = () =>  {
+  //   axios.post('/passUId', )
+  // }
   return (
     <div>
       <div className="beforeLogin desktop">
         <div className="landing-main-display">
-          <button className="login-button" onClick={loginWithRedirect}>
+          <button className="login-button" onClick={() => {
+            loginWithRedirect()
+          console.log("user from button", user)
+          }}>
             Login / Register
           </button>
 

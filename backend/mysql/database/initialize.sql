@@ -1,6 +1,9 @@
 CREATE DATABASE capstone;
 USE capstone;
 
+
+-- DROP TABLE IF EXISTS users, ve
+
 CREATE TABLE IF NOT EXISTS users (
 	id  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100) NOT NULL UNIQUE KEY
@@ -9,10 +12,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS vehicles (
 	v_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(100) NOT NULL UNIQUE KEY,
-    v_ymm VARCHAR(100) NOT NULL,
-    v_trim VARCHAR(50) NOT NULL,
-    v_engine VARCHAR(50) NOT NULL,
-    v_transmission VARCHAR(50) NOT NULL,
+    v_ymm VARCHAR(100),
+    v_trim VARCHAR(50),
+    v_engine VARCHAR(50),
+    v_transmission VARCHAR(50),
     vin VARCHAR(50) NOT NULL UNIQUE KEY,
     mileage INT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(user_id)

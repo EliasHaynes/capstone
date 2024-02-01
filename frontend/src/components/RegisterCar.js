@@ -3,42 +3,41 @@ import { TextField, Button, Container, useThemeProps } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { saveVin,saveMileage } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux"; 
+import axios from "axios";
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 
 const RegisterCar = (props) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch() 
-
-    const mileage = useSelector(state => state.mileage)
-    const vin = useSelector(state => state.vin)
     
+    const {
+      isAuthenitcated,
+      user
+  } = useAuth0()
     
 
-    const [vinNum, setVin] = useState('')
-    const [mile,setMileage] = useState('')
+    const [vin, setVin] = useState('')
+    const [mileage,setMileage] = useState('')
     const [open, toggleOpen] = useState(false)
-
-  
-    const login = (e) => {
+    
+    const handleSubmit = (e) => {
+      const user_id = user.sub.split('|')[1]
       e.preventDefault();
-      // document.cookie = "loggedIn=true;Max-Age=1800";
-      // navigate("/");
-      dispatch(saveVin(vinNum))
-      dispatch(saveMileage(mile))
-
+      axios.post(`http://localhost:5000/addVehicle/${user_id}`, {vin, mileage})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
     };
 
-
-  
     return (
       <div className="App">
-        <p>{vin}</p>
-        <p>{mileage}</p>
+
         <Container maxWidth="sm">
           <form className="login-form" 
             onSubmit={(e) => {
-              login(e)
+              handleSubmit(e)
               toggleOpen(true)
             }}>
             <TextField

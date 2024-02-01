@@ -21,7 +21,7 @@ function Home() {
   const navigate = useNavigate();
 
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-
+  console.log("The user:", user)
   return (
     <div className="home">
       {!isAuthenticated ? (

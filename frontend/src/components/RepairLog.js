@@ -82,7 +82,7 @@ function RepairLog() {
                     <TableCell>{rep.date}</TableCell>
                     <TableCell>{rep.mileage}</TableCell>
                     <TableCell>{rep.maintenance}</TableCell>
-                    <TableCell>{rep.performedBy}</TableCell>
+                    <TableCell>{rep.performed_by}</TableCell>
                     <TableCell>{rep.contact}</TableCell>
                     <TableCell>{rep.material}</TableCell>
                     <TableCell>{rep.labor}</TableCell>

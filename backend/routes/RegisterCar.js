@@ -3,6 +3,6 @@ const router = express.Router()
 const registerCarController = require("../controllers/RegisterCar")
 
 
-router.post("/addVehicle/:user_id", registerCarController.addVehicle) //addVehicle
+router.post("/addVehicle/:user_id", registerCarController.addVehicle)
 
 module.exports = router;

@@ -10,10 +10,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain='dev-yhqpkv3jpefleo1k.us.auth0.com'
-      clientId='2sW5UwLHjQYUkBz7TPZmF5wPIjvkwFxP'
+      domain='dev-qxzngmucus86xphq.us.auth0.com'
+      clientId='hYuUdjbz5oBWARLENPzukHperkoUPHzm'
       redirectUri={window.location.origin}
-      audience='capstone app'
+      audience='Vehicle Maintenance'
       scope='openid profile email'
     >
       <App />
