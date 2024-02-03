@@ -1,20 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {Auth0Provider} from '@auth0/auth0-react'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Auth0Provider } from "@auth0/auth0-react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain='dev-qxzngmucus86xphq.us.auth0.com'
-      clientId='hYuUdjbz5oBWARLENPzukHperkoUPHzm'
-      redirectUri={window.location.origin}
-      audience='Vehicle Maintenance'
-      scope='openid profile email'
+      domain="dev-qxzngmucus86xphq.us.auth0.com"
+      clientId="hYuUdjbz5oBWARLENPzukHperkoUPHzm"
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        audience: "https://dev-qxzngmucus86xphq.us.auth0.com/api/v2/",
+        scope: "read:current_user update:current_user_metadata openid profile email",
+      }}
+      useRefreshTokens={true}
+
     >
       <App />
     </Auth0Provider>
