@@ -5,7 +5,7 @@ const passUId = (req,res) => {
     console.log("passUuid controller hit")
     const Uuid = req.body.parcel
     console.log("Controller Uuid:", Uuid)
-    const sql = "INSERT INTO users(user_id) VALUES (?)"
+    const sql = "INSERT IGNORE INTO users(user_id) VALUES (?)"
 
     pool.query(sql,Uuid, (err,data) => {
         console.log("Auth Controller query hit")
