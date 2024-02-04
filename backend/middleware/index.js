@@ -11,11 +11,11 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://dev-yhqpkv3jpefleo1k.us.auth0.com/.well-known/jwks.json`
+    jwksUri: `https://dev-qxzngmucus86xphq.us.auth0.com/.well-known/jwks.json`
   }),
   // Validate the audience and the issuer.}),
-  audience: 'capstone app',
-  issuer: `https://dev-yhqpkv3jpefleo1k.us.auth0.com/`,
+  audience: 'Vehicle Maintenance',
+  issuer: `https://dev-qxzngmucus86xphq.us.auth0.com/`,
   algorithms: ['RS256']
 })
 .unless({ path: ['/']})

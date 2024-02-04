@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 function AddRepair() {
     const [mileage,setMileage] = useState(0)
     const [maintenance, setMaintenance] = useState('')
-    const [performedBy,setPerformedBy] = useState('')
+    const [performed_by,setPerformed_by] = useState('')
     const [contact,setContact] = useState('')
     const [material,setMaterial] = useState(0)
     const [labor,setLabor] = useState(0)
@@ -27,7 +27,7 @@ function AddRepair() {
         e.preventDefault()
         const auth0_id = user.sub.split('|')[1]
         console.log(auth0_id, 'saving record under this auth0 id')
-        axios.post('http://localhost:5000/create', {mileage,maintenance, performedBy, contact, material, labor, other, auth0_id })
+        axios.post('http://localhost:5000/create', {mileage,maintenance, performed_by, contact, material, labor, other, auth0_id })
         .then((res) => {
             console.log(res)
             navigate('/repair')
@@ -58,7 +58,7 @@ function AddRepair() {
                 name='performedBy'
                 placeholder='performedBy'
                 onChange={(e) => {
-                    setPerformedBy(e.target.value)
+                    setPerformed_by(e.target.value)
                     console.log(e.target.value)
                 }}>
             </input>

@@ -34,12 +34,12 @@ const showUsersRepairById = (req, res) => {
 
 
 const createRepair = (req,res) => {
-    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performedBy`, `contact`, material, labor, other, auth0_id) VALUES (?)"
+    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performed_by`, `contact`, material, labor, other, auth0_id) VALUES (?)"
 
     const values = [
         req.body.mileage,
         req.body.maintenance,
-        req.body.performedBy,
+        req.body.performed_by,
         req.body.contact,
         req.body.material,
         req.body.labor,
@@ -54,20 +54,22 @@ const createRepair = (req,res) => {
 }
 
 const updateRepair = (req,res) => {
-    const sql = "UPDATE repairLog SET mileage = ?, maintenance = ?, performedBy = ?, contact = ?, material = ?, labor =?, other =?   WHERE auth0_id = ? AND id =?"
+    const sql = "UPDATE repairLog SET mileage = ?, maintenance = ?, performed_by = ?, contact = ?, material = ?, labor =?, other =?   WHERE auth0_id = ? AND id =?"
     const id = req.params.id;
     const auth0_id = req.params.auth0_id
 
     const values = [
         req.body.mileage,
         req.body.maintenance,
-        req.body.performedBy,
+        req.body.performed_by,
         req.body.contact,
         req.body.material,
         req.body.labor,
         req.body.other,
     ]
-    pool.query(sql, [...values,auth0_id,id], (err,data) => {
+
+    console.log("The Values:", values)
+    pool.query(sql, [...values, auth0_id, id], (err,data) => {
         if(err) return res.json(err)
         return res.json(data)
     })

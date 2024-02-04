@@ -11,6 +11,7 @@ import AddRepair from "./components/AddRepair";
 import UpdateRepair from "./components/UpdateRepair";
 import VinDecode from "./components/VinDecode";
 import ScheduledMaintenance from "./components/ScheduledMaintenance";
+import VehicleProfiles from "./components/VehicleProfiles";
 
 
 
@@ -38,12 +39,13 @@ function Router() {
             {/* API Components */}
             <Route path="/vindecode" element={<ProtectedRoute component={VinDecode} />} />
             <Route path="/userMaintenace" element={<ProtectedRoute component={ScheduledMaintenance} />} />
+            <Route path="/vehicleprofiles" element={<ProtectedRoute component={VehicleProfiles}/>} />
     
             {/* Repair Components */}
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
             <Route path='/create' element={<ProtectedRoute component={AddRepair} />} />
             <Route path="/update/:auth0_id/:id" element={<ProtectedRoute component={UpdateRepair} />} />
-    
+            
             {/* Auth Components */}
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />
             

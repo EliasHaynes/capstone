@@ -30,10 +30,8 @@ function RepairLog() {
     useEffect(() => {
         const fetchRepairData = async () => {
           try {
-            console.log("The user:", user.sub.split('|')[1])
             const response = await axios.get(`http://localhost:5000/repair/${auth0_id}`, {auth0_id});
             setRepairs(response.data);
-            console.log(response.data);
           } catch (error) {
             console.log(error);
           }
@@ -47,9 +45,7 @@ function RepairLog() {
     const handleDelete =  (id) => {        
         axios.delete(`http://localhost:5000/delete/`+id , {auth0_id})
         .then(response => {
-            console.log(response, 'this is the id', id)
             const newArr = repairs.filter(rep => rep.id !== id)
-            console.log(newArr)
           setRepairs(newArr)
         })
         .catch(err => {return err})
@@ -86,7 +82,7 @@ function RepairLog() {
                     <TableCell>{rep.date}</TableCell>
                     <TableCell>{rep.mileage}</TableCell>
                     <TableCell>{rep.maintenance}</TableCell>
-                    <TableCell>{rep.performedBy}</TableCell>
+                    <TableCell>{rep.performed_by}</TableCell>
                     <TableCell>{rep.contact}</TableCell>
                     <TableCell>{rep.material}</TableCell>
                     <TableCell>{rep.labor}</TableCell>
