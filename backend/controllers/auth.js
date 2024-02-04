@@ -2,9 +2,7 @@ const mysql = require('mysql2')
 const pool = require('../mysql/connection')
 
 const passUId = (req,res) => {
-    console.log("passUuid controller hit")
     const Uuid = req.body.parcel
-    console.log("Controller Uuid:", Uuid)
     const sql = "INSERT IGNORE INTO users(user_id) VALUES (?)"
 
     pool.query(sql,Uuid, (err,data) => {
