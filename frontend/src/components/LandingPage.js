@@ -27,7 +27,7 @@ function LandingPage() {
   return (
     <div>
       <div className="beforeLogin desktop">
-        <div className="landing-main-display">
+        {isAuthenticated ? <Dashboard></Dashboard>:         <div className="landing-main-display">
           <button className="login-button" onClick={() => {
             loginWithRedirect()
           console.log("user from button", user)
@@ -36,8 +36,7 @@ function LandingPage() {
           </button>
 
           {/* <h1> Must Register / Login First</h1> */}
-        </div>
-        {isAuthenticated ? <Dashboard></Dashboard>: null}
+        </div>}
         <h1 className="services">Services</h1>
         <div className="wrap-page-buttons">
           <div className="page-buttons">
