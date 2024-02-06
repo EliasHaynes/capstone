@@ -16,7 +16,7 @@ router.put('/update/:auth0_id/:id', repairLogRoute)
 router.delete('/delete/:id', repairLogRoute)
 
 // Register Car Route
-router.get('/addVehicle/:user_id', registerCarRoute)
+router.post('/addVehicle/:user_id', registerCarRoute)
 
 // Vehicle Profiles Routes
 router.get('/getVehicles/:user_id', vehicleProfilesRoute)
