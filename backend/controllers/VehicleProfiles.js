@@ -2,28 +2,41 @@ const mysql = require("mysql2");
 const pool = require("../mysql/connection");
 
 const getVehicles = async (req, res) => {
+  console.log("1 after async func started")
   const sql = "SELECT * FROM vehicles WHERE user_id = ?";
   const user_id = req.params.user_id;
 
-  try {
-    const response = await pool.query(sql, [user_id], (err, data) => {
-      if (err) return res.json(err);
+  console.log("user_id in vehicle profiles controller:", user_id)
 
-      return res.json(data);
+  try {
+    console.log("2 after try block");
+
+    const response = await pool.query(sql, user_id, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data[0]);
     });
 
-    if (response.length < 1) {
-      return 
+
+
+
+    if (response.length > 1) {
+      console.log("3a if ran")
+
     } else {
+      console.log("3b else ran")
       const sqlUpdateCurrentVProfileField = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ?"
-      pool.query(sqlUpdateCurrentVProfileField, [user_id], (err,data) => {
+      pool.query(sqlUpdateCurrentVProfileField, user_id, (err,data) => {
         if (err) return res.json(err);
         return res.json(data)
       });
+
     }
+    return res.json(response[0])
   } catch (e) {
+    console.log("4 catch hit")
     console.error(e);
   }
+  console.log("5 after try catch block")
 };
 
 const getCurrentVehicleProfile = (req, res) => {
