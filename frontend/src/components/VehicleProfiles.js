@@ -5,45 +5,32 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function VehicleProfiles() {
   const navigate = useNavigate();
-  const [selectedProfile, setProfile] = useState(null);
+  const [selectedProfile, setProfile] = useState();
   const [usersVehicleProfiles, setUsersVehiclesProfiles] = useState([]);
 
   const { isAutheticated, user } = useAuth0();
 
   const user_id = user.sub.split("|")[1].toString();
-  console.log("user-Id in vehicle profiles:", user_id)
+  console.log("user-Id in vehicle profiles:", user_id);
 
   console.log("The users vehicles profiles:", usersVehicleProfiles);
+  console.log("The selected profile:", selectedProfile);
 
   useEffect(() => {
-    console.log("1 useEffect start")
     const getVehicleProfilesAndCurrent = async () => {
-      console.log("2 after async function")
       try {
-        console.log("3 after try block")
-        //Recieve all of users registered vehicles
-        const allVehicles = await axios.get(
+        const allVehiclesResponse = await axios.get(
           `http://localhost:5000/getVehicles/${user_id}`
         );
-        console.log("All Vehicles:", allVehicles)
-        setUsersVehiclesProfiles(allVehicles.data);
+        const currentVehicleResponse = await axios.get(
+          `http://localhost:5000/getCurrentVehicle/${user_id}`
+        );
 
-        //This is a check first condition. It is checking if the user has only 1 registered vehicle.
-        //If they do then that vehicle is the current by default.
-
-        // if (allVehicles.length > 1) {
-        //     setProfile(allVehicles[0])
-        // } else {
-        //   const currentVehicle = await axios.get(`/getCurrentVehicle/${user_id}`)
-        //   setProfile(currentVehicle)
-        // }
-
-        //Recieve the currently selected vehicle. (This is temporary until the check first condition^ is polished)
-        const currentVehicle = await axios.get(`http://localhost:5000/getCurrentVehicle/${user_id}`);
-        setProfile(currentVehicle.data);
+        // Assuming currentVehicleResponse.data contains the ID of the current vehicle
+        setUsersVehiclesProfiles(allVehiclesResponse.data);
+        setProfile(currentVehicleResponse.data[0].v_id); // Adjust according to the actual structure
       } catch (e) {
-        console.log("4 after catch block")
-        console.log(e);
+        console.error(e);
       }
     };
     getVehicleProfilesAndCurrent();
@@ -52,18 +39,18 @@ function VehicleProfiles() {
   const handleSubmit = (e) => {
     //The user has selected their current vehicle profile. Send this to the backend to save this selection.
     e.preventDefault();
-    // axios.put(
-    //   `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${v_id}`
-    // );
+    axios.put(
+      `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`, {selectedProfile}
+    );
     console.log("The selected profile is...", selectedProfile);
   };
 
   const handleProfileSelection = (e) => {
-    // setProfile(e.target.key);
-    console.log(e.target.key);
+    const newValue = Number(e.target.value); // Convert to number if `v_id` is a number
+    setProfile(newValue);
+    console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
-
-  const isCurrent = usersVehicleProfiles
+  
 
   return (
     <div className="vehicle-profile-wrap-container">
@@ -71,59 +58,18 @@ function VehicleProfiles() {
         <h1>Vehicle Profiles</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           {usersVehicleProfiles.map((vehicle, idx) => (
-            <label key={vehicle.v_id}>
+            <label key={idx}>
               <input
-                onClick={(e) => handleProfileSelection(e)}
+                onChange={handleProfileSelection}
                 type="radio"
-                checked={vehicle.currentVProfile === 1 ? "checked" : ""}
+                checked={selectedProfile === vehicle.v_id} // This line is changed
                 name="radio"
-                value="one"
+                value={vehicle.v_id}
               />{" "}
               {vehicle.v_ymm}
               {/* Conditioning for the vehicle that is current. Insert "<span className="checkmark"></span>" */}
-          
             </label>
           ))}
-          {/* <label className="container">
-            <input
-              onClick={(e) => handleProfileSelection(e)}
-              type="radio"
-              name="radio"
-              value="one"
-            />{" "}
-            One
-            <span className="checkmark"></span>
-          </label>
-          <label className="container">
-            <input
-              onClick={(e) => handleProfileSelection(e)}
-              type="radio"
-              name="radio"
-              value="two"
-            />{" "}
-            Two
-            <span className="checkmark"></span>
-          </label>
-          <label className="container">
-            <input
-              onClick={(e) => handleProfileSelection(e)}
-              type="radio"
-              name="radio"
-              value="three"
-            />{" "}
-            Three
-            <span className="checkmark"></span>
-          </label>
-          <label className="container">
-            <input
-              onClick={(e) => handleProfileSelection(e)}
-              type="radio"
-              name="radio"
-              value="four"
-            />{" "}
-            Four
-            <span className="checkmark"></span>
-          </label> */}
           <div>
             <button type="submit">Update Selection</button>
           </div>
