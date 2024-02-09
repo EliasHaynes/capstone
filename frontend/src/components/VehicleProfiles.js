@@ -63,6 +63,8 @@ function VehicleProfiles() {
     console.log(e.target.key);
   };
 
+  const isCurrent = usersVehicleProfiles
+
   return (
     <div className="vehicle-profile-wrap-container">
       <div className="vehicle-profile-container">
@@ -73,14 +75,13 @@ function VehicleProfiles() {
               <input
                 onClick={(e) => handleProfileSelection(e)}
                 type="radio"
+                checked={vehicle.currentVProfile === 1 ? "checked" : ""}
                 name="radio"
                 value="one"
               />{" "}
               {vehicle.v_ymm}
               {/* Conditioning for the vehicle that is current. Insert "<span className="checkmark"></span>" */}
-              {vehicle.currentVProfile ? null : (
-                <span className="checkmark"></span>
-              )}
+          
             </label>
           ))}
           {/* <label className="container">
