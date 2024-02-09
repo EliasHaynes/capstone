@@ -2,14 +2,10 @@ const mysql = require("mysql2");
 const pool = require("../mysql/connection");
 
 const getVehicles = async (req, res) => {
-  console.log("1 after async func started")
   const sql = "SELECT * FROM vehicles WHERE user_id = ?";
   const user_id = req.params.user_id;
 
-  console.log("user_id in vehicle profiles controller:", user_id)
-
   try {
-    console.log("2 after try block");
 
     const response = await pool.query(sql, user_id, (err, data) => {
       if (err) return res.json(err);
@@ -20,10 +16,8 @@ const getVehicles = async (req, res) => {
 
 
     if (response.length > 1) {
-      console.log("3a if ran")
 
     } else {
-      console.log("3b else ran")
       const sqlUpdateCurrentVProfileField = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ?"
       pool.query(sqlUpdateCurrentVProfileField, user_id, (err,data) => {
         if (err) return res.json(err);
@@ -33,46 +27,58 @@ const getVehicles = async (req, res) => {
     }
     return res.json(response[0])
   } catch (e) {
-    console.log("4 catch hit")
     console.error(e);
   }
-  console.log("5 after try catch block")
 };
 
-const getCurrentVehicleProfile = (req, res) => {
-  const sql = "SELECT * FROM vehicles WHERE user_id = ? and currentVProfile = true";
+const getCurrentVehicleProfile = async (req, res) => {
+  const sql = "SELECT * FROM vehicles WHERE user_id = ? AND currentVProfile = 1"; // Use 1 for TRUE in SQL
   const user_id = req.params.user_id;
+  console.log("The user_id:", user_id);
 
-  pool.query(sql, [user_id], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
+  const response = await pool.query(sql, [user_id], (err, data) => { // Pass parameters as an array
+    console.log("pool connection start");
+    if (err) {
+      console.error(err); // Log the error
+      return res.status(500).json({ message: "An error occurred." }); // Send generic error message
+    }
+    console.log("Query success");
+    return res.json(data); // Send data
   });
+  return res.json(response[0])
 };
 
-const togglingPrevCurrentAndNewCurrent = async (req,res) => {
-    const sql = "UPDATE vehicles SET currentVProfile = false WHERE user_id =? AND currentVProfile = true"
 
-    const user_id = req.params.user_id;
+const togglingPrevCurrentAndNewCurrent = async (req, res) => {
+  const user_id = req.params.user_id;
+  const selectedProfile = req.body.selectedProfile; // Ensure this value is being sent in the request body
+  console.log("selected Profile:", selectedProfile)
 
-    await pool.query(sql,[user_id], (err,data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+  const sql = "UPDATE vehicles SET currentVProfile = false WHERE user_id = ? AND currentVProfile = true";
+
+  // Update all vehicles to not be the current profile
+  await pool.query(sql, [user_id], async (err, data) => {
+      if (err) {
+          return res.json(err);
+      }
     })
 
-    const toggleNewcurrent = (req,res) => {
-        const sql2 = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ? AND v_id = ?"
+      // Then, update the selected vehicle to be the current profile
+      const sql2 = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ? AND v_id = ?";
+      pool.query(sql2, [user_id, selectedProfile], (err, data) => {
+        if (err) {
+            console.error("SQL error:", err);
+            return res.json(err);
+        }
+        if (data.affectedRows === 0) {
+            console.log("No records updated, check your WHERE clause conditions.");
+        } else {
+            console.log("Record updated successfully.");
+        }
+        return res.json(data);
+    });;
+  }
 
-        const values = [
-            req.params.user_id,
-            req.params.v_id
-        ]
-        pool.query(sql2, [values], (err,data) => {
-            if (err) return res.json(err);
-            return res.json(data);
-        })
-    }
-    toggleNewcurrent()
-}
 
 const deleteVehicle = (req,res) => {
     const sql = "DELETE FROM vehicles WHERE v_id =?"
