@@ -94,9 +94,6 @@ function RepairLog() {
                             // add onClick method here
                             onClick={() => handleDelete(rep.id)}
                             className="icon text-red" />
-                        
-                        
-                            
                     </TableCell>
                 </TableRow>
             ))}

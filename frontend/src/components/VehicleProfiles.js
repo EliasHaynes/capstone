@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function VehicleProfiles() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function VehicleProfiles() {
   console.log("The selected profile:", selectedProfile);
 
   useEffect(() => {
+    console.log("Running")
     const getVehicleProfilesAndCurrent = async () => {
       try {
         const allVehiclesResponse = await axios.get(
@@ -26,9 +28,9 @@ function VehicleProfiles() {
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
 
-        // Assuming currentVehicleResponse.data contains the ID of the current vehicle
+
         setUsersVehiclesProfiles(allVehiclesResponse.data);
-        setProfile(currentVehicleResponse.data[0].v_id); // Adjust according to the actual structure
+        setProfile(currentVehicleResponse.data[0].v_id); 
       } catch (e) {
         console.error(e);
       }
@@ -40,7 +42,8 @@ function VehicleProfiles() {
     //The user has selected their current vehicle profile. Send this to the backend to save this selection.
     e.preventDefault();
     axios.put(
-      `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`, {selectedProfile}
+      `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
+      { selectedProfile }
     );
     console.log("The selected profile is...", selectedProfile);
   };
@@ -50,7 +53,42 @@ function VehicleProfiles() {
     setProfile(newValue);
     console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
-  
+
+  // const handleDelete = async (vId) => {
+  //   try {
+  //     await axios.delete(`http://localhost:5000/deleteVehicle/${vId}`)
+  //     const newArr = usersVehicleProfiles.filter((vehicle) => vehicle.vId !== vId);
+  //     console.log("newAee:", newArr)
+  //     setUsersVehiclesProfiles(newArr)
+  //   }
+  //   catch(e) {
+  //     console.log(e)
+  //   }
+  //     // window.location.reload()
+  // };
+
+  const handleDelete = (v_id) => {
+    // Optimistically remove the vehicle from the state
+    const updatedVehicles = usersVehicleProfiles.filter(vehicle => vehicle.v_id !== v_id);
+    setUsersVehiclesProfiles(updatedVehicles);
+
+    axios.delete(`http://localhost:5000/deleteVehicle/${v_id}`)
+      .then(response => {
+        // Check if the deletion was successful on the server
+        // If the server sends back a not successful response, revert the change
+        if (!response.data.success) {
+          // This is just a placeholder, you'll need to adjust based on your actual API response
+          console.error("Deletion failed on the server, reverting");
+          setUsersVehiclesProfiles(usersVehicleProfiles); // Revert to the original state
+        }
+      })
+      .catch(error => {
+        console.error("An error occurred:", error);
+        // Revert to the original state in case of an error
+        setUsersVehiclesProfiles(usersVehicleProfiles);
+      });
+};
+
 
   return (
     <div className="vehicle-profile-wrap-container">
@@ -58,6 +96,7 @@ function VehicleProfiles() {
         <h1>Vehicle Profiles</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           {usersVehicleProfiles.map((vehicle, idx) => (
+            <>
             <label key={idx}>
               <input
                 onChange={handleProfileSelection}
@@ -68,7 +107,10 @@ function VehicleProfiles() {
               />{" "}
               {vehicle.v_ymm}
               {/* Conditioning for the vehicle that is current. Insert "<span className="checkmark"></span>" */}
+              <DeleteIcon className="icon text-red" onClick={() => handleDelete(vehicle.v_id)}></DeleteIcon>
             </label>
+            
+            </>
           ))}
           <div>
             <button type="submit">Update Selection</button>
