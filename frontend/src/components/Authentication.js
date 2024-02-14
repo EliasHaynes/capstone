@@ -38,9 +38,9 @@ const Authentication = () => {
       
             setUserMetadata(user_metadata);
 
-
+            const user_id = user?.sub.split('|')[1].toString()
             const postData = {
-                parcel: user?.sub,
+                parcel: user_id,
               };
 
 

@@ -16,13 +16,13 @@ router.put('/update/:auth0_id/:id', repairLogRoute)
 router.delete('/delete/:id', repairLogRoute)
 
 // Register Car Route
-router.get('/addVehicle/:user_id', registerCarRoute)
+router.post('/addVehicle/:user_id', registerCarRoute)
 
 // Vehicle Profiles Routes
-router.get('/getVehicles/:user_id', vehicleProfilesRoute)
-router.put('/selectVehicle/:user_id/:v_id', vehicleProfilesRoute);
-router.put('/updateVehicle/:user_id/:v_id', vehicleProfilesRoute);
-router.delete('/deleteVehicle/:v_id', vehicleProfilesRoute)
+router.get("/getVehicles/:user_id", vehicleProfilesRoute)
+router.get("/getCurrentVehicle/:user_id", vehicleProfilesRoute)
+router.put("/toggleCurrentAndNewCurrent/:user_id/:v_id", vehicleProfilesRoute)
+router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute) 
 
 // Auth Route
 router.post('/passUId', authRoute)

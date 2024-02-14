@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import { TextField, Button, Container, useThemeProps } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { saveVin,saveMileage } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux"; 
 import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -22,7 +20,7 @@ const RegisterCar = (props) => {
     const [open, toggleOpen] = useState(false)
     
     const handleSubmit = (e) => {
-      const user_id = user.sub.split('|')[1]
+      const user_id = user.sub.split('|')[1].toString()
       e.preventDefault();
       axios.post(`http://localhost:5000/addVehicle/${user_id}`, {vin, mileage})
       .then((res) => {
