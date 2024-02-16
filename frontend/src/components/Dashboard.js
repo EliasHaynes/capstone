@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios'
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { isAutheticated, user } = useAuth0();
+  
+  const [vehicle,setVehicle] = useState()
+
+  const user_id = user.sub.split("|")[1].toString();
+
+  useEffect(()  => {
+    const fetchCurrentVehicle = async () => {
+      try {
+        const currentVehicleResponse = await axios.get(
+          `http://localhost:5000/getCurrentVehicle/${user_id}`
+        );
+        console.log("currentVehicleResponse:", currentVehicleResponse)
+
+        setVehicle(currentVehicleResponse.data[0])
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    fetchCurrentVehicle()
+     
+  },[])
+
+  console.log("vehicle:", vehicle)
 
   function NoVehicles() {
     return (
@@ -21,10 +47,10 @@ function Dashboard() {
       <div className="wrapper-dashboard">
         <div className="vehicle-info-container">
           <h1>Your Current Vehicle Profile</h1>
-          <h3>Vehicle Name</h3>
-          <h4>Vehicle Engine</h4>
-          <h4>Vehicle Trim</h4>
-          <h4>Vehicle Transmission</h4>
+          {/* <h3>Year Make Model: {vehicle.v_ymm}</h3>
+          <h4>Trim: {vehicle.v_trim}</h4>
+          <h4>Engine: {vehicle.v_engine}</h4>
+          <h4>{vehicle.v_transmission}</h4> */}
         </div>
         <div className="vehicle-image">
           <img></img>

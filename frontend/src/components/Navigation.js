@@ -46,7 +46,7 @@ const Navigation = () => {
             <Authentication></Authentication>
           </li>
         </ul>
-        {/* {isAuthenticated ? <button className="mobile-login" onClick={logout}>Logout</button> : <button className="mobile-login" onClick={loginWithRedirect} >Login</button> } */}
+        {isAuthenticated ? <button className="mobile-login" onClick={logout}>Logout</button> : <button className="mobile-login" onClick={loginWithRedirect} >Login</button> }
       </Toolbar>
     </AppBar>
   );

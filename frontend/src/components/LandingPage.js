@@ -14,7 +14,7 @@ function LandingPage() {
   // }
   return (
     <div>
-      <div className="beforeLogin desktop">
+      <div className="desktop">
         {/* If user is autheticated substitue Hero content for Dashboard */}
         {isAuthenticated ? (
           <Dashboard></Dashboard>

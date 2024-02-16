@@ -12,10 +12,6 @@ function VehicleProfiles() {
   const { isAutheticated, user } = useAuth0();
 
   const user_id = user.sub.split("|")[1].toString();
-  console.log("user-Id in vehicle profiles:", user_id);
-
-  console.log("The users vehicles profiles:", usersVehicleProfiles);
-  console.log("The selected profile:", selectedProfile);
 
   useEffect(() => {
     console.log("Running")
