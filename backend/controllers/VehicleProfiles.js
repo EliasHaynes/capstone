@@ -6,24 +6,19 @@ const getVehicles = async (req, res) => {
   const user_id = req.params.user_id;
 
   try {
-
     const response = await pool.query(sql, user_id, (err, data) => {
       if (err) return res.json(err);
       return res.json(data[0]);
     });
 
-
-
-
     if (response.length > 1) {
-
+      
     } else {
       const sqlUpdateCurrentVProfileField = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ?"
       pool.query(sqlUpdateCurrentVProfileField, user_id, (err,data) => {
         if (err) return res.json(err);
         return res.json(data)
       });
-
     }
     return res.json(response[0])
   } catch (e) {

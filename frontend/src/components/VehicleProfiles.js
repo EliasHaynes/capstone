@@ -54,18 +54,6 @@ function VehicleProfiles() {
     console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
 
-  // const handleDelete = async (vId) => {
-  //   try {
-  //     await axios.delete(`http://localhost:5000/deleteVehicle/${vId}`)
-  //     const newArr = usersVehicleProfiles.filter((vehicle) => vehicle.vId !== vId);
-  //     console.log("newAee:", newArr)
-  //     setUsersVehiclesProfiles(newArr)
-  //   }
-  //   catch(e) {
-  //     console.log(e)
-  //   }
-  //     // window.location.reload()
-  // };
 
   const handleDelete = (v_id) => {
     // Optimistically remove the vehicle from the state
