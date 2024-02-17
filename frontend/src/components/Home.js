@@ -13,15 +13,13 @@ import {
   faClipboardList,
   faFileLines,
 } from "@fortawesome/free-solid-svg-icons";
-import LandingPage from "./LandingPage";
-import MobileLandingPage from "./mobile components/MobileLandingPage";
+import MobileHome from "./mobile components/MobileHome";
 import Dashboard from "./Dashboard";
 
 function Home() {
   const navigate = useNavigate();
 
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-  console.log("The user:", user);
   return (
     <div>
     <div className="desktop">
@@ -124,20 +122,10 @@ function Home() {
           </section>
         </div>
       </div>
-      {/* {!isAuthenticated ? (
-        <div>
-        <LandingPage></LandingPage>
-        <MobileLandingPage></MobileLandingPage>
-        </div>
-      ) : (
-        <div>
-          <LandingPage></LandingPage>
-          <MobileLandingPage></MobileLandingPage>
-          </div>
-      )} */}
+
     </div>
     <div className="mobile">
-      <MobileLandingPage></MobileLandingPage>
+      <MobileHome></MobileHome>
     </div>
     </div>
   );

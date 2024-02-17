@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Dashboard from "../Dashboard";
 
-function MobileLandingPage() {
+function MobileHome() {
   const navigate = useNavigate();
 
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
@@ -114,4 +114,4 @@ function MobileLandingPage() {
   );
 }
 
-export default MobileLandingPage;
+export default MobileHome;
