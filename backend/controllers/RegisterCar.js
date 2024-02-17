@@ -15,6 +15,7 @@ const addVehicle = async (req,res) => {
     const engine = vehicleSpecs.engine;
     const trim = vehicleSpecs.trim;
     const transmission = vehicleSpecs.transmission;
+
     try {
         //Check if the user has any record of registered cars
         const sql = "SELECT * FROM vehicles WHERE user_id = ?";        
@@ -24,10 +25,14 @@ const addVehicle = async (req,res) => {
             return res.json(data);
           });
           
-
-  // console.log("The response in Register car:", response)
-          //If user doesnt have existing registered car then set it to current profile by default
-          if (response[0].length < 1) {
+          //Check if user has 4 or more registered vehicles
+          if (response[0].length >= 4) {
+            return res.send("Max limit of registered vehicles reached")
+          } 
+          //If less than 4 registered vehicles then proceed.
+          else {
+            //Check if user has no registered vehicles and set only vehicle to current by default
+            if (response[0].length < 1) {
             const sql = "INSERT IGNORE INTO vehicles (`vin`, mileage, `v_ymm`, `v_engine`, `v_trim`, `v_transmission`, currentVProfile, `user_id`) VALUES (?)"
             const values = [
                 vin,
@@ -62,7 +67,7 @@ const addVehicle = async (req,res) => {
                 return res.json(data);
             })
           }
-          
+          }
     } catch (e) {
         console.error(e)
     }
@@ -77,15 +82,12 @@ const idVehicleNameFromVin = async (vin) => {
     }
   })
   const theData = response.data.data;
-  console.log("CarMD Response:", response.data.data)
+
   const YMM = theData.year + " " + theData.make + " " + theData.model
   const engine = theData.engine;
   const trim = theData.trim;
   const transmission = theData.transmission;
-  console.log("YMM:", YMM)
-  console.log("engine:", engine )
-  console.log("trim:", trim )
-  console.log("transmission:", transmission )
+
   const vehicleInfo = {
     YMM,
     engine,

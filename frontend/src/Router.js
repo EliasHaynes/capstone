@@ -22,7 +22,7 @@ import VehicleProfiles from "./components/VehicleProfiles";
         isAuthenticated,
         user
     } = useAuth0();
-    const {component: Component, ...rest} =props;
+    const {component: Component, ...rest} = props;
 
     return(
         isAuthenticated === true ? (<Component {...rest} />): (<Navigate to='/' />)
