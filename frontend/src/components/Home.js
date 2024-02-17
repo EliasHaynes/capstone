@@ -23,6 +23,7 @@ function Home() {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
   console.log("The user:", user);
   return (
+    <div>
     <div className="desktop">
       {!isAuthenticated ? (
         <div className="landing-main-display">
@@ -134,6 +135,10 @@ function Home() {
           <MobileLandingPage></MobileLandingPage>
           </div>
       )} */}
+    </div>
+    <div className="mobile">
+      <MobileLandingPage></MobileLandingPage>
+    </div>
     </div>
   );
 }
