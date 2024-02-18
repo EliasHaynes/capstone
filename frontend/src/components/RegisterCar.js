@@ -30,7 +30,7 @@ const RegisterCar = (props) => {
     const MaxVehicles = () => {
       return (
         <div>
-          Max limit of registered vehicles reached (4)
+          Max limit of registered vehicles (4) reached 
         </div>
       );
     };

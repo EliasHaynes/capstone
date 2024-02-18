@@ -6,10 +6,12 @@ import axios from "axios";
 function Dashboard() {
   const navigate = useNavigate();
   const { isAutheticated, user } = useAuth0();
-
   const [vehicle, setVehicle] = useState();
+  const [vehicleImage,setImage] = useState();
 
   const user_id = user.sub.split("|")[1].toString();
+  const token = process.env.REACT_APP_CAR_KEY
+  const key = process.env.REACT_APP_API_KEY
 
   useEffect(() => {
     const fetchCurrentVehicle = async () => {
@@ -20,6 +22,15 @@ function Dashboard() {
         console.log("currentVehicleResponse:", currentVehicleResponse);
         if (currentVehicleResponse.data.length > 0) {
           setVehicle(currentVehicleResponse.data[0]);
+          const vin = currentVehicleResponse.data[0].vin
+          const image = await axios.get(`http://api.carmd.com/v3.0/image?vin=${vin}`, {
+            headers: {
+              authorization: token,
+              "partner-token": key
+            }
+          })
+          console.log("Vehicle image:", image.data.data)
+          setImage(image.data.data)     
         } else {
           setVehicle("No Vehicle");
         }
@@ -27,6 +38,16 @@ function Dashboard() {
         console.error(e);
       }
     };
+
+    // const vehicleImg = async () => {
+    //   try {
+    //       const image = await axios.request(`http://api.carmd.com/v3.0/image?${}`)
+
+    //   }
+    //   catch(e) {
+    //     console.error(e)
+    //   }
+    // }
     fetchCurrentVehicle();
   }, []);
 
@@ -47,6 +68,7 @@ function Dashboard() {
   return (
     <div className="root-dashboard">
       <div className="wrapper-dashboard">
+        {vehicleImage ? <img src={vehicleImage.image}></img> : null}
         <div className="vehicle-info-container">
           {vehicle === "No Vehicle" ? (
             <NoVehicles></NoVehicles>

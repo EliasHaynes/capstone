@@ -22,7 +22,6 @@ function VinDecode(props) {
   const handleClick = () => {
     const fetchVehicleData = async () => {
       try {
-
         const response = await axios.get(`http://api.carmd.com/v3.0/decode?vin=${vin}`, {
             headers: {
                 authorization: token,
