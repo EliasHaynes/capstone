@@ -68,14 +68,16 @@ function Dashboard() {
   return (
     <div className="root-dashboard">
       <div className="wrapper-dashboard">
-        {vehicleImage ? <img src={vehicleImage.image}></img> : null}
+        <h1>Your Current Vehicle Profile</h1>
+        
         <div className="vehicle-info-container">
+          {vehicleImage ? <img className="vehicle-img" src={vehicleImage.image}></img> : null}
           {vehicle === "No Vehicle" ? (
             <NoVehicles></NoVehicles>
           ) : (
             <div className="vehicle-info-container">
               {" "}
-              <h1>Your Current Vehicle Profile</h1>
+              
               <h3>Year Make Model: {vehicle ? vehicle.v_ymm : null}</h3>
               <h4>Trim: {vehicle ? vehicle.v_trim : null}</h4>
               <h4>Engine: {vehicle ? vehicle.v_engine : null}</h4>

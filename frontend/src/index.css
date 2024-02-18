@@ -84,9 +84,7 @@ code {
   background-repeat: no-repeat;
    
   background-size: 100% 100%;
-    background-position: 30% 0;
-
-
+  background-position: 30% 0;
 }
 
 
@@ -211,7 +209,6 @@ code {
   justify-content: flex-end;
 }
 
-/* ---------- Landing Page (After Register/Login) ---------- */
 
 .page-buttons-anchors {
   color:#0d6efd;
@@ -222,34 +219,6 @@ code {
     font-weight: 1000;
     color:black;
   }
-}
-
-
-
-.icon-grid-heading {
-  display:flex;
-}
-
-
-.wrap-icon-grid {
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-}
-
-.icon-grid-container {
-
-  display: grid;
-  grid-template-columns: 45% 45%;
-  grid-template-rows: 45% 45%;
-  grid-gap: 10px;
-}
-
-.icons {
-  display: "flex";
- flex-flow: "column"; 
- justify-content: "center";
- cursor: pointer;
 }
 
 /* ---------- Dashboard ---------- */
@@ -273,6 +242,10 @@ code {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+}
+
+.vehicle-img {
+  width:100%;
 }
 
 /* ---------- Vehicle Profiles ---------- */
