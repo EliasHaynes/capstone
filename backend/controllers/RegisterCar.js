@@ -7,71 +7,50 @@ require('dotenv').config()
 const token = process.env.TOKEN
 const key = process.env.CAR_KEY
 
-const addVehicle = async (req,res) => {
+const addVehicle = async (req, res) => {
     const user_id = req.params.user_id;
     const vin = req.body.vin;
-    const vehicleSpecs = await idVehicleNameFromVin(vin);
-    const YMM = vehicleSpecs.YMM;
-    const engine = vehicleSpecs.engine;
-    const trim = vehicleSpecs.trim;
-    const transmission = vehicleSpecs.transmission;
 
     try {
-        //Check if the user has any record of registered cars
-        const sql = "SELECT * FROM vehicles WHERE user_id = ?";        
-        const response = await pool.query(sql, [user_id], (err, data) => {
-            if (err) return res.json(err);
-      
-            return res.json(data);
-          });
-          
-          //Check if user has 4 or more registered vehicles
-          if (response[0].length >= 4) {
-            return res.send("Max limit of registered vehicles reached")
-          } 
-          //If less than 4 registered vehicles then proceed.
-          else {
-            //Check if user has no registered vehicles and set only vehicle to current by default
-            if (response[0].length < 1) {
-            const sql = "INSERT IGNORE INTO vehicles (`vin`, mileage, `v_ymm`, `v_engine`, `v_trim`, `v_transmission`, currentVProfile, `user_id`) VALUES (?)"
-            const values = [
-                vin,
-                parseInt(req.body.mileage),
-                YMM,
-                engine,
-                trim,
-                transmission,
-                1,
-                user_id
-            ]
-            pool.query(sql,[values], (err,data) => {
-                if (err) return res.json(err);
-                return res.json(data);
-            })
-          } 
-        //If user already has existing registered car dont set it to current profile by default
-          else {
-            const sql = "INSERT IGNORE INTO vehicles (`vin`, mileage,`v_ymm`, `v_engine`, `v_trim`, `v_transmission`, currentVProfile, `user_id`) VALUES (?)"
-            const values = [
-                req.body.vin,
-                parseInt(req.body.mileage),
-                YMM,
-                engine,
-                trim,
-                transmission,
-                0,
-                user_id
-            ]
-            pool.query(sql,[values], (err,data) => {
-                if (err) return res.json(err);
-                return res.json(data);
-            })
-          }
-          }
+        const vehicleSpecs = await idVehicleNameFromVin(vin);
+        const { YMM, engine, trim, transmission } = vehicleSpecs;
+
+        // Check if the user has any record of registered cars
+        const checkVehiclesSql = "SELECT * FROM vehicles WHERE user_id = ?";
+        const [vehicles] = await pool.query(checkVehiclesSql, [user_id]);
+
+        // Check if user has 4 or more registered vehicles
+        if (vehicles.length >= 4) {
+            return res.send("Max limit of registered vehicles reached");
+        } 
+
+        // Determine if the vehicle should be set as current
+        const isCurrentVehicle = vehicles.length < 1 ? 1 : 0;
+
+        // Prepare SQL query and values
+        const insertSql = `INSERT INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, user_id) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [
+            vin,
+            parseInt(req.body.mileage),
+            YMM,
+            engine,
+            trim,
+            transmission,
+            isCurrentVehicle,
+            user_id
+        ];
+
+        // Execute insert query
+        const [insertResult] = await pool.query(insertSql, values);
+        return res.json(insertResult);
+
     } catch (e) {
-        console.error(e)
+        console.error(e);
+        return res.status(500).json({ error: "An error occurred while adding the vehicle." });
     }
-}
+};
+
 
 const idVehicleNameFromVin = async (vin) => {
   try {

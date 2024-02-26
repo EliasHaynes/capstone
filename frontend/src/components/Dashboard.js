@@ -60,7 +60,7 @@ function Dashboard() {
           <img />
         </div>
         <h2>No current vehicle profiles registered...</h2>
-        <button>Click here to register a vehicle</button>
+        <button onClick={() => navigate("/registerCar")}>Click here to register a vehicle</button>
       </div>
     );
   }
@@ -68,7 +68,7 @@ function Dashboard() {
   return (
     <div className="root-dashboard">
       <div className="wrapper-dashboard">
-        <h1>Your Current Vehicle Profile</h1>
+        <h1>Your Current Vehicle Profile:</h1>
         
         <div className="vehicle-info-container">
           {vehicleImage ? <img className="vehicle-img" src={vehicleImage.image}></img> : null}
@@ -88,9 +88,9 @@ function Dashboard() {
             <img></img>
           </div>
         </div>
-        <button onClick={() => navigate("/vehicleprofiles")}>
+        {vehicle === "No Vehicle" ? null : <button onClick={() => navigate("/vehicleprofiles")}>
           Manage Vehicle Profiles
-        </button>
+        </button> }
       </div>
     </div>
   );

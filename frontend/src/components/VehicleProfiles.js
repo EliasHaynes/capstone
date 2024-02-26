@@ -34,15 +34,20 @@ function VehicleProfiles() {
     getVehicleProfilesAndCurrent();
   }, []);
 
-  const handleSubmit = (e) => {
-    //The user has selected their current vehicle profile. Send this to the backend to save this selection.
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.put(
-      `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
-      { selectedProfile }
-    );
-    console.log("The selected profile is...", selectedProfile);
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
+        { selectedProfile }
+      );
+      console.log("The selected profile is...", selectedProfile);
+    } catch (e) {
+      console.error(e);
+      alert("An error occurred while updating the profile.");
+    }
   };
+  
 
   const handleProfileSelection = (e) => {
     const newValue = Number(e.target.value); // Convert to number if `v_id` is a number

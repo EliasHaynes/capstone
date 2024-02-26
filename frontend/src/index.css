@@ -248,6 +248,58 @@ code {
   width:100%;
 }
 
+.no-vehicle-profiles {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.no-vehicle-profiles button {
+  width: 25%;
+}
+
+/* ---------- Register Car ---------- */
+.register-page {
+
+}
+
+
+.register-wrapper {
+  width: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid red;
+}
+
+.register-main-container {
+  display:flex;
+  height:90vh;
+  flex-direction: column nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.register-image {
+  width: 45%;
+  height:65%;
+}
+
+.register-right-side-form {
+  display:flex;
+  flex-direction: column nowrap;
+}
+
+.register-form {
+  display:flex;
+  flex-direction: column nowrap;
+}
+
+.register-form-inputs {
+
+}
+
+
 /* ---------- Vehicle Profiles ---------- */
 
 .vehicle-profile-wrap-container {
