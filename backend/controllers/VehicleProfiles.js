@@ -30,18 +30,15 @@ const getCurrentVehicleProfile = async (req, res) => {
   const sql = "SELECT * FROM vehicles WHERE user_id = ? AND currentVProfile = 1"; // Use 1 for TRUE in SQL
   const user_id = req.params.user_id;
 
-  try {
-    const [data] = await pool.query(sql, [user_id]); // Await the promise without a callback
-    console.log("Query success", data);
-    if (data.length === 0) {
-      // Handle no data found scenario
-      return res.status(404).json({ message: "No current vehicle profile found." });
+  const response = await pool.query(sql, [user_id], (err, data) => { // Pass parameters as an array
+    if (err) {
+      console.error(err); // Log the error
+      return res.status(500).json({ message: "An error occurred." }); // Send generic error message
     }
+    console.log("Query success");
     return res.json(data); // Send data
-  } catch (err) {
-    console.error(err); // Log the error
-    return res.status(500).json({ message: "An error occurred." }); // Send generic error message
-  }
+  });
+  return res.json(response[0])
 };
 
 
@@ -72,7 +69,6 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
     return res.status(500).json({ error: "An error occurred while updating the profile." });
   }
 };
-
 
 
 

@@ -8,6 +8,7 @@ function VehicleProfiles() {
   const navigate = useNavigate();
   const [selectedProfile, setProfile] = useState();
   const [usersVehicleProfiles, setUsersVehiclesProfiles] = useState([]);
+  const [reload,setReload] = useState(false)
 
   const { isAutheticated, user } = useAuth0();
 
@@ -25,6 +26,7 @@ function VehicleProfiles() {
         );
 
 
+
         setUsersVehiclesProfiles(allVehiclesResponse.data);
         setProfile(currentVehicleResponse.data[0].v_id); 
       } catch (e) {
@@ -32,7 +34,9 @@ function VehicleProfiles() {
       }
     };
     getVehicleProfilesAndCurrent();
-  }, []);
+  }, [reload]);
+  console.log("The selected profile on initial run:", selectedProfile)
+  console.log("The users vehicle profiles:", usersVehicleProfiles)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +50,7 @@ function VehicleProfiles() {
       console.error(e);
       alert("An error occurred while updating the profile.");
     }
+    setReload(currentState => !currentState)
   };
   
 
@@ -90,13 +95,13 @@ function VehicleProfiles() {
               <input
                 onChange={handleProfileSelection}
                 type="radio"
-                checked={selectedProfile === vehicle.v_id} // This line is changed
+                checked={selectedProfile === vehicle.v_id}
                 name="radio"
                 value={vehicle.v_id}
               />{" "}
               {vehicle.v_ymm}
               {/* Conditioning for the vehicle that is current. Insert "<span className="checkmark"></span>" */}
-              <DeleteIcon className="icon text-red" onClick={() => handleDelete(vehicle.v_id)}></DeleteIcon>
+               {vehicle.currentVProfile === 0 ? <DeleteIcon className="icon text-red" onClick={() => handleDelete(vehicle.v_id)}></DeleteIcon> : null}
             </label>
             
             </>
