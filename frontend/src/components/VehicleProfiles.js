@@ -100,14 +100,17 @@ function VehicleProfiles() {
                 value={vehicle.v_id}
               />{" "}
               {vehicle.v_ymm}
-              {/* Conditioning for the vehicle that is current. Insert "<span className="checkmark"></span>" */}
+              
                {vehicle.currentVProfile === 0 ? <DeleteIcon className="icon text-red" onClick={() => handleDelete(vehicle.v_id)}></DeleteIcon> : null}
+               {usersVehicleProfiles.length === 1 ? <DeleteIcon className="icon text-red" onClick={() => handleDelete(usersVehicleProfiles[0].v_id)}></DeleteIcon> : null}
             </label>
             
             </>
           ))}
           <div>
-            <button type="submit">Update Selection</button>
+            {usersVehicleProfiles.length > 1 ? <button type="submit">Update Selection</button> : null}
+            
+            
           </div>
         </form>
         <button onClick={() => navigate("/registerCar")}>

@@ -35,9 +35,9 @@ function Dashboard() {
           console.log("Vehicle image:", image.data.data);
           setImage(image.data.data);
         } 
-        // else {
-        //   setVehicle("No Vehicle");
-        // }
+        else {
+          setVehicle("No Vehicle");
+        }
       } catch (e) {
         console.error(e);
       }
@@ -84,25 +84,7 @@ function Dashboard() {
           {vehicleImage ? (
             <img className="vehicle-img" src={vehicleImage.image}></img>
           ) : null}
-          {/* {(() => {
-            if (vehicle === "No Vehicle") {
-              return <NoVehicles></NoVehicles>;
-            } else if (vehicle === "No Current Vehicle") {
-              return <NoCurrentVehicle></NoCurrentVehicle>;
-            } else {
-              return (
-                <div className="vehicle-info-container">
-                  {" "}
-                  <h3>Year Make Model: {vehicle ? vehicle.v_ymm : null}</h3>
-                  <h4>Trim: {vehicle ? vehicle.v_trim : null}</h4>
-                  <h4>Engine: {vehicle ? vehicle.v_engine : null}</h4>
-                  <h4>
-                    Transmission: {vehicle ? vehicle.v_transmission : null}
-                  </h4>
-                </div>
-              );
-            }
-          })()} */}
+
           {vehicle === "No Vehicle" ? (
             <NoVehicles></NoVehicles>
           ) : (
