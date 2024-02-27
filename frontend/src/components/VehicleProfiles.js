@@ -87,7 +87,7 @@ function VehicleProfiles() {
   return (
     <div className="vehicle-profile-wrap-container">
       <div className="vehicle-profile-container">
-        <h1>Vehicle Profiles</h1>
+        <h1>Vehicle Profile(s)</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           {usersVehicleProfiles.map((vehicle, idx) => (
             <>

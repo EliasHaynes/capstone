@@ -9,7 +9,6 @@ import RegisterCar from "./components/RegisterCar";
 import RepairLog from "./components/RepairLog";
 import AddRepair from "./components/AddRepair";
 import UpdateRepair from "./components/UpdateRepair";
-import VinDecode from "./components/VinDecode";
 import ScheduledMaintenance from "./components/ScheduledMaintenance";
 import VehicleProfiles from "./components/VehicleProfiles";
 
@@ -37,7 +36,6 @@ function Router() {
             <Route path="/" element={<Home />} />
     
             {/* API Components */}
-            <Route path="/vindecode" element={<ProtectedRoute component={VinDecode} />} />
             <Route path="/userMaintenace" element={<ProtectedRoute component={ScheduledMaintenance} />} />
             <Route path="/vehicleprofiles" element={<ProtectedRoute component={VehicleProfiles}/>} />
     

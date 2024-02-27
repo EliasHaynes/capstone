@@ -63,26 +63,6 @@ function Home() {
               </h4>
             </div>
           </section>
-
-          <section className="landing-alternate-background">
-            <div className="page-buttons-text-box">
-              <h3>Get Specs on your Vehicle</h3>
-              <p> </p>
-              <h4 className="page-buttons-anchors">
-                <a
-                  onClick={() =>
-                    !isAuthenticated
-                      ? loginWithRedirect()
-                      : navigate("/vindecode")
-                  }
-                >
-                  Click here to view your vehicles dashboard
-                </a>
-              </h4>
-            </div>
-            <div className="page-buttons-img-container-right second-pic"></div>
-          </section>
-
           <section>
             <div className="page-buttons-img-container-left third-pic"></div>
 

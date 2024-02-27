@@ -57,24 +57,6 @@ function MobileHome() {
             </div>
           </section>
 
-          <section className="second-pic">
-            <div className="page-buttons-text-box">
-              <h3>Get Specs on your Vehicle</h3>
-              <p> </p>
-              <h4 className="page-buttons-anchors">
-                <a
-                  onClick={() =>
-                    !isAuthenticated
-                      ? loginWithRedirect()
-                      : navigate("/vindecode")
-                  }
-                >
-                  Click here to view your vehicles dashboard
-                </a>
-              </h4>
-            </div>
-          </section>
-
           <section className="third-pic">
             <div className="page-buttons-text-box">
               <h3>Get Relative Scheduled Maintenance</h3>

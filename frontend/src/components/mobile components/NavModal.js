@@ -44,9 +44,6 @@ const Menu = ({ open, ...props }) => {
         <NavTab onClick={() => !isAuthenticated ? loginWithRedirect() : navigate("/")} tabIndex={tabIndex}>
           Home
         </NavTab>
-        <NavTab onClick={() => !isAuthenticated ? loginWithRedirect() : navigate("/vindecode")} tabIndex={tabIndex}>
-          Vin
-        </NavTab>
         <NavTab onClick={() => !isAuthenticated ? loginWithRedirect() : navigate("/userMaintenace")} tabIndex={tabIndex}>
           Maintenance
         </NavTab>
