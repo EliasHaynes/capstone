@@ -13,7 +13,10 @@ const addVehicle = async (req, res) => {
 
     try {
         const vehicleSpecs = await idVehicleNameFromVin(vin);
+        const vImg = await vehicleImage(vin);
         const { YMM, engine, trim, transmission } = vehicleSpecs;
+        const { theData } = vImg
+        console.log("vehicle image: ", theData)
 
         // Check if the user has any record of registered cars
         const checkVehiclesSql = "SELECT * FROM vehicles WHERE user_id = ?";
@@ -28,8 +31,8 @@ const addVehicle = async (req, res) => {
         const isCurrentVehicle = vehicles.length < 1 ? 1 : 0;
 
         // Prepare SQL query and values
-        const insertSql = `INSERT INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, user_id) 
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const insertSql = `INSERT INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, v_img, user_id) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
             vin,
             parseInt(req.body.mileage),
@@ -38,6 +41,7 @@ const addVehicle = async (req, res) => {
             trim,
             transmission,
             isCurrentVehicle,
+            theData,
             user_id
         ];
 
@@ -77,6 +81,31 @@ const idVehicleNameFromVin = async (vin) => {
   }
   catch (e) {
     console.log(e);
+  }
+}
+
+const vehicleImage = async (vin) => {
+  try {
+    const response = await axios.get(
+      `http://api.carmd.com/v3.0/image?vin=${vin}`,
+      {
+        headers: {
+          authorization: `Basic ${key}`,
+          "partner-token": token,
+        },
+      }
+    );
+    const theData = response.data.data.image;
+    
+
+    const imgURL = {
+      theData
+    }
+
+      return imgURL;
+
+  } catch(e) {
+    console.error(e);
   }
 }
 

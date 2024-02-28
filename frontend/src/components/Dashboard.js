@@ -7,7 +7,8 @@ function Dashboard() {
   const navigate = useNavigate();
   const { isAutheticated, user } = useAuth0();
   const [vehicle, setVehicle] = useState();
-  const [vehicleImage, setImage] = useState();
+  const [imgURL, setImage] = useState();
+
 
   const user_id = user.sub.split("|")[1].toString();
   const token = process.env.REACT_APP_CAR_KEY;
@@ -20,20 +21,10 @@ function Dashboard() {
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
         console.log("currentVehicleResponse:", currentVehicleResponse);
+
         if (currentVehicleResponse.data.length > 0) {
           setVehicle(currentVehicleResponse.data[0]);
-          const vin = currentVehicleResponse.data[0].vin;
-          const image = await axios.get(
-            `http://api.carmd.com/v3.0/image?vin=${vin}`,
-            {
-              headers: {
-                authorization: token,
-                "partner-token": key,
-              },
-            }
-          );
-          console.log("Vehicle image:", image.data.data);
-          setImage(image.data.data);
+          setImage(currentVehicleResponse.data[0].v_img)
         } 
         else {
           setVehicle("No Vehicle");
@@ -42,20 +33,11 @@ function Dashboard() {
         console.error(e);
       }
     };
-
-    // const vehicleImg = async () => {
-    //   try {
-    //       const image = await axios.request(`http://api.carmd.com/v3.0/image?${}`)
-
-    //   }
-    //   catch(e) {
-    //     console.error(e)
-    //   }
-    // }
     fetchCurrentVehicle();
   }, []);
 
   console.log("vehicles:", vehicle);
+  // console.log("vehicle image:", vehicle.v_img)
 
   function NoVehicles() {
     return (
@@ -81,16 +63,12 @@ function Dashboard() {
         <h1>Your Current Vehicle Profile:</h1>
 
         <div className="vehicle-info-container">
-          {vehicleImage ? (
-            <img className="vehicle-img" src={vehicleImage.image}></img>
-          ) : null}
-
+          {imgURL  ?  (<img className="vehicle-img" src={imgURL}></img> ) : null }
           {vehicle === "No Vehicle" ? (
             <NoVehicles></NoVehicles>
           ) : (
             <div className="vehicle-info-container">
               {" "}
-              
               <h3>Year Make Model: {vehicle ? vehicle.v_ymm : null}</h3>
               <h4>Trim: {vehicle ? vehicle.v_trim : null}</h4>
               <h4>Engine: {vehicle ? vehicle.v_engine : null}</h4>
