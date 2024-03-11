@@ -8,12 +8,11 @@ const { checkJwt } = require('../middleware')
 
 
 // Repair Log Routes
-router.get('/repair', repairLogRoute)
-router.get('/repair/:auth0_id', repairLogRoute)
-router.get('/repair/:auth0_id/:id',repairLogRoute)
-router.post('/create', repairLogRoute)
-router.put('/update/:auth0_id/:id', repairLogRoute)
-router.delete('/delete/:id', repairLogRoute)
+router.get('/repair/:user_id/:v_id', repairLogRoute)
+router.get('/repair/:repair_id', repairLogRoute)
+router.post('/create/:user_id/:v_id', repairLogRoute)
+router.put('/update/:user_id/:repair_id', repairLogRoute)
+router.delete('/delete/:v_id', repairLogRoute)
 
 // Register Car Route
 router.post('/addVehicle/:user_id', registerCarRoute)

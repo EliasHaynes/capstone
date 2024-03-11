@@ -20,8 +20,6 @@ function Dashboard() {
         const currentVehicleResponse = await axios.get(
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
-        console.log("currentVehicleResponse:", currentVehicleResponse);
-
         if (currentVehicleResponse.data.length > 0) {
           setVehicle(currentVehicleResponse.data[0]);
           setImage(currentVehicleResponse.data[0].v_img)
@@ -36,8 +34,6 @@ function Dashboard() {
     fetchCurrentVehicle();
   }, []);
 
-  console.log("vehicles:", vehicle);
-  // console.log("vehicle image:", vehicle.v_img)
 
   function NoVehicles() {
     return (
@@ -60,7 +56,7 @@ function Dashboard() {
   return (
     <div className="root-dashboard">
       <div className="wrapper-dashboard">
-        <h1>Your Current Vehicle Profile:</h1>
+        <h1>Your Current Vehicle Profile: </h1>
 
         <div className="vehicle-info-container">
           {imgURL  ?  (<img className="vehicle-img" src={imgURL}></img> ) : null }

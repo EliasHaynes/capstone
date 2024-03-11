@@ -20,19 +20,19 @@ function UpdateRepair() {
     const navigate = useNavigate()
 
 
-    let {auth0_id,id} = useParams();
-    id = parseInt(id,10) 
+    let {user_id,v_id,repair_id} = useParams();
+    console.log(`user id in param: ${user_id} and repair_id in param: ${repair_id}`)
+
 
 
 
     useEffect(() => {
         const fetchRepairDataById = async () => {
             try {
-            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}/${id}`);
+            const response = await axios.get(`http://localhost:5000/repair/${repair_id}`);
             console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
-                console.log("REPAIR BY ID:", response.data[0].mileage)
-                setMileage(response.data[0].mileage);
+                setMileage(response.data[0].repair_mileage);
                 setMaintenance(response.data[0].maintenance);
                 setPerformed_by(response.data[0].performed_by);
                 setContact(response.data[0].contact);
@@ -56,8 +56,7 @@ function UpdateRepair() {
       
     const handleSubmit = (e) => {
         e.preventDefault()
- 
-        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maintenance, performed_by, contact, material, labor,other})
+        axios.put(`http://localhost:5000/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
         .then((res) => {
             console.log("The PUT:", res)
             navigate(`/repair`)
@@ -70,7 +69,7 @@ function UpdateRepair() {
         <form onSubmit={handleSubmit}>
             <input 
                 name='mileage' 
-                placeholder={repair.mileage}
+                placeholder={repair.repair_mileage}
                 onChange={(e) => {
                     setMileage(e.target.value)
                     console.log(e.target.value)
@@ -86,17 +85,9 @@ function UpdateRepair() {
             </input>
             <input 
                 name='performedBy'
-                placeholder={repair.performedBy}
+                placeholder={repair.performed_by}
                 onChange={(e) => {
                     setPerformed_by(e.target.value)
-                    console.log(e.target.value)
-                }}>
-            </input>
-            <input 
-                name='contact'
-                placeholder={repair.contact}
-                onChange={(e) => {
-                    setContact(e.target.value)
                     console.log(e.target.value)
                 }}>
             </input>
