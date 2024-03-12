@@ -102,7 +102,7 @@ function RepairLog() {
                 <TableCell component="th" scope="row">
                   {idx + 1}
                 </TableCell>
-                <TableCell>{rep.date}</TableCell>
+                <TableCell>{new Date(rep.date).toLocaleDateString('en-US')}</TableCell>
                 <TableCell>{rep.repair_mileage}</TableCell>
                 <TableCell>{rep.maintenance}</TableCell>
                 <TableCell>{rep.performed_by}</TableCell>

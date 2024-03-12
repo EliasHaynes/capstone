@@ -6,13 +6,8 @@ const passUId = async (req, res) => {
     const sql = "INSERT IGNORE INTO users(user_id) VALUES (?)";
 
     try {
-        console.log("Auth Controller query hit");
-
         // Execute the INSERT query
         const [data] = await pool.query(sql, [Uuid]);
-
-        console.log("Auth Controller Data:", data);
-
         return res.json(data);
     } catch (err) {
         console.error(err);

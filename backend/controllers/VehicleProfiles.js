@@ -35,7 +35,6 @@ const getCurrentVehicleProfile = async (req, res) => {
       console.error(err); // Log the error
       return res.status(500).json({ message: "An error occurred." }); // Send generic error message
     }
-    console.log("Query success");
     return res.json(data); // Send data
   });
   return res.json(response[0])
@@ -50,18 +49,14 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
     const sql = "UPDATE vehicles SET currentVProfile = false WHERE user_id = ? AND currentVProfile = true";
     // Update all vehicles to not be the current profile
     await pool.query(sql, [user_id]);
-    console.log("Previous current profile unset.");
 
     // Then, update the selected vehicle to be the current profile
     const sql2 = "UPDATE vehicles SET currentVProfile = true WHERE user_id = ? AND v_id = ?";
     const [result] = await pool.query(sql2, [user_id, selectedProfile]);
-    console.log("Selected profile set as current.");
     
     if (result.affectedRows === 0) {
-      console.log("No records updated, possibly invalid user_id or v_id.");
       return res.status(404).json({ message: "No records updated, possibly invalid user_id or v_id." });
     } else {
-      console.log("Record updated successfully.");
       return res.json({ success: true, message: "Profile updated successfully." });
     }
   } catch (err) {
@@ -88,7 +83,7 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
         res.status(500).json({ success: false, message: 'Deletion failed due to server error.' });
     }
 };
-
+ 
 
 
 

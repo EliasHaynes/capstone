@@ -16,7 +16,6 @@ const addVehicle = async (req, res) => {
         const vImg = await vehicleImage(vin);
         const { YMM, engine, trim, transmission } = vehicleSpecs;
         const { theData } = vImg
-        console.log("vehicle image: ", theData)
 
         // Check if the user has any record of registered cars
         const checkVehiclesSql = "SELECT * FROM vehicles WHERE user_id = ?";
@@ -32,7 +31,7 @@ const addVehicle = async (req, res) => {
 
         // Prepare SQL query and values
         const insertSql = `INSERT INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, v_img, user_id) 
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
             vin,
             parseInt(req.body.mileage),

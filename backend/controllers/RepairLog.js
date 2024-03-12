@@ -5,15 +5,11 @@ const showUsersRepairById = async (req, res) => {
   try {
     const user_id = req.params.user_id;
     const v_id = req.params.v_id;
-    console.log("user id:", user_id);
-    console.log("v id:", v_id);
     const sql = "SELECT * FROM repairLog WHERE user_id = ? AND v_id = ?";
     const response = await pool.query(sql, [user_id, v_id], (err, data) => {
       if (err) return res.json(err);
-      console.log(res.json(data));
       return res.json(data);
     });
-    console.log("the response:", response[0]);
     return res.json(response[0]);
   } catch (e) {
     console.error(e);
@@ -26,7 +22,6 @@ const showRepairById = async (req,res) => {
         const sql = "SELECT * FROM repairLog WHERE repair_id = ?"
         const response = await pool.query(sql, [repair_id], (err, data) => {
             if (err) return res.json(err);
-            console.log(res.json(data));
             return res.json(data);
           });
           return res.json(response[0]);
@@ -52,8 +47,6 @@ const createRepair = (req, res) => {
     v_id,
   ];
 
-  console.log("The values:", values);
-
   pool.query(sql, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -77,7 +70,6 @@ const updateRepair = (req, res) => {
     req.body.v_id
   ];
 
-  console.log("The Values:", values);
   pool.query(sql, [...values, user_id, repair_id], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
