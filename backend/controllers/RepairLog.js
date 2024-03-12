@@ -84,16 +84,22 @@ const updateRepair = (req, res) => {
   });
 };
 
-const deleteRepair = (req, res) => {
+const deleteRepair = async (req, res) => {
+    try {
   const sql =
-    "DELETE FROM repairLog WHERE v_id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;";
-  let v_id = req.params.v_id;
-  v_id = parseInt(v_id, 10);
+    "DELETE FROM repairLog WHERE repair_id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;";
+  let repair_id = req.params.repair_id;
+  repair_id = parseInt(repair_id, 10);
 
-  pool.query(sql, [v_id, v_id], (err, data) => {
+  const deleteRepair = pool.query(sql, [repair_id, repair_id], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
+  return deleteRepair;
+    } catch (e) {
+        console.error(e);
+    }
+
 };
 
 module.exports = {

@@ -22,8 +22,10 @@ function RepairLog() {
 
   const [repairs, setRepairs] = useState([]);
   const [currentVId, setCurrentVId] = useState(null);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
+    console.log("running repair")
     const fetchRepairData = async () => {
       try {
         const currentVehicleId = await fetchCurrentVehicle();
@@ -39,7 +41,7 @@ function RepairLog() {
     };
 
     fetchRepairData();
-  }, []);
+  }, [reload]);
 
   const fetchCurrentVehicle = async () => {
     try {
@@ -54,16 +56,22 @@ function RepairLog() {
     }
   };
 
-  const handleDelete = (v_id) => {
-    axios
-      .delete(`http://localhost:5000/delete/` + v_id)
-      .then((response) => {
-        const newArr = repairs.filter((rep) => rep.v_id !== v_id);
-        setRepairs(newArr);
-      })
-      .catch((err) => {
-        return err;
-      });
+  const handleDelete = async (repair_id) => {
+    try {
+      console.log("delete id:", repair_id);
+      const deleteRepair = await axios
+        .delete(`http://localhost:5000/delete/${repair_id}`)
+        .then((response) => {
+          const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
+          setRepairs(newArr);
+        })
+        .catch((err) => {
+          return err;
+        });
+    } catch (e) {
+      console.error(e);
+    }
+    
   };
 
   return (
@@ -105,12 +113,17 @@ function RepairLog() {
                 <TableCell>
                   <EditIcon
                     onClick={() =>
-                      navigate(`/update/${user_id}/${currentVId}/${rep.repair_id}`)
+                      navigate(
+                        `/update/${user_id}/${currentVId}/${rep.repair_id}`
+                      )
                     }
                   />
                   <DeleteIcon
                     // add onClick method here
-                    onClick={() => handleDelete(rep.v_id)}
+                    onClick={() => {
+                        handleDelete(rep.repair_id)
+                        setReload(currentState => !currentState)
+                    }}
                     className="icon text-red"
                   />
                 </TableCell>

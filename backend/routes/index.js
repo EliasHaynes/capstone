@@ -12,7 +12,7 @@ router.get('/repair/:user_id/:v_id', repairLogRoute)
 router.get('/repair/:repair_id', repairLogRoute)
 router.post('/create/:user_id/:v_id', repairLogRoute)
 router.put('/update/:user_id/:repair_id', repairLogRoute)
-router.delete('/delete/:v_id', repairLogRoute)
+router.delete('/delete/:repair_id', repairLogRoute)
 
 // Register Car Route
 router.post('/addVehicle/:user_id', registerCarRoute)
