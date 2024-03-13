@@ -354,12 +354,11 @@ code {
 
 /* Card */
 
-/* .card {
+ .card {
   width: 200px;
-  height:100px;
+  height:auto;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
   perspective: 800px;
   transform-style: preserve-3d;
   margin-right: 8%;
@@ -367,21 +366,27 @@ code {
 }
 
 .abstract {
+  height: 200px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  height: 210px;
   background-color:white;
   transition: 0.3s ease all;
   border: 2px solid black;
+  border-radius: 6px;
 }
 
 .repair-desc {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
   width:95%;
+  height: 40px;
   border-radius: 5px;
   margin-top: 5px;
-
+  margin-bottom: 0;
+  font-size: 95%;
 }
 
 .repair-info {
@@ -407,33 +412,50 @@ width: 100%;
   width:50%;
 }
 
-.card.is-active .details {
-  max-height: 500px;
-  overflow: visible;
-  visibility: visible;
-  transform: rotateX(0deg);
+.details-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  position: relative;
+  top: -50px;
+
 }
 
 .details {
-  height: 150px;
-  background-color:gray;
-  color: white;
-  max-height: 0;
-  padding: 0;
-  overflow: hidden;
-  visibility: hidden;
-  transform: rotateX(-180deg);
-  transform-origin: top center;
-  backface-visibility: hidden;
-  transition: 0.3s transform ease;
+  background-color: #8D8686;  
+  color: white;  
+  border-top: 1px solid white;
+  width: 150px;
+  height: 125px;
+  border-radius: 6px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .parts-desc {
-  text-align: center;;
-  width:95%;
-  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+  height: 30%;
   margin-top: 5px;
-} */
+  margin-bottom: 0;
+  font-size: 95%;
+}
+
+.parts-info section {
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+
+.parts-info p {
+  font-size: 100%;
+  margin-bottom: 0;
+}
+
+
+
 
 
 

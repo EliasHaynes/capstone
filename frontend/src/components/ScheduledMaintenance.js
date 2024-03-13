@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +57,9 @@ function ScheduledMaintenance() {
         const mileage = await currentVehicleResponse.data[0].mileage;
         const vin = await currentVehicleResponse.data[0].vin;
 
+        console.log("mileage:", mileage);
+        console.log("vin:", vin)
+
         const response = await axios.get(
           `http://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
           {
@@ -67,6 +69,7 @@ function ScheduledMaintenance() {
             },
           }
         );
+        console.log("response:", response)
         const grouped = groupCardsByMileageThreshold(response.data.data);
         setGroupedRepairs(grouped);
         setRepairs(response.data.data);
@@ -76,6 +79,8 @@ function ScheduledMaintenance() {
     };
     fetchVehicleData();
   };
+
+  console.log("The repairs: ", repairs)
 
   return (
     <div className="scheduled-maintenance-page">

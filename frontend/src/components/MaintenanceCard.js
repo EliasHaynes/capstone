@@ -12,6 +12,7 @@ function MaintenanceCard({
   isActive
 }) {
 
+
   const getDifficultyColor = (difficulty) => {
     switch(difficulty) {
       case 1: return "#19AB0C"; // Easy
@@ -19,9 +20,26 @@ function MaintenanceCard({
       case 3: return "#F00D0D"; // Hard
       default: return "transparent"; // Default case
     }
+  };  
+  const backgroundColor = getDifficultyColor(repairDifficulty);
+
+  //Parts component
+  const PartsCard = () => {
+    return (
+      <div className="parts-card">
+        <h1 className="parts-desc">Part Desc</h1>
+
+        <section>
+          <h4>Price: </h4>
+          <h4> $100</h4>
+          <h4>Quantity: </h4>
+          <h4>8</h4>
+        </section>
+      </div>
+    );
   };
 
-  const backgroundColor = getDifficultyColor(repairDifficulty);
+
 
   return (
     <>
@@ -44,18 +62,18 @@ function MaintenanceCard({
         </div>
       </div>
       {parts && parts.length > 0 && (
-        <div>
+        <div className="details-wrapper">
             {parts.map((part,index) => (
                 <div key={index} className="details">
                 <h4 className="parts-desc">{part.desc}</h4>
-        <div className="repair-info">
+        <div className="parts-info">
           <section>
-            <p className="repair-sub-headings">Price: </p>
-            <p className="repair-sub-headings-value">{part.price}</p>
+            <p className="parts-sub-headings">Price: </p>
+            <p className="parts-sub-headings-value">{part.price}</p>
           </section>
           <section>
-            <p className="repair-sub-headings">Quantity: </p>
-            <p className="repair-sub-headings-value">{part.qty}</p>
+            <p className="parts-sub-headings">Quantity: </p>
+            <p className="parts-sub-headings-value">{part.qty}</p>
           </section>
         </div >
                 </div>
