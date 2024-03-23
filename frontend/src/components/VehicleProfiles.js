@@ -35,8 +35,7 @@ function VehicleProfiles() {
     };
     getVehicleProfilesAndCurrent();
   }, [reload]);
-  console.log("The selected profile on initial run:", selectedProfile)
-  console.log("The users vehicle profiles:", usersVehicleProfiles)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

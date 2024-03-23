@@ -24,7 +24,7 @@ function MobileHome() {
     <div className=" mobile">
       {!isAuthenticated ? (
         <div className="landing-main-display">
-          <button className="login-button" onClick={loginWithRedirect}>
+          <button className="login-button button-29" onClick={loginWithRedirect}>
             Login / Register
           </button>
 

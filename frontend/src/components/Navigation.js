@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React,{useState} from "react";
+import { Link, useNavigate,NavLink } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -14,36 +14,39 @@ const Navigation = () => {
     isAuthenticated,
     logout,
   } = useAuth0();
+  const [currentPage,setCurrentPage] = useState("Home")
 
+  const hightlightCurrentPage = () => {
 
+  }
 
   return (
     <AppBar position="relative">
-      <Toolbar>
+      <Toolbar className="navbar">
         <IconButton color="inherit">
           <NavModal></NavModal>
         </IconButton>
         <Typography  onClick={() => navigate('/')} variant="h6" style={{ flexGrow: "1", cursor: "pointer", marginLeft: "5%" }}>
           Maintenance App
         </Typography>
-        <ul className="nav-list">
+        <ul className="nav-list ">
           <li className="nav-list-item">
-            <Link to="/">Home</Link>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li className="nav-list-item">
-            <Link to="/userMaintenace">Maintenance</Link>
+            <NavLink to="/registerCar"> Register Car</NavLink>
           </li>
           <li className="nav-list-item">
-            <Link to="/registerCar"> Register Car</Link>
+            <NavLink to="/userMaintenace">Maintenance</NavLink>
           </li>
           <li className="nav-list-item">
-            <Link to="/repair">Repair Log</Link>
+            <NavLink to="/repair">Repair Log</NavLink>
           </li>
-          <li>
+          <li className="nav-list-item">
             <Authentication></Authentication>
           </li>
         </ul>
-        {isAuthenticated ? <button className="mobile-login" onClick={logout}>Logout</button> : <button className="mobile-login" onClick={loginWithRedirect} >Login</button> }
+        {isAuthenticated ? <button className="mobile-login button-29" onClick={logout}>Logout</button> : <button className="mobile-login button-29" onClick={loginWithRedirect} >Login</button> }
       </Toolbar>
     </AppBar>
   );

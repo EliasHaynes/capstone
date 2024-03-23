@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MobileHome from "./mobile components/MobileHome";
 import Dashboard from "./Dashboard";
+import Authentication from "./Authentication";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,15 +26,7 @@ function Home() {
     <div className="desktop">
       {!isAuthenticated ? (
         <div className="landing-main-display">
-          <button
-            className="login-button"
-            onClick={() => {
-              loginWithRedirect();
-              console.log("user from button", user);
-            }}
-          >
-            Login / Register
-          </button>
+          <Authentication className="button-29"></Authentication>
         </div>
       ) : (
         <Dashboard></Dashboard>

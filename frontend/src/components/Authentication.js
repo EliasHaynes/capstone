@@ -66,7 +66,7 @@ const Authentication = () => {
     return (
         <>
             {
-                isAuthenticated ? <button onClick={logout}>Log Out</button> : <button onClick={loginWithRedirect}>Log In</button>
+                isAuthenticated ? <button className="button-29" onClick={logout}>Log Out</button> : <button className="button-29" onClick={loginWithRedirect}>Log In</button>
             }
         </>
     )
