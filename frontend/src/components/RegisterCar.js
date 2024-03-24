@@ -14,11 +14,11 @@ const RegisterCar = (props) => {
   const user_id = user.sub.split("|")[1].toString();
   const [vin, setVin] = useState("");
   const [mileage, setMileage] = useState("");
-  const [open, toggleOpen] = useState(false);
   const [vehicles, setVehicles] = useState([]);
   const [alert, sendAlert] = useState(false);
   const [alertType, setAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [reload,setReload] = useState(false);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -32,7 +32,17 @@ const RegisterCar = (props) => {
       }
     };
     getVehicles();
-  }, []);
+  }, [reload]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      sendAlert(false);
+    }, 8000);
+    return () => {
+      clearTimeout(timer)
+      setReload(currentState => !currentState)
+    };
+  }, [alertType, alertMessage]);
 
   const MaxVehicles = () => {
     return <div>Max limit of registered vehicles (4) reached</div>;
@@ -44,7 +54,6 @@ const RegisterCar = (props) => {
     axios
       .post(`http://localhost:5000/addVehicle/${user_id}`, { vin, mileage })
       .then((res) => {
-        console.log("The response data:", res);
         switch (res.status) {
           case 200:
             setAlert("success");
@@ -55,6 +64,9 @@ const RegisterCar = (props) => {
             setAlertMessage(
               "Vin not found, please check that youve entered the correct vin. If issue persists vehicle may be too old or new"
             );
+            case 207:
+              setAlert("error")
+              setAlertMessage("You've already registered this vin")
             break;
         }
         sendAlert(true);
@@ -71,7 +83,7 @@ const RegisterCar = (props) => {
           setAlertMessage("An unexpected error occurred");
         }
       });
-      
+
   };
 
   console.log("Alert type:", alertType);
@@ -90,10 +102,7 @@ const RegisterCar = (props) => {
             ) : (
               <form
                 className="register-form"
-                onSubmit={(e) => {
-                  handleSubmit(e);
-                  toggleOpen(true);
-                }}
+                onSubmit={(e) => handleSubmit(e)}
               >
                 <label>
                   <input

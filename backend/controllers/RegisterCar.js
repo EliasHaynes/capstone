@@ -15,52 +15,69 @@ const addVehicle = async (req, res) => {
     if (vehicleSpecs.engine === undefined) {
       return res.status(204).json("Vin error");
     } else {
-      const vImg = await vehicleImage(vin);
-      const { YMM, engine, trim, transmission } = vehicleSpecs;
-      const { theData } = vImg;
-
-      // Check if the user has any record of registered cars
-      const checkVehiclesSql = "SELECT * FROM vehicles WHERE user_id = ?";
-      const [vehicles] = await pool.query(checkVehiclesSql, [user_id]);
-
-      // Check if user has 4 or more registered vehicles
-      if (vehicles.length >= 4) {
-        return res.send("Max limit of registered vehicles reached");
-      }
-
-      // Determine if the vehicle should be set as current
-      const isCurrentVehicle = vehicles.length < 1 ? 1 : 0;
-
-      // Prepare SQL query and values
-      const insertSql = `INSERT INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, v_img, user_id) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-      const values = [
+      const verifyNoDuplicateVin = await checkIfUserVinAlreadyRegistered(
         vin,
-        parseInt(req.body.mileage),
-        YMM,
-        engine,
-        trim,
-        transmission,
-        isCurrentVehicle,
-        theData,
-        user_id,
-      ];
+        user_id
+      );
+      
+      //Check if the user has already registered this vin
+      if (verifyNoDuplicateVin.length !== 0) {
+        return res.status(207).json("Duplicate vin entry");
+      } else {
+        const vImg = await vehicleImage(vin);
+        const { YMM, engine, trim, transmission } = vehicleSpecs;
+        const { theData } = vImg;
 
-      // Execute insert query
-      const [insertResult] = await pool.query(insertSql, values);
-      console.log("insertResult:", insertResult);
-      return res.json(insertResult);
+        // Check if the user has any record of registered cars
+        const checkVehiclesSql = "SELECT * FROM vehicles WHERE user_id = ?";
+        const [vehicles] = await pool.query(checkVehiclesSql, [user_id]);
+
+        // Check if user has 4 or more registered vehicles
+        if (vehicles.length >= 4) {
+          return res.send("Max limit of registered vehicles reached");
+        }
+
+        // Determine if the vehicle should be set as current
+        const isCurrentVehicle = vehicles.length < 1 ? 1 : 0;
+
+        // Prepare SQL query and values
+        const insertSql = `INSERT IGNORE INTO vehicles (vin, mileage, v_ymm, v_engine, v_trim, v_transmission, currentVProfile, v_img, user_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [
+          vin,
+          parseInt(req.body.mileage),
+          YMM,
+          engine,
+          trim,
+          transmission,
+          isCurrentVehicle,
+          theData,
+          user_id,
+        ];
+
+        // Execute insert query
+        const [insertResult] = await pool.query(insertSql, values);
+        return res.json(insertResult);
+      }
     }
   } catch (e) {
     console.error(e);
     // Check if the error is a duplicate entry error
-    if (e.code === 'ER_DUP_ENTRY') {
-      return res.status(404).json({ error: "A vehicle with this VIN already exists." });
-    } else {
-      return res.status(500).json({ error: "An error occurred while adding the vehicle." });
-    }
   }
-  
+};
+
+const checkIfUserVinAlreadyRegistered = async (vin, user_id) => {
+  try {
+    const sqlQuery = "SELECT * FROM vehicles WHERE user_id = ? AND vin = ?";
+    const values = [user_id, vin];
+    const [results] = await pool.query(sqlQuery, values, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+    });
+    return results;
+  } catch (e) {
+    console.error("Error when checking vin:", e);
+  }
 };
 
 const idVehicleNameFromVin = async (vin) => {
@@ -87,7 +104,6 @@ const idVehicleNameFromVin = async (vin) => {
       trim,
       transmission,
     };
-    console.log("vehicleInfo:", vehicleInfo);
     return vehicleInfo;
   } catch (e) {
     console.log(e);

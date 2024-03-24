@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AlertTrigger from "./AlertTrigger";
 
 function VehicleProfiles() {
   const navigate = useNavigate();
   const [selectedProfile, setProfile] = useState();
   const [usersVehicleProfiles, setUsersVehiclesProfiles] = useState([]);
   const [reload,setReload] = useState(false)
+  const [alert, sendAlert] = useState(false);
+  const [alertType, setAlert] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const { isAutheticated, user } = useAuth0();
 
@@ -24,9 +28,6 @@ function VehicleProfiles() {
         const currentVehicleResponse = await axios.get(
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
-
-
-
         setUsersVehiclesProfiles(allVehiclesResponse.data);
         setProfile(currentVehicleResponse.data[0].v_id); 
       } catch (e) {
@@ -36,25 +37,49 @@ function VehicleProfiles() {
     getVehicleProfilesAndCurrent();
   }, [reload]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      sendAlert(false);
+    }, 5000);
+    return () => {
+      clearTimeout(timer)
+    };
+  }, [alertType, alertMessage]);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmitOfUpdatingCurrentVehicle = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.put(
         `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
         { selectedProfile }
       );
-      console.log("The selected profile is...", selectedProfile);
+      switch (response.data.message) {
+        case "Profile updated successfully":
+          setAlert("success")
+          setAlertMessage("Your current vehicle profile is updated")
+          break;
+        case "":
+          setAlert("error");
+          setAlertMessage("Something went wrong please refresh and try again");
+          break;
+      }
+
+      
+      console.log("The response in toggling:", response.data.message)
+sendAlert(true)
     } catch (e) {
       console.error(e);
       alert("An error occurred while updating the profile.");
     }
+    
     setReload(currentState => !currentState)
   };
   
-
+  //Handles selecting the 
   const handleProfileSelection = (e) => {
-    const newValue = Number(e.target.value); // Convert to number if `v_id` is a number
+  
+    const newValue = Number(e.target.value);
     setProfile(newValue);
     console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
@@ -73,6 +98,8 @@ function VehicleProfiles() {
           // This is just a placeholder, you'll need to adjust based on your actual API response
           console.error("Deletion failed on the server, reverting");
           setUsersVehiclesProfiles(usersVehicleProfiles); // Revert to the original state
+        } else {
+
         }
       })
       .catch(error => {
@@ -85,9 +112,10 @@ function VehicleProfiles() {
 
   return (
     <div className="vehicle-profile-wrap-container">
-      <div className="vehicle-profile-container">
+{alert && <AlertTrigger alertType={alertType} alertMessage={alertMessage} />}      
+<div className="vehicle-profile-container">
         <h1>Vehicle Profile(s)</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmitOfUpdatingCurrentVehicle(e)}>
           {usersVehicleProfiles.map((vehicle, idx) => (
             <>
             <label key={idx}>

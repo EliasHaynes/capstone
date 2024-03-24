@@ -57,7 +57,7 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "No records updated, possibly invalid user_id or v_id." });
     } else {
-      return res.json({ success: true, message: "Profile updated successfully." });
+      return res.json({ success: true, message: "Profile updated successfully" });
     }
   } catch (err) {
     console.error(err);
