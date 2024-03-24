@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
-
 function Dashboard() {
   const navigate = useNavigate();
   const { isAutheticated, user } = useAuth0();
   const [vehicle, setVehicle] = useState();
   const [imgURL, setImage] = useState();
-
 
   const user_id = user.sub.split("|")[1].toString();
   const token = process.env.REACT_APP_CAR_KEY;
@@ -23,9 +21,8 @@ function Dashboard() {
         );
         if (currentVehicleResponse.data.length > 0) {
           setVehicle(currentVehicleResponse.data[0]);
-          setImage(currentVehicleResponse.data[0].v_img)
-        } 
-        else {
+          setImage(currentVehicleResponse.data[0].v_img);
+        } else {
           setVehicle("No Vehicle");
         }
       } catch (e) {
@@ -34,7 +31,6 @@ function Dashboard() {
     };
     fetchCurrentVehicle();
   }, []);
-
 
   function NoVehicles() {
     return (
@@ -60,7 +56,7 @@ function Dashboard() {
         <h1>Your Current Vehicle Profile: </h1>
 
         <div className="vehicle-info-container">
-          {imgURL  ?  (<img className="vehicle-img" src={imgURL}></img> ) : null }
+          {imgURL ? <img className="vehicle-img" src={imgURL}></img> : null}
           {vehicle === "No Vehicle" ? (
             <NoVehicles></NoVehicles>
           ) : (
@@ -77,12 +73,16 @@ function Dashboard() {
           </div>
         </div>
         {vehicle === "No Vehicle" ? null : (
-          <button onClick={() => navigate("/vehicleprofiles")}>
-            Manage Vehicle Profiles
+          <button
+            class="button-82-pushable"
+            onClick={() => navigate("/vehicleprofiles")}
+          >
+            <span class="button-82-shadow"></span>
+            <span class="button-82-edge"></span>
+            <span class="button-82-front text">Manage Vehicles</span>
           </button>
         )}
       </div>
-
     </div>
   );
 }

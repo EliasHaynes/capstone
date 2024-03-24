@@ -115,8 +115,11 @@ function UpdateRepair() {
                     console.log(e.target.value)
                 }}>
             </input>
-
-            <button type='submit'>Update</button>
+            <button class="button-82-pushable" role="button" type="submit">
+                  <span class="button-82-shadow"></span>
+                  <span class="button-82-edge"></span>
+                  <span class="button-82-front text">Update Repair</span>
+                </button>
         </form>
     )
 }

@@ -25,7 +25,7 @@ function RepairLog() {
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    console.log("running repair")
+    console.log("running repair");
     const fetchRepairData = async () => {
       try {
         const currentVehicleId = await fetchCurrentVehicle();
@@ -71,15 +71,19 @@ function RepairLog() {
     } catch (e) {
       console.error(e);
     }
-    
   };
 
   return (
     <div>
       <Container maxWidth="lg" className="car-container">
         <div className="flex-container">
-          <button onClick={() => navigate(`/create/${user_id}/${currentVId}`)}>
-            Add Repair
+          <button
+            class="button-82-pushable"
+            onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
+          >
+            <span class="button-82-shadow"></span>
+            <span class="button-82-edge"></span>
+            <span class="button-82-front text">Add Repair</span>
           </button>
         </div>
         <Table>
@@ -102,7 +106,9 @@ function RepairLog() {
                 <TableCell component="th" scope="row">
                   {idx + 1}
                 </TableCell>
-                <TableCell>{new Date(rep.date).toLocaleDateString('en-US')}</TableCell>
+                <TableCell>
+                  {new Date(rep.date).toLocaleDateString("en-US")}
+                </TableCell>
                 <TableCell>{rep.repair_mileage}</TableCell>
                 <TableCell>{rep.maintenance}</TableCell>
                 <TableCell>{rep.performed_by}</TableCell>
@@ -121,8 +127,8 @@ function RepairLog() {
                   <DeleteIcon
                     // add onClick method here
                     onClick={() => {
-                        handleDelete(rep.repair_id)
-                        setReload(currentState => !currentState)
+                      handleDelete(rep.repair_id);
+                      setReload((currentState) => !currentState);
                     }}
                     className="icon text-red"
                   />

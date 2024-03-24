@@ -86,7 +86,11 @@ function AddRepair() {
         }}
       ></input>
 
-      <button type="submit">Add Repair</button>
+      <button class="button-82-pushable" role="button" type="submit">
+                  <span class="button-82-shadow"></span>
+                  <span class="button-82-edge"></span>
+                  <span class="button-82-front text">Add Repair</span>
+                </button>
     </form>
   );
 }

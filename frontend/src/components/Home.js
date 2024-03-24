@@ -23,83 +23,83 @@ function Home() {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
   return (
     <div>
-    <div className="desktop">
-      {!isAuthenticated ? (
-        <div className="landing-main-display">
-          <Authentication className="button-29"></Authentication>
-        </div>
-      ) : (
-        <Dashboard></Dashboard>
-      )}
+      <div className="desktop">
+        {!isAuthenticated ? (
+          <div className="landing-main-display">
+            <Authentication className="button-29"></Authentication>
+          </div>
+        ) : (
+          <Dashboard></Dashboard>
+        )}
 
-      <h1 className="services">Services</h1>
-      <div className="wrap-page-buttons">
-        <div className="page-buttons">
-          <section>
-            <div className="page-buttons-img-container-left first-pic"></div>
-            <div className="page-buttons-text-box">
-              <h3>Register your vehicles profile</h3>
-              <p>
-                Create your vehicles profile to have easy access to your
-                vehicles data.
-              </p>
-              <h4 className="page-buttons-anchors">
-                <a
-                  onClick={() =>
-                    !isAuthenticated
-                      ? loginWithRedirect()
-                      : navigate("/registerCar")
-                  }
-                >
-                  Click Here to register
-                </a>
-              </h4>
-            </div>
-          </section>
-          <section>
-            <div className="page-buttons-img-container-left third-pic"></div>
+        <h1 className="services">Services</h1>
+        <div className="wrap-page-buttons">
+          <div className="page-buttons">
+            <section className="landing-alternate-background">
+              <div className="page-buttons-img-container-left first-pic"></div>
+              <div className="page-buttons-text-box">
+                <h3>Register your vehicles profile</h3>
+                <p>
+                  Create your vehicles profile to have easy access to your
+                  vehicles data.
+                </p>
+                <h4 className="page-buttons-anchors">
+                  <a
+                    onClick={() =>
+                      !isAuthenticated
+                        ? loginWithRedirect()
+                        : navigate("/registerCar")
+                    }
+                  >
+                    Click Here to register
+                  </a>
+                </h4>
+              </div>
+            </section>
+            <section className="landing-alternate-background">
+              <div className="page-buttons-text-box">
+                <h3>Get Relative Scheduled Maintenance</h3>
+                <p> </p>
+                <h4 className="page-buttons-anchors">
+                  <a
+                    onClick={() =>
+                      !isAuthenticated
+                        ? loginWithRedirect()
+                        : navigate("/userMaintenace")
+                    }
+                  >
+                    {" "}
+                    Click here to view upcoming maintenance
+                  </a>
+                </h4>
+              </div>
+              <div className="page-buttons-img-container-left third-pic"></div>
+            </section>
 
-            <div className="page-buttons-text-box">
-              <h3>Get Relative Scheduled Maintenance</h3>
-              <p> </p>
-              <h4 className="page-buttons-anchors">
-                <a
-                  onClick={() =>
-                    !isAuthenticated
-                      ? loginWithRedirect()
-                      : navigate("/userMaintenace")
-                  }
-                >
-                  {" "}
-                  Click here to view upcoming maintenance
-                </a>
-              </h4>
-            </div>
-          </section>
-
-          <section className="landing-alternate-background">
-            <div className="page-buttons-text-box">
-              <h3>Document personal and professional repairs</h3>
-              <p> </p>
-              <h4 className="page-buttons-anchors">
-                <a
-                  onClick={() =>
-                    !isAuthenticated ? loginWithRedirect() : navigate("/repair")
-                  }
-                >
-                  Click here to view repair records
-                </a>
-              </h4>
-            </div>
-            <div className="page-buttons-img-container-right fourth-pic"></div>
-          </section>
+            <section className="landing-alternate-background">
+              <div className="page-buttons-img-container-right fourth-pic"></div>
+              <div className="page-buttons-text-box">
+                <h3>Document personal and professional repairs</h3>
+                <p> </p>
+                <h4 className="page-buttons-anchors">
+                  <a
+                    onClick={() =>
+                      !isAuthenticated
+                        ? loginWithRedirect()
+                        : navigate("/repair")
+                    }
+                  >
+                    Click here to view repair records
+                  </a>
+                </h4>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
-
-    </div>
-    <div className="mobile">
-      <MobileHome></MobileHome>
-    </div>
+      <div className="mobile">
+        <MobileHome></MobileHome>
+      </div>
     </div>
   );
 }

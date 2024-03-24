@@ -88,14 +88,16 @@ function ScheduledMaintenance() {
         <h1>Get Relative Scheduled Maintenance</h1>
         <p>within -+10,000 miles of vehicle mileage</p>
 
-        <button
-          onClick={() => {
+        <button class="button-82-pushable"  onClick={() => {
             toggleOpen(true);
             handleClick();
-          }}
-        >
-          See Relative Repairs
-        </button>
+          }}>
+  <span class="button-82-shadow"></span>
+  <span class="button-82-edge"></span>
+  <span class="button-82-front text">
+  See Repairs
+  </span>
+</button>
       </div>
       {open && (
         <div className="scheduled-mileage-threshold">

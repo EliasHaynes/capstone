@@ -18,7 +18,7 @@ const RegisterCar = (props) => {
   const [alert, sendAlert] = useState(false);
   const [alertType, setAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-  const [reload,setReload] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -39,15 +39,14 @@ const RegisterCar = (props) => {
       sendAlert(false);
     }, 8000);
     return () => {
-      clearTimeout(timer)
-      setReload(currentState => !currentState)
+      clearTimeout(timer);
+      setReload((currentState) => !currentState);
     };
   }, [alertType, alertMessage]);
 
   const MaxVehicles = () => {
     return <div>Max limit of registered vehicles (4) reached</div>;
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,13 +63,13 @@ const RegisterCar = (props) => {
             setAlertMessage(
               "Vin not found, please check that youve entered the correct vin. If issue persists vehicle may be too old or new"
             );
-            case 207:
-              setAlert("error")
-              setAlertMessage("You've already registered this vin")
+          case 207:
+            setAlert("error");
+            setAlertMessage("You've already registered this vin");
             break;
         }
         sendAlert(true);
-        console.log(" response done")
+        console.log(" response done");
       })
       .catch((err) => {
         if (err.response) {
@@ -83,15 +82,16 @@ const RegisterCar = (props) => {
           setAlertMessage("An unexpected error occurred");
         }
       });
-
   };
 
   console.log("Alert type:", alertType);
-  console.log("Alert message:", alertMessage)
+  console.log("Alert message:", alertMessage);
 
   return (
     <div className="register-page">
-      {alert && <AlertTrigger alertType={alertType} alertMessage={alertMessage} />}
+      {alert && (
+        <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
+      )}
 
       <div className="register-main-container">
         <div className=" register-wrapper">
@@ -100,10 +100,7 @@ const RegisterCar = (props) => {
             {vehicles.length >= 4 ? (
               <MaxVehicles />
             ) : (
-              <form
-                className="register-form"
-                onSubmit={(e) => handleSubmit(e)}
-              >
+              <form className="register-form" onSubmit={(e) => handleSubmit(e)}>
                 <label>
                   <input
                     required
@@ -124,13 +121,11 @@ const RegisterCar = (props) => {
                     type="text"
                   />
                 </label>
-                <button
-                  type="submit"
-                  className="login-button"
-                  variant="contained"
-                  color="primary"
-                >
-                  Submit Info
+
+                <button class="button-82-pushable" role="button" type="submit">
+                  <span class="button-82-shadow"></span>
+                  <span class="button-82-edge"></span>
+                  <span class="button-82-front text">Submit Info</span>
                 </button>
               </form>
             )}

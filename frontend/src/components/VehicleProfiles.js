@@ -9,7 +9,7 @@ function VehicleProfiles() {
   const navigate = useNavigate();
   const [selectedProfile, setProfile] = useState();
   const [usersVehicleProfiles, setUsersVehiclesProfiles] = useState([]);
-  const [reload,setReload] = useState(false)
+  const [reload, setReload] = useState(false);
   const [alert, sendAlert] = useState(false);
   const [alertType, setAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
@@ -19,7 +19,7 @@ function VehicleProfiles() {
   const user_id = user.sub.split("|")[1].toString();
 
   useEffect(() => {
-    console.log("Running")
+    console.log("Running");
     const getVehicleProfilesAndCurrent = async () => {
       try {
         const allVehiclesResponse = await axios.get(
@@ -29,7 +29,7 @@ function VehicleProfiles() {
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
         setUsersVehiclesProfiles(allVehiclesResponse.data);
-        setProfile(currentVehicleResponse.data[0].v_id); 
+        setProfile(currentVehicleResponse.data[0].v_id);
       } catch (e) {
         console.error(e);
       }
@@ -42,10 +42,9 @@ function VehicleProfiles() {
       sendAlert(false);
     }, 5000);
     return () => {
-      clearTimeout(timer)
+      clearTimeout(timer);
     };
   }, [alertType, alertMessage]);
-
 
   const handleSubmitOfUpdatingCurrentVehicle = async (e) => {
     e.preventDefault();
@@ -56,42 +55,40 @@ function VehicleProfiles() {
       );
       switch (response.data.message) {
         case "Profile updated successfully":
-          setAlert("success")
-          setAlertMessage("Your current vehicle profile is updated")
+          setAlert("success");
+          setAlertMessage("Your current vehicle profile is updated");
           break;
         case "":
           setAlert("error");
           setAlertMessage("Something went wrong please refresh and try again");
           break;
       }
-
-      
-      console.log("The response in toggling:", response.data.message)
-sendAlert(true)
+      sendAlert(true);
     } catch (e) {
       console.error(e);
       alert("An error occurred while updating the profile.");
     }
-    
-    setReload(currentState => !currentState)
+
+    setReload((currentState) => !currentState);
   };
-  
-  //Handles selecting the 
+
+  //Handles selecting the
   const handleProfileSelection = (e) => {
-  
     const newValue = Number(e.target.value);
     setProfile(newValue);
     console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
 
-
   const handleDelete = (v_id) => {
     // Optimistically remove the vehicle from the state
-    const updatedVehicles = usersVehicleProfiles.filter(vehicle => vehicle.v_id !== v_id);
+    const updatedVehicles = usersVehicleProfiles.filter(
+      (vehicle) => vehicle.v_id !== v_id
+    );
     setUsersVehiclesProfiles(updatedVehicles);
 
-    axios.delete(`http://localhost:5000/deleteVehicle/${v_id}`)
-      .then(response => {
+    axios
+      .delete(`http://localhost:5000/deleteVehicle/${v_id}`)
+      .then((response) => {
         // Check if the deletion was successful on the server
         // If the server sends back a not successful response, revert the change
         if (!response.data.success) {
@@ -99,45 +96,53 @@ sendAlert(true)
           console.error("Deletion failed on the server, reverting");
           setUsersVehiclesProfiles(usersVehicleProfiles); // Revert to the original state
         } else {
-
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("An error occurred:", error);
         // Revert to the original state in case of an error
         setUsersVehiclesProfiles(usersVehicleProfiles);
       });
-};
-
+  };
 
   return (
     <div className="vehicle-profile-wrap-container">
-{alert && <AlertTrigger alertType={alertType} alertMessage={alertMessage} />}      
-<div className="vehicle-profile-container">
+      {alert && (
+        <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
+      )}
+      <div className="vehicle-profile-container">
         <h1>Vehicle Profile(s)</h1>
         <form onSubmit={(e) => handleSubmitOfUpdatingCurrentVehicle(e)}>
           {usersVehicleProfiles.map((vehicle, idx) => (
             <>
-            <label key={idx}>
-              <input
-                onChange={handleProfileSelection}
-                type="radio"
-                checked={selectedProfile === vehicle.v_id}
-                name="radio"
-                value={vehicle.v_id}
-              />{" "}
-              {vehicle.v_ymm}
-              
-               {vehicle.currentVProfile === 0 ? <DeleteIcon className="icon text-red" onClick={() => handleDelete(vehicle.v_id)}></DeleteIcon> : null}
-               {usersVehicleProfiles.length === 1 ? <DeleteIcon className="icon text-red" onClick={() => handleDelete(usersVehicleProfiles[0].v_id)}></DeleteIcon> : null}
-            </label>
-            
+              <label key={idx}>
+                <input
+                  onChange={handleProfileSelection}
+                  type="radio"
+                  checked={selectedProfile === vehicle.v_id}
+                  name="radio"
+                  value={vehicle.v_id}
+                />{" "}
+                {vehicle.v_ymm}
+                {vehicle.currentVProfile === 0 ? (
+                  <DeleteIcon
+                    className="icon text-red"
+                    onClick={() => handleDelete(vehicle.v_id)}
+                  ></DeleteIcon>
+                ) : null}
+                {usersVehicleProfiles.length === 1 ? (
+                  <DeleteIcon
+                    className="icon text-red"
+                    onClick={() => handleDelete(usersVehicleProfiles[0].v_id)}
+                  ></DeleteIcon>
+                ) : null}
+              </label>
             </>
           ))}
           <div>
-            {usersVehicleProfiles.length > 1 ? <button type="submit">Update Selection</button> : null}
-            
-            
+            {usersVehicleProfiles.length > 1 ? (
+              <button type="submit">Update Selection</button>
+            ) : null}
           </div>
         </form>
         <button onClick={() => navigate("/registerCar")}>
