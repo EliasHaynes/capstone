@@ -32,6 +32,7 @@ code {
 
 /* ---------- Nav Bar ---------- */
 
+
 .nav-list {
   display: flex;
   flex-flow: row nowrap;
@@ -369,6 +370,7 @@ code {
 
 .vehicle-profile-container {
   display: flex;
+  width:40%;
   flex-flow: column nowrap;
   align-items: center;
   padding: 5%;
@@ -379,6 +381,11 @@ code {
   flex-flow: column nowrap;
   align-items: center;
   padding: 5%;
+}
+
+.vehicle-profile-container form label {
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 /* ---------- Scheduled Maintenance ---------- */
@@ -615,3 +622,27 @@ code {
 .button-82-pushable:focus:not(:focus-visible) {
   outline: none;
 }
+
+/* ---------- Repair Log ---------- */
+ /* Add Repair */
+ .repair-forms-container {    
+  width:100vw;
+  height: 80vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+ }
+
+ .repair-forms{
+  width: 15%;
+  height: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  border: 5px solid rgb(79, 79, 192);
+  padding: 10px;
+  border-radius: 16px;
+ }

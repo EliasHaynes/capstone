@@ -40,7 +40,7 @@ const Menu = ({ open, ...props }) => {
     const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0(); 
   const navigate = useNavigate();
     return (
-      <StyledMenu open={open} aria-hidden={!isHidden} {...props}>
+      <StyledMenu open={open} style={{zIndex: '3'}} aria-hidden={!isHidden} {...props}>
         <NavTab onClick={() => !isAuthenticated ? loginWithRedirect() : navigate("/")} tabIndex={tabIndex}>
           Home
         </NavTab>

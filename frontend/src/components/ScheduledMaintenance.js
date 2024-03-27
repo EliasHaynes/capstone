@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
 import MaintenanceCard from "./MaintenanceCard";
+import AlertTrigger from './AlertTrigger';
 
 function ScheduledMaintenance() {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ function ScheduledMaintenance() {
   const [groupedRepairs, setGroupedRepairs] = useState({});
   const { isAutheticated, user } = useAuth0();
   const [active, setActive] = useState(null);
+  const [alert, sendAlert] = useState(false);
+  const [alertType, setAlert] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const user_id = user.sub.split("|")[1].toString();
 
@@ -69,6 +73,12 @@ function ScheduledMaintenance() {
             },
           }
         );
+        if (response.data.data = []) {
+          sendAlert(true);
+          setAlert("error");
+          setAlertMessage("Unfortunately there is no repair data for your vehicle. May be too old or new.")
+          return
+        }
         console.log("response:", response)
         const grouped = groupCardsByMileageThreshold(response.data.data);
         setGroupedRepairs(grouped);
@@ -84,6 +94,9 @@ function ScheduledMaintenance() {
 
   return (
     <div className="scheduled-maintenance-page">
+            {alert && (
+        <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
+      )}
       <div className="scheduled-heading">
         <h1>Get Relative Scheduled Maintenance</h1>
         <p>within -+10,000 miles of vehicle mileage</p>

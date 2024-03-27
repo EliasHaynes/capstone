@@ -18,25 +18,27 @@ function AddRepair() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`http://localhost:5000/create/${user_id}/${v_id}`, {
+    try {
+      await axios.post(`http://localhost:5000/create/${user_id}/${v_id}`, {
         mileage,
         maintenance,
         performed_by,
         material,
         labor,
         other,
-      })
-      .then((res) => {
-        navigate("/repair");
-      })
-      .catch((err) => console.log(err));
+      });
+      navigate("/repair");
+    } catch (e) {
+      console.log(e);
+    }
   };
-  console.log();
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="repair-forms-container">
+      <h1>Add Repair</h1>
+    <form onSubmit={handleSubmit} className="repair-forms">
       <input
         name="mileage"
         placeholder="mileage"
@@ -87,11 +89,12 @@ function AddRepair() {
       ></input>
 
       <button class="button-82-pushable" role="button" type="submit">
-                  <span class="button-82-shadow"></span>
-                  <span class="button-82-edge"></span>
-                  <span class="button-82-front text">Add Repair</span>
-                </button>
+        <span class="button-82-shadow"></span>
+        <span class="button-82-edge"></span>
+        <span class="button-82-front text">Add Repair</span>
+      </button>
     </form>
+    </div>
   );
 }
 

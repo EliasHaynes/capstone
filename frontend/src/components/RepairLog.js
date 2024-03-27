@@ -13,6 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddRepair from "./AddRepair";
 import { useAuth0 } from "@auth0/auth0-react";
+import StickyHeadTable from "./RepairTable";
 
 function RepairLog() {
   const navigate = useNavigate();
@@ -57,25 +58,48 @@ function RepairLog() {
   };
 
   const handleDelete = async (repair_id) => {
+    console.log("Deleteing...");
     try {
-      console.log("delete id:", repair_id);
-      const deleteRepair = await axios
-        .delete(`http://localhost:5000/delete/${repair_id}`)
-        .then((response) => {
-          const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
-          setRepairs(newArr);
-        })
-        .catch((err) => {
-          return err;
-        });
+      await axios.delete(`http://localhost:5000/delete/${repair_id}`);
+      const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
+      console.log("newArr:", newArr);
+      setRepairs(newArr);
+
+      setReload((currentState) => !currentState);
+      console.log("reload:", reload);
+      console.log("Async delete done...");
+      return;
     } catch (e) {
       console.error(e);
     }
+    console.log("handleDelete done!");
   };
+
+  const onRepairDeleteReRender = () => {
+    setReload((currentState) => !currentState);
+  };
+
+  console.log("Reload:", reload);
 
   return (
     <div>
-      <Container maxWidth="lg" className="car-container">
+      <button
+        class="button-82-pushable"
+        onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
+      >
+        <span class="button-82-shadow"></span>
+        <span class="button-82-edge"></span>
+        <span class="button-82-front text">Add Repair</span>
+      </button>
+      <StickyHeadTable
+        repairs={repairs}
+        navigate={navigate}
+        handleDelete={handleDelete}
+        currentVId={currentVId}
+        userId={user_id}
+        reRenderPage={onRepairDeleteReRender}
+      ></StickyHeadTable>
+      {/* <Container maxWidth="lg" className="car-container">
         <div className="flex-container">
           <button
             class="button-82-pushable"
@@ -86,7 +110,7 @@ function RepairLog() {
             <span class="button-82-front text">Add Repair</span>
           </button>
         </div>
-        <Table>
+        <Table className="repair-table">
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
@@ -137,7 +161,7 @@ function RepairLog() {
             ))}
           </TableBody>
         </Table>
-      </Container>
+      </Container> */}
     </div>
   );
 }

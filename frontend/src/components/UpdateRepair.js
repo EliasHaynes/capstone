@@ -54,19 +54,20 @@ function UpdateRepair() {
       
       
       
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:5000/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
-        .then((res) => {
-            console.log("The PUT:", res)
+        try {
+            await axios.put(`http://localhost:5000/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
             navigate(`/repair`)
-
-        })
-        .catch(err => console.log(err))
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="repair-forms-container">
+            <h1>Update Repair</h1>
+        <form onSubmit={handleSubmit} className="repair-forms">
             <input 
                 name='mileage' 
                 placeholder={repair.repair_mileage}
@@ -121,6 +122,7 @@ function UpdateRepair() {
                   <span class="button-82-front text">Update Repair</span>
                 </button>
         </form>
+        </div>
     )
 }
 

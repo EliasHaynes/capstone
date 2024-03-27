@@ -30,12 +30,12 @@ const showRepairById = async (req,res) => {
     }
 }
 
-const createRepair = (req, res) => {
+const createRepair = async (req, res) => {
   const user_id = req.params.user_id;
   const v_id = req.params.v_id;
   const sql =
     "INSERT INTO repairLog (`repair_mileage`, `maintenance`, `performed_by`, material, labor, other, user_id,`v_id`) VALUES (?)";
-
+ try {
   const values = [
     req.body.mileage,
     req.body.maintenance,
@@ -47,19 +47,25 @@ const createRepair = (req, res) => {
     v_id,
   ];
 
-  pool.query(sql, [values], (err, data) => {
+  const response = await pool.query(sql, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
+  console.log("response:", response)
+  return res.json(response)
+ } catch (e) {
+  console.error(e);
+ }
+
 };
 
-const updateRepair = (req, res) => {
+const updateRepair = async (req, res) => {
   const sql =
     "UPDATE repairLog SET repair_mileage = ?, maintenance = ?, performed_by = ?, material = ?, labor =?, other =?, v_id = ? WHERE user_id = ? AND repair_id = ?";
   const repair_id = req.params.repair_id;
   const user_id = req.params.user_id;
 
-
+try {
   const values = [
     req.body.mileage,
     req.body.maintenance,
@@ -70,10 +76,16 @@ const updateRepair = (req, res) => {
     req.body.v_id
   ];
 
-  pool.query(sql, [...values, user_id, repair_id], (err, data) => {
+  const response = await pool.query(sql, [...values, user_id, repair_id], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
+  console.log("response:", response)
+  return res.json(response)
+} catch(e) {
+  console.error(e);
+}
+
 };
 
 const deleteRepair = async (req, res) => {
@@ -83,11 +95,11 @@ const deleteRepair = async (req, res) => {
   let repair_id = req.params.repair_id;
   repair_id = parseInt(repair_id, 10);
 
-  const deleteRepair = pool.query(sql, [repair_id, repair_id], (err, data) => {
+  const deleteRepair = await pool.query(sql, [repair_id, repair_id], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
-  return deleteRepair;
+  return res.json(deleteRepair);
     } catch (e) {
         console.error(e);
     }
