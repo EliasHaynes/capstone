@@ -20,6 +20,8 @@ router.post('/addVehicle/:user_id', registerCarRoute)
 // Vehicle Profiles Routes
 router.get("/getVehicles/:user_id", vehicleProfilesRoute)
 router.get("/getCurrentVehicle/:user_id", vehicleProfilesRoute)
+router.get("/getMileage/:user_id/:v_id", vehicleProfilesRoute);
+router.put("/updateMileage/:user_id/:v_id", vehicleProfilesRoute)
 router.put("/toggleCurrentAndNewCurrent/:user_id/:v_id", vehicleProfilesRoute)
 router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute) 
 

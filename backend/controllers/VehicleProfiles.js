@@ -40,6 +40,41 @@ const getCurrentVehicleProfile = async (req, res) => {
   return res.json(response[0])
 };
 
+const getVehicleMileage = async (req,res) => {
+  const user_id = req.params.user_id;
+  const v_id = req.params.v_id;
+  const sql = "SELECT mileage FROM vehicles WHERE user_id = ? AND v_id = ?"
+  try {
+    const response = await pool.query(sql,[user_id,v_id], (err,data) => {
+      if(err) return res.status(500).json("Error:" + e);
+
+      return res.status(200).json(data)
+    })
+    return res.json(response[0])
+  } catch(e) {
+    console.error(e);
+    res.status(500).json("Error " + e);
+  }
+}
+
+const updateVehicleMileage = async (req,res) => {
+  const user_id = req.params.user_id;
+  const v_id = req.params.v_id;
+  const mileage = req.body.mileage
+  const sql = "UPDATE vehicles SET mileage = ? WHERE user_id =? AND v_id = ?"
+  try {
+    const response = await pool.query(sql,[mileage, user_id, v_id], (err,data) => {
+      if(err) return res.status(500).json("Error:" + err);
+      return res.json(data);
+    })
+    return res.json(response[0]);
+
+  } catch(e) {
+    console.error(e);
+    res.status(500).json("Error" + e)
+  }
+}
+
 
 const togglingPrevCurrentAndNewCurrent = async (req, res) => {
   const user_id = req.params.user_id;
@@ -90,6 +125,8 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
 module.exports = {
     getVehicles,
     getCurrentVehicleProfile,
+    getVehicleMileage,
+    updateVehicleMileage,
     togglingPrevCurrentAndNewCurrent,
     deleteVehicle
 };

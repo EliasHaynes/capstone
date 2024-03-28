@@ -121,10 +121,10 @@ const RegisterCar = (props) => {
                 />
               </label>
 
-              <button class="button-82-pushable" role="button" type="submit">
-                <span class="button-82-shadow"></span>
-                <span class="button-82-edge"></span>
-                <span class="button-82-front text">Submit Info</span>
+              <button className="button-82-pushable" role="button" type="submit">
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">Submit Info</span>
               </button>
             </form>
           )}

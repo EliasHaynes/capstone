@@ -11,6 +11,7 @@ import AddRepair from "./components/AddRepair";
 import UpdateRepair from "./components/UpdateRepair";
 import ScheduledMaintenance from "./components/ScheduledMaintenance";
 import VehicleProfiles from "./components/VehicleProfiles";
+import UpdateMileage from "./components/UpdateMileage";
 
 
 
@@ -38,6 +39,7 @@ function Router() {
             {/* API Components */}
             <Route path="/userMaintenace" element={<ProtectedRoute component={ScheduledMaintenance} />} />
             <Route path="/vehicleprofiles" element={<ProtectedRoute component={VehicleProfiles}/>} />
+            <Route path="/updateMileage/:user_id/:v_id" element={<ProtectedRoute component={UpdateMileage} /> } />
     
             {/* Repair Components */}
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />

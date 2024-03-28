@@ -105,6 +105,7 @@ function VehicleProfiles() {
       });
   };
 
+  console.log("selectedProfile:", selectedProfile)
   return (
     <div className="vehicle-profile-wrap-container">
       {alert && (
@@ -141,12 +142,36 @@ function VehicleProfiles() {
           ))}
           <div>
             {usersVehicleProfiles.length > 1 ? (
-              <button type="submit">Update Selection</button>
+              <button
+                className="button-82-pushable"
+                role="button"
+                type="submit"
+              >
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">Update Selection</span>
+              </button>
             ) : null}
           </div>
+
         </form>
-        <button onClick={() => navigate("/registerCar")}>
-          Add Another Vehicle Profile
+        </div>
+        <div></div>
+        <button
+          onClick={() => navigate("/registerCar")}
+          className="button-82-pushable"
+          role="button"
+        >
+          <span class="button-82-shadow"></span>
+          <span class="button-82-edge"></span>
+          <span class="button-82-front text">Add Vehicle</span>
+        </button>
+      
+      <div>
+        <button className="button-82-pushable" role="button" type="submit">
+          <span className="button-82-shadow"></span>
+          <span className="button-82-edge"></span>
+          <span  onClick={() => navigate(`/updateMileage/${user_id}/${selectedProfile}`)} className="button-82-front text">Update mileage</span>
         </button>
       </div>
     </div>
