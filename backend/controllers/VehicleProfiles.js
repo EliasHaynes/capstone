@@ -22,7 +22,8 @@ const getVehicles = async (req, res) => {
     }
     return res.json(response[0])
   } catch (e) {
-    console.error(e);
+    return "Error: " + e
+
   }
 };
 
@@ -32,7 +33,6 @@ const getCurrentVehicleProfile = async (req, res) => {
 
   const response = await pool.query(sql, [user_id], (err, data) => { // Pass parameters as an array
     if (err) {
-      console.error(err); // Log the error
       return res.status(500).json({ message: "An error occurred." }); // Send generic error message
     }
     return res.json(data); // Send data
@@ -52,7 +52,6 @@ const getVehicleMileage = async (req,res) => {
     })
     return res.json(response[0])
   } catch(e) {
-    console.error(e);
     res.status(500).json("Error " + e);
   }
 }
@@ -70,7 +69,6 @@ const updateVehicleMileage = async (req,res) => {
     return res.json(response[0]);
 
   } catch(e) {
-    console.error(e);
     res.status(500).json("Error" + e)
   }
 }
@@ -95,7 +93,6 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
       return res.json({ success: true, message: "Profile updated successfully" });
     }
   } catch (err) {
-    console.error(err);
     return res.status(500).json({ error: "An error occurred while updating the profile." });
   }
 };
@@ -114,7 +111,6 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
             res.json({ success: false, message: 'Vehicle not found.' });
         }
     } catch (err) {
-        console.error("The v_id is...:", v_id, "Error:", err);
         res.status(500).json({ success: false, message: 'Deletion failed due to server error.' });
     }
 };

@@ -40,8 +40,7 @@ function MobileHome() {
             <div className="page-buttons-text-box">
               <h3>Register your vehicles profile</h3>
               <p>
-                Create your vehicles profile to have easy access to your
-                vehicles data.
+              Using your vehicles vin #, register up to 4. Registering gives you access to your vehicles data.
               </p>
               <h4 className="page-buttons-anchors">
                 <a
@@ -60,7 +59,7 @@ function MobileHome() {
           <section className="third-pic">
             <div className="page-buttons-text-box">
               <h3>Get Relative Scheduled Maintenance</h3>
-              <p> </p>
+              <p> Access data on upcoming repairs relative to your vehicles mileage. Recieve insightful information and metrics into each of those repairs so you may keep your vehicle in prestine condition.</p>
               <h4 className="page-buttons-anchors">
                 <a
                   onClick={() =>
@@ -78,7 +77,7 @@ function MobileHome() {
           <section className="fourth-pic">
             <div className="page-buttons-text-box">
               <h3>Document personal and professional repairs</h3>
-              <p> </p>
+              <p>When performing your repairs you want to be able to keep track of the costs and details. Our repair log is made with this in mind. Manage each repair you add and store meaningful metrics on your repairs. </p>
               <h4 className="page-buttons-anchors">
                 <a
                   onClick={() =>

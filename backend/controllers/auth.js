@@ -10,7 +10,7 @@ const passUId = async (req, res) => {
         const [data] = await pool.query(sql, [Uuid]);
         return res.json(data);
     } catch (err) {
-        console.error(err);
+
         return res.status(500).json(err);
     }
 };

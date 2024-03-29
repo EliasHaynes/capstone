@@ -26,7 +26,8 @@ function Dashboard() {
           setVehicle("No Vehicle");
         }
       } catch (e) {
-        console.error(e);
+        return "Error: " + e
+
       }
     };
     fetchCurrentVehicle();
@@ -63,6 +64,7 @@ function Dashboard() {
             <div className="vehicle-info-container">
               {" "}
               <h3>Year Make Model: {vehicle ? vehicle.v_ymm : null}</h3>
+              <h4>Mileage: {vehicle ? vehicle.mileage: null}</h4>
               <h4>Trim: {vehicle ? vehicle.v_trim : null}</h4>
               <h4>Engine: {vehicle ? vehicle.v_engine : null}</h4>
               <h4>Transmission: {vehicle ? vehicle.v_transmission : null}</h4>
@@ -74,12 +76,12 @@ function Dashboard() {
         </div>
         {vehicle === "No Vehicle" ? null : (
           <button
-            class="button-82-pushable"
+          className="button-82-pushable"
             onClick={() => navigate("/vehicleprofiles")}
           >
-            <span class="button-82-shadow"></span>
-            <span class="button-82-edge"></span>
-            <span class="button-82-front text">Manage Vehicles</span>
+            <span className="button-82-shadow"></span>
+            <span className="button-82-edge"></span>
+            <span className="button-82-front text">Manage Vehicles</span>
           </button>
         )}
       </div>

@@ -138,7 +138,6 @@ export default function StickyHeadTable({
                             />
                             <DeleteIcon
                               onClick={() => {
-                                console.log("The ID:", row.repair_id)
                                   handleDelete(row.repair_id);
                                   reRenderPage()                          }}
                               className="icon text-red"

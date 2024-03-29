@@ -28,7 +28,7 @@ const RegisterCar = (props) => {
         );
         setVehicles(response.data);
       } catch (e) {
-        console.error(e);
+        return "Error: " + e
       }
     };
     getVehicles();
@@ -69,11 +69,9 @@ const RegisterCar = (props) => {
             break;
         }
         sendAlert(true);
-        console.log(" response done");
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.data.error); // Custom error message from the server
           setAlert("error");
           setAlertMessage(err.response.data.error);
         } else {
@@ -84,8 +82,6 @@ const RegisterCar = (props) => {
       });
   };
 
-  console.log("Alert type:", alertType);
-  console.log("Alert message:", alertMessage);
 
   return (
     <div className="register-page ">

@@ -14,7 +14,6 @@ function AddRepair() {
   const { isAuthenitcated, user } = useAuth0();
 
   const { user_id, v_id } = useParams();
-  console.log(`user id in param: ${user_id} and v_id in param: ${v_id}`);
 
   const navigate = useNavigate();
 
@@ -31,7 +30,7 @@ function AddRepair() {
       });
       navigate("/repair");
     } catch (e) {
-      console.log(e);
+      return "Error: " +e;
     }
   };
 
@@ -44,7 +43,6 @@ function AddRepair() {
         placeholder="mileage"
         onChange={(e) => {
           setMileage(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
       <input
@@ -52,7 +50,6 @@ function AddRepair() {
         placeholder="maintenance"
         onChange={(e) => {
           setMaintenance(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
       <input
@@ -60,7 +57,6 @@ function AddRepair() {
         placeholder="performedBy"
         onChange={(e) => {
           setPerformed_by(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
       <input
@@ -68,7 +64,6 @@ function AddRepair() {
         placeholder="material"
         onChange={(e) => {
           setMaterial(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
       <input
@@ -76,7 +71,6 @@ function AddRepair() {
         placeholder="labor"
         onChange={(e) => {
           setLabor(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
       <input
@@ -84,7 +78,6 @@ function AddRepair() {
         placeholder="other"
         onChange={(e) => {
           setOther(e.target.value);
-          console.log(e.target.value);
         }}
       ></input>
 

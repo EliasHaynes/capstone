@@ -61,7 +61,7 @@ const addVehicle = async (req, res) => {
       }
     }
   } catch (e) {
-    console.error(e);
+   return "Error: " + e
     // Check if the error is a duplicate entry error
   }
 };
@@ -76,7 +76,7 @@ const checkIfUserVinAlreadyRegistered = async (vin, user_id) => {
     });
     return results;
   } catch (e) {
-    console.error("Error when checking vin:", e);
+    return "Error: " + e
   }
 };
 
@@ -106,7 +106,7 @@ const idVehicleNameFromVin = async (vin) => {
     };
     return vehicleInfo;
   } catch (e) {
-    console.log(e);
+    return e
   }
 };
 
@@ -129,7 +129,7 @@ const vehicleImage = async (vin) => {
 
     return imgURL;
   } catch (e) {
-    console.error(e);
+    return "Error: " + e
   }
 };
 

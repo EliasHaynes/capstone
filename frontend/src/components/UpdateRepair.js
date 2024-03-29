@@ -15,13 +15,11 @@ function UpdateRepair() {
     const [other,setOther] = useState(0)
     const [repair,setRepair] = useState({})
 
-    console.log("The repair state:", repair)
 
     const navigate = useNavigate()
 
 
     let {user_id,v_id,repair_id} = useParams();
-    console.log(`user id in param: ${user_id} and repair_id in param: ${repair_id}`)
 
 
 
@@ -30,7 +28,6 @@ function UpdateRepair() {
         const fetchRepairDataById = async () => {
             try {
             const response = await axios.get(`http://localhost:5000/repair/${repair_id}`);
-            console.log("THE RESPONSE:", response)
                 setRepair(response.data[0])
                 setMileage(response.data[0].repair_mileage);
                 setMaintenance(response.data[0].maintenance);
@@ -41,7 +38,7 @@ function UpdateRepair() {
                 setOther(response.data[0].other);
             }
             catch (error) {
-                console.log(error)
+                return "Error: " + error;
             }
         }
         fetchRepairDataById();
@@ -60,7 +57,7 @@ function UpdateRepair() {
             await axios.put(`http://localhost:5000/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
             navigate(`/repair`)
         } catch(e) {
-            console.error(e);
+            return "Error: " + e
         }
     }
 
@@ -73,7 +70,6 @@ function UpdateRepair() {
                 placeholder={repair.repair_mileage}
                 onChange={(e) => {
                     setMileage(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -81,7 +77,6 @@ function UpdateRepair() {
                 placeholder={repair.maintenance}
                 onChange={(e) => {
                     setMaintenance(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -89,7 +84,6 @@ function UpdateRepair() {
                 placeholder={repair.performed_by}
                 onChange={(e) => {
                     setPerformed_by(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -97,7 +91,6 @@ function UpdateRepair() {
                 placeholder={repair.material}
                 onChange={(e) => {
                     setMaterial(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -105,7 +98,6 @@ function UpdateRepair() {
                 placeholder={repair.labor}
                 onChange={(e) => {
                     setLabor(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -113,7 +105,6 @@ function UpdateRepair() {
                 placeholder={repair.other}
                 onChange={(e) => {
                     setOther(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <button class="button-82-pushable" role="button" type="submit">

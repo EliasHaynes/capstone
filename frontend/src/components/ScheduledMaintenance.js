@@ -47,7 +47,6 @@ function ScheduledMaintenance() {
       }
       grouped[mileage].push(repair);
     });
-    console.log("Grouped:", grouped);
     return grouped;
   };
 
@@ -61,8 +60,7 @@ function ScheduledMaintenance() {
         const mileage = await currentVehicleResponse.data[0].mileage;
         const vin = await currentVehicleResponse.data[0].vin;
 
-        console.log("mileage:", mileage);
-        console.log("vin:", vin)
+
 
         const response = await axios.get(
           `http://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
@@ -73,24 +71,22 @@ function ScheduledMaintenance() {
             },
           }
         );
-        if (response.data.data = []) {
+        if (response.data.data.length === 0) {
+          console.log("if ran")
           sendAlert(true);
           setAlert("error");
           setAlertMessage("Unfortunately there is no repair data for your vehicle. May be too old or new.")
-          return
         }
-        console.log("response:", response)
         const grouped = groupCardsByMileageThreshold(response.data.data);
         setGroupedRepairs(grouped);
         setRepairs(response.data.data);
       } catch (error) {
-        console.log(error);
+        return "Error: " + error
       }
     };
     fetchVehicleData();
   };
 
-  console.log("The repairs: ", repairs)
 
   return (
     <div className="scheduled-maintenance-page">

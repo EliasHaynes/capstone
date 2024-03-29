@@ -12,7 +12,8 @@ const showUsersRepairById = async (req, res) => {
     });
     return res.json(response[0]);
   } catch (e) {
-    console.error(e);
+    return "Error: " + e
+
   }
 };
 
@@ -26,7 +27,8 @@ const showRepairById = async (req,res) => {
           });
           return res.json(response[0]);
     } catch(e) {
-        console.error(e);
+      return "Error: " + e
+
     }
 }
 
@@ -51,10 +53,10 @@ const createRepair = async (req, res) => {
     if (err) return res.json(err);
     return res.json(data);
   });
-  console.log("response:", response)
   return res.json(response)
  } catch (e) {
-  console.error(e);
+  return "Error: " + e
+
  }
 
 };
@@ -80,10 +82,10 @@ try {
     if (err) return res.json(err);
     return res.json(data);
   });
-  console.log("response:", response)
   return res.json(response)
 } catch(e) {
-  console.error(e);
+  return "Error: " + e
+
 }
 
 };
@@ -101,7 +103,8 @@ const deleteRepair = async (req, res) => {
   });
   return res.json(deleteRepair);
     } catch (e) {
-        console.error(e);
+      return "Error: " + e
+
     }
 
 };

@@ -19,7 +19,6 @@ function VehicleProfiles() {
   const user_id = user.sub.split("|")[1].toString();
 
   useEffect(() => {
-    console.log("Running");
     const getVehicleProfilesAndCurrent = async () => {
       try {
         const allVehiclesResponse = await axios.get(
@@ -31,7 +30,7 @@ function VehicleProfiles() {
         setUsersVehiclesProfiles(allVehiclesResponse.data);
         setProfile(currentVehicleResponse.data[0].v_id);
       } catch (e) {
-        console.error(e);
+        return "Error: " + e
       }
     };
     getVehicleProfilesAndCurrent();
@@ -65,8 +64,7 @@ function VehicleProfiles() {
       }
       sendAlert(true);
     } catch (e) {
-      console.error(e);
-      alert("An error occurred while updating the profile.");
+      return "Error: " + e
     }
 
     setReload((currentState) => !currentState);
@@ -76,7 +74,6 @@ function VehicleProfiles() {
   const handleProfileSelection = (e) => {
     const newValue = Number(e.target.value);
     setProfile(newValue);
-    console.log(`New selection: ${newValue}, Type: ${typeof newValue}`);
   };
 
   const handleDelete = (v_id) => {
@@ -93,19 +90,18 @@ function VehicleProfiles() {
         // If the server sends back a not successful response, revert the change
         if (!response.data.success) {
           // This is just a placeholder, you'll need to adjust based on your actual API response
-          console.error("Deletion failed on the server, reverting");
+
           setUsersVehiclesProfiles(usersVehicleProfiles); // Revert to the original state
         } else {
         }
       })
       .catch((error) => {
-        console.error("An error occurred:", error);
+        return "Error: " + error
         // Revert to the original state in case of an error
         setUsersVehiclesProfiles(usersVehicleProfiles);
       });
   };
 
-  console.log("selectedProfile:", selectedProfile)
   return (
     <div className="vehicle-profile-wrap-container">
       {alert && (
@@ -153,10 +149,13 @@ function VehicleProfiles() {
               </button>
             ) : null}
           </div>
-
         </form>
-        </div>
-        <div></div>
+      </div>
+<div className="profile-additional-buttons-container">
+
+
+      <div className="profile-additional-buttons">
+        <h3> Register a new vehicle</h3>
         <button
           onClick={() => navigate("/registerCar")}
           className="button-82-pushable"
@@ -166,13 +165,23 @@ function VehicleProfiles() {
           <span class="button-82-edge"></span>
           <span class="button-82-front text">Add Vehicle</span>
         </button>
-      
-      <div>
+      </div>
+
+      <div className="profile-additional-buttons">
+        <h3>Update the mileage of selected vehicle profile</h3>
         <button className="button-82-pushable" role="button" type="submit">
           <span className="button-82-shadow"></span>
           <span className="button-82-edge"></span>
-          <span  onClick={() => navigate(`/updateMileage/${user_id}/${selectedProfile}`)} className="button-82-front text">Update mileage</span>
+          <span
+            onClick={() =>
+              navigate(`/updateMileage/${user_id}/${selectedProfile}`)
+            }
+            className="button-82-front text"
+          >
+            Update mileage
+          </span>
         </button>
+      </div>
       </div>
     </div>
   );

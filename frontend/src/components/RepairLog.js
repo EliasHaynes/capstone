@@ -26,18 +26,15 @@ function RepairLog() {
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    console.log("running repair");
     const fetchRepairData = async () => {
       try {
         const currentVehicleId = await fetchCurrentVehicle();
-        console.log("The v id:", currentVehicleId);
         const vehicleRepairs = await axios.get(
           `http://localhost:5000/repair/${user_id}/${currentVehicleId}`
         );
-        console.log("the data:", vehicleRepairs.data);
         setRepairs(vehicleRepairs.data);
       } catch (error) {
-        console.log(error);
+        return "Error: " + error;
       }
     };
 
@@ -53,33 +50,27 @@ function RepairLog() {
       setCurrentVId(currentVehicleResponse.data[0].v_id);
       return currentVehicleResponse.data[0].v_id;
     } catch (e) {
-      console.error(e);
+      return "Error: " + e
     }
   };
 
   const handleDelete = async (repair_id) => {
-    console.log("Deleteing...");
     try {
       await axios.delete(`http://localhost:5000/delete/${repair_id}`);
       const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
-      console.log("newArr:", newArr);
       setRepairs(newArr);
 
       setReload((currentState) => !currentState);
-      console.log("reload:", reload);
-      console.log("Async delete done...");
       return;
     } catch (e) {
-      console.error(e);
+      return "Error: " + e
     }
-    console.log("handleDelete done!");
   };
 
   const onRepairDeleteReRender = () => {
     setReload((currentState) => !currentState);
   };
 
-  console.log("Reload:", reload);
 
   return (
     <div>

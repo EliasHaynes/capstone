@@ -12,7 +12,6 @@ const clientSecret = process.env.CLIENTSECRET
 class Connection {
     constructor() {
         if (!this.pool) {
-            console.log('creating connection...')
             this.pool = mysql.createPool({
                 connectionLimit: 25,
                 host: host,
@@ -36,8 +35,6 @@ const instance = new Connection();
 
 // request(options, function (error, response, body) {
 //   if (error) throw new Error(error);
-
-//   console.log(body);
 // });
 
 module.exports = instance;

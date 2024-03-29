@@ -369,11 +369,16 @@ code {
 }
 
 .vehicle-profile-container {
-  display: flex;
   width:40%;
+  height: 30%;
+  display: flex;
   flex-flow: column nowrap;
+  border: 5px solid blue;
+  border-radius: 30px;
+  margin-top: 5%;
   align-items: center;
   padding: 5%;
+  margin-bottom: 3%;
 }
 
 .vehicle-profile-container form {
@@ -386,6 +391,66 @@ code {
 .vehicle-profile-container form label {
   display: flex;
   flex-flow: row nowrap;
+}
+
+.profile-additional-buttons-container {
+display: flex;
+width: 40%;
+flex-flow: row wrap;
+align-items: center;
+justify-content: space-around;
+}
+
+.profile-additional-buttons {
+  width: 200px;
+  height: 200px;
+  border: 3px solid blue;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-bottom: 3%;
+}
+
+/* - Update Mileage - */
+.update-mileage-page {
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height:80vh;
+  margin-top: 3%;
+}
+
+.update-mileage-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:80%;
+  height:40%;
+}
+
+.update-mileage-form {
+  height: 95%;
+  width:80%;
+border: 1px solid red;
+flex-flow: column nowrap;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 2%;
+}
+
+.update-mileage-form label {
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3%;
+}
+
+.profiles-return-button-container {
+margin-top: 3%;
 }
 
 /* ---------- Scheduled Maintenance ---------- */

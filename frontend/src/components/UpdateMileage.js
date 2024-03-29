@@ -18,11 +18,10 @@ function UpdateMileage() {
         const response = await axios.get(
           `http://localhost:5000/getMileage/${user_id}/${v_id}`
         );
-        console.log("mileage response:", response.data);
         setMileage(response.data[0]);
         
       } catch (e) {
-        console.error(e);
+        return "Error: " + e
       }
     }
     fetchVehiclesMileage();
@@ -48,9 +47,8 @@ function UpdateMileage() {
     );
     alerttUser(response)
     sendReturn(true);
-    console.log("Update response:", response);
     } catch(e) {
-      console.error(e);
+      return "Error: " + e
 
     }
 
@@ -67,16 +65,18 @@ function UpdateMileage() {
       setAlertMessage("Sorry, something went wrong");
     }
   };
-
+console.log("mileage:", mileage)
   return (
-    <div>
-      {alert && (
+    <>      {alert && (
         <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
       )}
-      <form onSubmit={(e) => handleUpdatingVehicleMileage(e)}>
+    <div className="update-mileage-page">
+
+      <div className="update-mileage-form-container">
+      <form onSubmit={(e) => handleUpdatingVehicleMileage(e)} className="update-mileage-form">
         <label>
           Update Vehicle Mileage
-          <input onChange={(e) => setMileage(e.target.value)}></input>
+          <input onChange={(e) => setMileage(e.target.value)} placeholder={mileage ? mileage.mileage : null}></input>
         </label>
         <div>
         <button className="button-82-pushable" role="button" type="submit">
@@ -85,10 +85,7 @@ function UpdateMileage() {
           <span className="button-82-front text">Submit</span>
         </button>
         </div>
-
-
-      </form>        
-      <div>
+      <div className="profiles-return-button-container">
       {returnVehicleProfiles && (
           <div>
                   <button onClick={() => navigate('/vehicleprofiles')} className="button-82-pushable" role="button">
@@ -98,8 +95,12 @@ function UpdateMileage() {
                 </button>
                 </div>
         )}
-        </div>
-    </div>
+        </div> 
+      </form>       
+
+      </div>      
+
+    </div></>
   );
 }
 

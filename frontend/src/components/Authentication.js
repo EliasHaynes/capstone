@@ -54,7 +54,7 @@ const Authentication = () => {
               });
 
           } catch (e) {
-            console.log(e.message);
+            return "Error: " + e;
           }
         };
       
