@@ -16,6 +16,7 @@ import {
 import MobileHome from "./mobile components/MobileHome";
 import Dashboard from "./Dashboard";
 import Authentication from "./Authentication";
+import Spinner from "./Spinner";
 
 function Home() {
   const navigate = useNavigate();

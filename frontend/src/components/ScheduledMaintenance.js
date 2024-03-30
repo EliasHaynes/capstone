@@ -5,6 +5,7 @@ import "../index.css";
 import { useNavigate } from "react-router-dom";
 import MaintenanceCard from "./MaintenanceCard";
 import AlertTrigger from './AlertTrigger';
+import Spinner from "./Spinner";
 
 function ScheduledMaintenance() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function ScheduledMaintenance() {
   const [alert, sendAlert] = useState(false);
   const [alertType, setAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [loading,isLoading] = useState(false)
 
   const user_id = user.sub.split("|")[1].toString();
 
@@ -54,6 +56,7 @@ function ScheduledMaintenance() {
   const handleClick = () => {
     const fetchVehicleData = async () => {
       try {
+        
         const currentVehicleResponse = await axios.get(
           `http://localhost:5000/getCurrentVehicle/${user_id}`
         );
@@ -80,6 +83,7 @@ function ScheduledMaintenance() {
         const grouped = groupCardsByMileageThreshold(response.data.data);
         setGroupedRepairs(grouped);
         setRepairs(response.data.data);
+        isLoading(false);
       } catch (error) {
         return "Error: " + error
       }
@@ -100,6 +104,7 @@ function ScheduledMaintenance() {
         <button class="button-82-pushable"  onClick={() => {
             toggleOpen(true);
             handleClick();
+            isLoading(true);
           }}>
   <span class="button-82-shadow"></span>
   <span class="button-82-edge"></span>
@@ -108,7 +113,8 @@ function ScheduledMaintenance() {
   </span>
 </button>
       </div>
-      {open && (
+      { loading ? <Spinner></Spinner> : (
+      
         <div className="scheduled-mileage-threshold">
           {Object.entries(groupedRepairs).map(
             ([mileage, repairsInGroup], idx) => (
@@ -137,7 +143,7 @@ function ScheduledMaintenance() {
             )
           )}
         </div>
-      )}
+                      )}
     </div>
   );
 }

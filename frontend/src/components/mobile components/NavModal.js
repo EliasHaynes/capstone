@@ -186,7 +186,7 @@ const StyledMenu = styled.nav`
 
   @media (max-width: 768px) {
     width: auto;
-    height: 33vh;
+    height: 40vh;
   }
 
   :hover {
