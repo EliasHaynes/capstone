@@ -32,22 +32,29 @@ code {
 
 /* ---------- Nav Bar ---------- */
 
+.navbar-heading {
+  @media (max-width: 768px) {
+    width:80%;
+
+
+    }
+  }
+
 
 .nav-list {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
-  width: 65%;
+  justify-content: space-between;
+  width: 70%;
   align-items: flex-end;
-
   @media (max-width: 768px) {
     display: none;
   }
 }
 
 .navbar ul a.active {
-  color: rgb(51, 22, 3);
-  font-size: 105%;
+  color: rgb(209, 17, 17);
+
   font-weight: 100%;
   text-decoration: underline;
 }
@@ -66,7 +73,7 @@ code {
 
 .nav-list-item {
   list-style-type: none;
-  width: 15%;
+  width: 13%;
   color: white;
   cursor: pointer;
 }

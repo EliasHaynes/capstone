@@ -26,7 +26,7 @@ const Navigation = () => {
         <IconButton color="inherit">
           <NavModal></NavModal>
         </IconButton>
-        <Typography  onClick={() => navigate('/')} variant="h6" style={{ flexGrow: "1", cursor: "pointer", marginLeft: "5%" }}>
+        <Typography  onClick={() => navigate('/')} variant="h6" className="navbar-heading">
           Maintenance App
         </Typography>
         <ul className="nav-list ">
