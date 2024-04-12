@@ -1,10 +1,9 @@
-const express = require('express')
+import express from "express"
 const router = express.Router()
-const repairLogRoute = require('./RepairLog')
-const vehicleProfilesRoute = require("./VehicleProfiles")
-const registerCarRoute = require('./RegisterCar')
-const authRoute = require('./auth')
-const { checkJwt } = require('../middleware')
+import repairLogRoute from './RepairLog.js'
+import vehicleProfilesRoute from './VehicleProfiles.js';
+import registerCarRoute from './RegisterCar.js';
+import authRoute from './auth.js'
 
 
 // Repair Log Routes
@@ -29,4 +28,4 @@ router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute)
 router.post('/passUId', authRoute)
 
     
-module.exports = router;
+export default router

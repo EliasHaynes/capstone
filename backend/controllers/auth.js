@@ -1,7 +1,7 @@
-const mysql = require('mysql2')
-const pool = require('../mysql/connection')
+import mysql from 'mysql2'
+import pool from '../mysql/connection.js';
 
-const passUId = async (req, res) => {
+export const passUId = async (req, res) => {
     const Uuid = req.body.parcel;
     const sql = "INSERT IGNORE INTO users(user_id) VALUES (?)";
 
@@ -16,4 +16,4 @@ const passUId = async (req, res) => {
 };
 
 
-module.exports = {passUId}
+export default {passUId};

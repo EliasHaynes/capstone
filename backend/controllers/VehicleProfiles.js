@@ -1,5 +1,6 @@
-const mysql = require("mysql2");
-const pool = require("../mysql/connection");
+import mysql from 'mysql2';
+import pool from '../mysql/connection.js'
+
 
 const getVehicles = async (req, res) => {
   const sql = "SELECT * FROM vehicles WHERE user_id = ?";
@@ -118,7 +119,7 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
 
 
 
-module.exports = {
+export default {
     getVehicles,
     getCurrentVehicleProfile,
     getVehicleMileage,

@@ -1,5 +1,5 @@
-const express = require('express')
-const repairLogController = require('../controllers/RepairLog')
+import express from 'express';
+import repairLogController from '../controllers/RepairLog.js'
 const router = express.Router()
 
 
@@ -10,4 +10,4 @@ router.post('/create/:user_id/:v_id', repairLogController.createRepair)
 router.put('/update/:user_id/:repair_id', repairLogController.updateRepair)
 router.delete('/delete/:repair_id', repairLogController.deleteRepair)
 
-module.exports = router;
+export default router;

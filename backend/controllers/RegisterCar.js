@@ -1,7 +1,8 @@
-const mysql = require("mysql2");
-const pool = require("../mysql/connection");
-const axios = require("axios");
-require("dotenv").config();
+import mysql from 'mysql2';
+import pool from '../mysql/connection.js';
+import axios from 'axios'
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const token = process.env.TOKEN;
 const key = process.env.CAR_KEY;
@@ -133,4 +134,5 @@ const vehicleImage = async (vin) => {
   }
 };
 
-module.exports = { addVehicle };
+export default {addVehicle}
+

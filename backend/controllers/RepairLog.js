@@ -1,5 +1,5 @@
-const mysql = require("mysql2");
-const pool = require("../mysql/connection");
+import mysql from 'mysql2'
+import pool from '../mysql/connection.js'
 
 const showUsersRepairById = async (req, res) => {
   try {
@@ -109,7 +109,7 @@ const deleteRepair = async (req, res) => {
 
 };
 
-module.exports = {
+export default {
   showUsersRepairById,
   showRepairById,
   createRepair,
