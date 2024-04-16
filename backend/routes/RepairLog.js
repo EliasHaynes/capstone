@@ -1,14 +1,13 @@
-const express = require('express')
-const repairLogController = require('../controllers/RepairLog')
+import express from 'express';
+import repairLogController from '../controllers/RepairLog.js'
 const router = express.Router()
 
 
 //RepairLog Routes
-router.get('/repair', repairLogController.showRepairs)
-router.get('/repair/:auth0_id', repairLogController.showRepairById)
-router.get('/repair/:auth0_id/:id',repairLogController.showUsersRepairById)
-router.post('/create', repairLogController.createRepair)
-router.put('/update/:auth0_id/:id', repairLogController.updateRepair)
-router.delete('/delete/:id', repairLogController.deleteRepair)
+router.get('/repair/:user_id/:v_id', repairLogController.showUsersRepairById)
+router.get('/repair/:repair_id', repairLogController.showRepairById)
+router.post('/create/:user_id/:v_id', repairLogController.createRepair)
+router.put('/update/:user_id/:repair_id', repairLogController.updateRepair)
+router.delete('/delete/:repair_id', repairLogController.deleteRepair)
 
-module.exports = router;
+export default router;

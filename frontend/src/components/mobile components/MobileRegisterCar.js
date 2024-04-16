@@ -3,7 +3,7 @@ import { TextField, Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import vinPic from "../assets/Blue-And-White-Modern-Car-Insurance-Instagram-Post-1-1024x1024.webp";
+import vinPic from "../assets/vin.png";
 import AlertTrigger from "./AlertTrigger";
 
 const RegisterCar = (props) => {
@@ -75,7 +75,7 @@ const RegisterCar = (props) => {
           setAlert("error");
           setAlertMessage(err.response.data.error);
         } else {
-
+          // Handle cases where the error doesn't come from the server
           setAlert("error");
           setAlertMessage("An unexpected error occurred");
         }
@@ -84,51 +84,49 @@ const RegisterCar = (props) => {
 
 
   return (
-    <div className="register-page">
+    <div className="register-page ">
       {alert && (
         <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
       )}
-      
+
       <div className="register-main-container">
-        <h1>Register a Vehicle</h1>
         <div className=" register-wrapper">
-          {vehicles.length >= 4 ? (
-            <MaxVehicles />
-          ) : (
-            <form className="register-form" onSubmit={(e) => handleSubmit(e)}>
-              <label>
-                <input
-                  required
-                  onChange={(e) => setVin(e.target.value)}
-                  name="vin"
-                  label="vin"
-                  placeholder="vin"
-                  type="text"
-                />
-              </label>
-              <label>
-                <input
-                  required
-                  onChange={(e) => setMileage(e.target.value)}
-                  name="mileage"
-                  label="mileage"
-                  placeholder="mileage"
-                  type="text"
-                />
-              </label>
+          <img src={vinPic} className="register-image"></img>
+          <div className="register-right-side-form">
+            {vehicles.length >= 4 ? (
+              <MaxVehicles />
+            ) : (
+              <form className="register-form" onSubmit={(e) => handleSubmit(e)}>
+                <label>
+                  <input
+                    required
+                    onChange={(e) => setVin(e.target.value)}
+                    name="vin"
+                    label="vin"
+                    placeholder="vin"
+                    type="text"
+                  />
+                </label>
+                <label>
+                  <input
+                    required
+                    onChange={(e) => setMileage(e.target.value)}
+                    name="mileage"
+                    label="mileage"
+                    placeholder="mileage"
+                    type="text"
+                  />
+                </label>
 
-              <button className="button-82-pushable" role="button" type="submit">
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Submit Info</span>
-              </button>
-            </form>
-          )}
-          
-        </div>
-        <div className="register-image-container">
-
+                <button class="button-82-pushable" role="button" type="submit">
+                  <span class="button-82-shadow"></span>
+                  <span class="button-82-edge"></span>
+                  <span class="button-82-front text">Submit Info</span>
+                </button>
+              </form>
+            )}
           </div>
+        </div>
       </div>
     </div>
   );

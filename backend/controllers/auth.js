@@ -1,17 +1,19 @@
-const mysql = require('mysql2')
-const pool = require('../mysql/connection')
+import mysql from 'mysql2'
+import pool from '../mysql/connection.js';
 
-const passUId = (req,res) => {
-    const Uuid = req.body.parcel
+export const passUId = async (req, res) => {
+    const Uuid = req.body.parcel;
+    const sql = "INSERT IGNORE INTO users(user_id) VALUES (?)";
 
-    const sql = "INSERT IGNORE INTO users(user_id) VALUES (?) "
+    try {
+        // Execute the INSERT query
+        const [data] = await pool.query(sql, [Uuid]);
+        return res.json(data);
+    } catch (err) {
 
-    pool.query(sql,[Uuid], (err,data) => {
-        console.log("Auth Controller query hit")
-        if(err) return res.json(err);
-        console.log("Auth Controller Data:", res.json(data))
-        return res.json(data)
-    })
-}
+        return res.status(500).json(err);
+    }
+};
 
-module.exports = {passUId}
+
+export default {passUId};

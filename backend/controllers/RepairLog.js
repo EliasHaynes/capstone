@@ -1,97 +1,118 @@
-const mysql = require('mysql2')
-const pool = require('../mysql/connection')
+import mysql from 'mysql2'
+import pool from '../mysql/connection.js'
 
-const showRepairs = (req,res) => {
-    const sql = "SELECT * FROM repairLog WHERE userid = ?";
-    pool.query(sql, (err,data) => {
-        if (err) return res.json(err);
-        return res.json(data)
-    })
-}
-
-const showRepairById = (req,res) => {
-    const auth0_id = req.params.auth0_id
-    
-    const sql = "SELECT * FROM repairLog WHERE auth0_id = ?"
-
-    pool.query(sql, auth0_id, (err,data) => {
-        if(err) return res.json(err);
-        return res.json(data)
-    })
-}
-
-const showUsersRepairById = (req, res) => {
-    const auth0_id = req.params.auth0_id;
-    const id = req.params.id;
-  
-    const sql = "SELECT * FROM repairLog WHERE auth0_id = ? AND id = ?";
-  
-    pool.query(sql, [auth0_id, id], (err, data) => {
+const showUsersRepairById = async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const v_id = req.params.v_id;
+    const sql = "SELECT * FROM repairLog WHERE user_id = ? AND v_id = ?";
+    const response = await pool.query(sql, [user_id, v_id], (err, data) => {
       if (err) return res.json(err);
       return res.json(data);
     });
-  };
+    return res.json(response[0]);
+  } catch (e) {
+    return "Error: " + e
 
+  }
+};
 
-const createRepair = (req,res) => {
-    const sql = "INSERT INTO repairLog (`mileage`, `maintenance`, `performed_by`, `contact`, material, labor, other, auth0_id) VALUES (?)"
+const showRepairById = async (req,res) => {
+    try {
+        const repair_id = req.params.repair_id;
+        const sql = "SELECT * FROM repairLog WHERE repair_id = ?"
+        const response = await pool.query(sql, [repair_id], (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+          });
+          return res.json(response[0]);
+    } catch(e) {
+      return "Error: " + e
 
-    const values = [
-        req.body.mileage,
-        req.body.maintenance,
-        req.body.performed_by,
-        req.body.contact,
-        req.body.material,
-        req.body.labor,
-        req.body.other,
-        req.body.auth0_id
-    ]
-
-    pool.query(sql, [values], (err,data) => {
-        if(err) return res.json(err)
-        return res.json(data)
-    })
+    }
 }
 
-const updateRepair = (req,res) => {
-    const sql = "UPDATE repairLog SET mileage = ?, maintenance = ?, performed_by = ?, contact = ?, material = ?, labor =?, other =?   WHERE auth0_id = ? AND id =?"
-    const id = req.params.id;
-    const auth0_id = req.params.auth0_id
+const createRepair = async (req, res) => {
+  const user_id = req.params.user_id;
+  const v_id = req.params.v_id;
+  const sql =
+    "INSERT INTO repairLog (`repair_mileage`, `maintenance`, `performed_by`, material, labor, other, user_id,`v_id`) VALUES (?)";
+ try {
+  const values = [
+    req.body.mileage,
+    req.body.maintenance,
+    req.body.performed_by,
+    req.body.material,
+    req.body.labor,
+    req.body.other,
+    user_id,
+    v_id,
+  ];
 
-    const values = [
-        req.body.mileage,
-        req.body.maintenance,
-        req.body.performed_by,
-        req.body.contact,
-        req.body.material,
-        req.body.labor,
-        req.body.other,
-    ]
+  const response = await pool.query(sql, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+  return res.json(response)
+ } catch (e) {
+  return "Error: " + e
 
-    console.log("The Values:", values)
-    pool.query(sql, [...values, auth0_id, id], (err,data) => {
-        if(err) return res.json(err)
-        return res.json(data)
-    })
+ }
+
+};
+
+const updateRepair = async (req, res) => {
+  const sql =
+    "UPDATE repairLog SET repair_mileage = ?, maintenance = ?, performed_by = ?, material = ?, labor =?, other =?, v_id = ? WHERE user_id = ? AND repair_id = ?";
+  const repair_id = req.params.repair_id;
+  const user_id = req.params.user_id;
+
+try {
+  const values = [
+    req.body.mileage,
+    req.body.maintenance,
+    req.body.performed_by,
+    req.body.material,
+    req.body.labor,
+    req.body.other,
+    req.body.v_id
+  ];
+
+  const response = await pool.query(sql, [...values, user_id, repair_id], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+  return res.json(response)
+} catch(e) {
+  return "Error: " + e
+
 }
 
-const deleteRepair = (req,res) => {
-    const sql = "DELETE FROM repairLog WHERE id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;"
-    let id = req.params.id; 
-    id = parseInt(id,10);
-    const auth0_id = req.body.auth0_id;
-    
-    pool.query(sql, [id,id], (err,data) => {
-        if(err) return res.json(err)
-        return res.json(data)
-    })
-}
+};
 
-module.exports = {
-    showRepairs,
-    showRepairById,
-    showUsersRepairById,
-    createRepair,
-    updateRepair,
-    deleteRepair
-}
+const deleteRepair = async (req, res) => {
+    try {
+  const sql =
+    "DELETE FROM repairLog WHERE repair_id = ?; ALTER TABLE repairLog AUTO_INCREMENT = ?;";
+  let repair_id = req.params.repair_id;
+  repair_id = parseInt(repair_id, 10);
+
+  const deleteRepair = await pool.query(sql, [repair_id, repair_id], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+  return res.json(deleteRepair);
+    } catch (e) {
+      return "Error: " + e
+
+    }
+
+};
+
+export default {
+  showUsersRepairById,
+  showRepairById,
+  createRepair,
+  updateRepair,
+  deleteRepair,
+};

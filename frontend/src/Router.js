@@ -9,9 +9,9 @@ import RegisterCar from "./components/RegisterCar";
 import RepairLog from "./components/RepairLog";
 import AddRepair from "./components/AddRepair";
 import UpdateRepair from "./components/UpdateRepair";
-import VinDecode from "./components/VinDecode";
 import ScheduledMaintenance from "./components/ScheduledMaintenance";
 import VehicleProfiles from "./components/VehicleProfiles";
+import UpdateMileage from "./components/UpdateMileage";
 
 
 
@@ -22,7 +22,7 @@ import VehicleProfiles from "./components/VehicleProfiles";
         isAuthenticated,
         user
     } = useAuth0();
-    const {component: Component, ...rest} =props;
+    const {component: Component, ...rest} = props;
 
     return(
         isAuthenticated === true ? (<Component {...rest} />): (<Navigate to='/' />)
@@ -37,14 +37,14 @@ function Router() {
             <Route path="/" element={<Home />} />
     
             {/* API Components */}
-            <Route path="/vindecode" element={<ProtectedRoute component={VinDecode} />} />
             <Route path="/userMaintenace" element={<ProtectedRoute component={ScheduledMaintenance} />} />
             <Route path="/vehicleprofiles" element={<ProtectedRoute component={VehicleProfiles}/>} />
+            <Route path="/updateMileage/:user_id/:v_id" element={<ProtectedRoute component={UpdateMileage} /> } />
     
             {/* Repair Components */}
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
-            <Route path='/create' element={<ProtectedRoute component={AddRepair} />} />
-            <Route path="/update/:auth0_id/:id" element={<ProtectedRoute component={UpdateRepair} />} />
+            <Route path='/create/:user_id/:v_id' element={<ProtectedRoute component={AddRepair} />} />
+            <Route path="/update/:user_id/:v_id/:repair_id" element={<ProtectedRoute component={UpdateRepair} />} />
             
             {/* Auth Components */}
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />

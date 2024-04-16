@@ -15,24 +15,21 @@ function UpdateRepair() {
     const [other,setOther] = useState(0)
     const [repair,setRepair] = useState({})
 
-    console.log("The repair state:", repair)
 
     const navigate = useNavigate()
 
 
-    let {auth0_id,id} = useParams();
-    id = parseInt(id,10) 
+    let {user_id,v_id,repair_id} = useParams();
+
 
 
 
     useEffect(() => {
         const fetchRepairDataById = async () => {
             try {
-            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}/${id}`);
-            console.log("THE RESPONSE:", response)
+            const response = await axios.get(`http://localhost:5000/repair/${repair_id}`);
                 setRepair(response.data[0])
-                console.log("REPAIR BY ID:", response.data[0].mileage)
-                setMileage(response.data[0].mileage);
+                setMileage(response.data[0].repair_mileage);
                 setMaintenance(response.data[0].maintenance);
                 setPerformed_by(response.data[0].performed_by);
                 setContact(response.data[0].contact);
@@ -41,7 +38,7 @@ function UpdateRepair() {
                 setOther(response.data[0].other);
             }
             catch (error) {
-                console.log(error)
+                return "Error: " + error;
             }
         }
         fetchRepairDataById();
@@ -54,26 +51,25 @@ function UpdateRepair() {
       
       
       
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
- 
-        axios.put(`http://localhost:5000/update/${auth0_id}/${id}`, {mileage,maintenance, performed_by, contact, material, labor,other})
-        .then((res) => {
-            console.log("The PUT:", res)
+        try {
+            await axios.put(`http://localhost:5000/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
             navigate(`/repair`)
-
-        })
-        .catch(err => console.log(err))
+        } catch(e) {
+            return "Error: " + e
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="repair-forms-container">
+            <h1>Update Repair</h1>
+        <form onSubmit={handleSubmit} className="repair-forms">
             <input 
                 name='mileage' 
-                placeholder={repair.mileage}
+                placeholder={repair.repair_mileage}
                 onChange={(e) => {
                     setMileage(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -81,23 +77,13 @@ function UpdateRepair() {
                 placeholder={repair.maintenance}
                 onChange={(e) => {
                     setMaintenance(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
                 name='performedBy'
-                placeholder={repair.performedBy}
+                placeholder={repair.performed_by}
                 onChange={(e) => {
                     setPerformed_by(e.target.value)
-                    console.log(e.target.value)
-                }}>
-            </input>
-            <input 
-                name='contact'
-                placeholder={repair.contact}
-                onChange={(e) => {
-                    setContact(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -105,7 +91,6 @@ function UpdateRepair() {
                 placeholder={repair.material}
                 onChange={(e) => {
                     setMaterial(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -113,7 +98,6 @@ function UpdateRepair() {
                 placeholder={repair.labor}
                 onChange={(e) => {
                     setLabor(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
             <input 
@@ -121,12 +105,15 @@ function UpdateRepair() {
                 placeholder={repair.other}
                 onChange={(e) => {
                     setOther(e.target.value)
-                    console.log(e.target.value)
                 }}>
             </input>
-
-            <button type='submit'>Update</button>
+            <button class="button-82-pushable" role="button" type="submit">
+                  <span class="button-82-shadow"></span>
+                  <span class="button-82-edge"></span>
+                  <span class="button-82-front text">Update Repair</span>
+                </button>
         </form>
+        </div>
     )
 }
 

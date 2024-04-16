@@ -1,11 +1,10 @@
-const express = require('express')
+import express from 'express';
 const app = express();
-const cors = require('cors')
-const mysql = require('mysql2')
-const pool = require('./mysql/connection')
+import cors from 'cors';
+import mysql from 'mysql2/promise'
+import pool from './mysql/connection.js'
 const port = 5000;
-const routes = require('./routes');
-const { checkJwt } = require('./middleware');
+import routes from './routes/index.js'
 
 app.use(cors())
 app.use(express.json())

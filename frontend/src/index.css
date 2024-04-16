@@ -2,7 +2,6 @@
   .desktop {
     display: none;
   }
-
 }
 
 @media (min-width: 769px) {
@@ -11,46 +10,60 @@
   }
 }
 
-
 html {
   overflow-x: hidden;
-  height:100vh;
+  height: 100vh;
   width: 100vw;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 /* ---------- Nav Bar ---------- */
 
-.nav-list {
-  display:flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  width:80%;
-  align-items: flex-end;
+.navbar-heading {
+  @media (max-width: 768px) {
+    width:80%;
 
-  @media (max-width:768px){
-    display:none;
+
     }
+  }
+
+
+.nav-list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 70%;
+  align-items: flex-end;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.navbar ul a.active {
+  color: rgb(209, 17, 17);
+
+  font-weight: 100%;
+  text-decoration: underline;
 }
 
 .mobile-login {
   display: none;
 
   @media (max-width: 768px) {
-    display:block;
+    display: block;
   }
 }
 
@@ -59,18 +72,71 @@ code {
 }
 
 .nav-list-item {
-  border-right: 2px dashed rgb(65, 68, 70);
-  width: 10%;
-  color:white;
+  list-style-type: none;
+  width: 13%;
+  color: white;
   cursor: pointer;
 }
 
-.nav-list-item  a{
-  color:white;
+.nav-list-item a {
+  color: white;
   text-decoration: none;
+  font-size: 80%;
+  width: 100%;
+  height: 100%;
 }
 
+.button-29 {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #5adaff 0,
+    #5468ff 100%
+  );
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  height: 48px;
+  width: 90px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
 
+.button-29:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-29:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-29:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
 
 /* ---------- Landin Page (Before Register/Login) ---------- */
 
@@ -78,43 +144,40 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  width:100%;
+  width: 100%;
   height: 90vh;
-  background-image: url(./assets/future-car-for-main-display.jpg);  
+  background-image: url(./assets/future-car-for-main-display.jpg);
   background-repeat: no-repeat;
-   
+
   background-size: 100% 100%;
-    background-position: 30% 0;
-
-
+  background-position: 30% 0;
 }
 
-
-
 .landing-main-display button {
-  background-color: #0d6efd;
+  /* background-color: #0d6efd;
   color: white;
   border: 1px solid white;
-  width:20%;
-  height:10%;
-  border-radius: 25px;
+  width: 20%;
+  height: 10%;
+  border-radius: 25px; */
+  content: "register";
   @media (max-width: 768px) {
     margin-top: 50%;
   }
 }
 
 .services {
-  display:flex;
+  display: flex;
   justify-content: center;
   margin-top: 5%;
-  width:100%;
+  width: 100%;
   background-color: #0d6efd;
   color: white;
   margin-bottom: 3%;
 }
 
 .wrap-page-buttons {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -123,7 +186,7 @@ code {
   display: flex;
   flex-flow: column nowrap;
   width: 80%;
-  height:auto;
+  height: auto;
   justify-content: center;
 
   @media (max-width: 768px) {
@@ -132,13 +195,13 @@ code {
 }
 
 .page-buttons section {
-  display:flex;
+  display: flex;
   flex-flow: row nowrap;
-  height:50vh;
+  height: 50vh;
   margin-bottom: 3%;
-  @media (max-width:768px) {
-    width:100%;
-    height:80vh;
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 80vh;
   }
 }
 
@@ -152,33 +215,33 @@ code {
 }
 
 .page-buttons-text-box h3 {
-  @media (max-width:768px) {
-    background-color:#0d6efd;
+  @media (max-width: 768px) {
+    background-color: #0d6efd;
     font-weight: 1000;
   }
 }
 
-.page-buttons-text-box p{
-  @media (max-width:768px) {
-    background-color:#0d6efd;
+.page-buttons-text-box p {
+  @media (max-width: 768px) {
+    background-color: #0d6efd;
     font-weight: 1000;
   }
 }
 
 .page-buttons div {
-  width:50%;
+  width: 50%;
 }
 
 .page-buttons-img-container-left {
-  display:flex;
+  display: flex;
   background-color: black;
-  width:50%;
+  width: 50%;
 }
 
 .first-pic {
   background-image: url(./assets/Image1_HowtoResgisterYourCar_Filling_out_vehicle_registration_forms.webp);
   background-repeat: no-repeat;
-  height:auto;
+  height: auto;
   background-size: 100% 100%;
   background-position: 30% 0;
 }
@@ -205,101 +268,453 @@ code {
 }
 
 .page-buttons-img-container-right {
-  display:flex;
+  display: flex;
   background-color: black;
-  width:50%;
+  width: 50%;
   justify-content: flex-end;
 }
 
-/* ---------- Landing Page (After Register/Login) ---------- */
-
 .page-buttons-anchors {
-  color:#0d6efd;
+  color: #0d6efd;
   text-decoration: underline;
   cursor: pointer;
-  @media (max-width:768px) {
-    background-color:#0d6efd;
+  @media (max-width: 768px) {
+    background-color: #0d6efd;
     font-weight: 1000;
-    color:black;
+    color: black;
   }
-}
-
-
-
-.icon-grid-heading {
-  display:flex;
-}
-
-
-.wrap-icon-grid {
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-}
-
-.icon-grid-container {
-
-  display: grid;
-  grid-template-columns: 45% 45%;
-  grid-template-rows: 45% 45%;
-  grid-gap: 10px;
-}
-
-.icons {
-  display: "flex";
- flex-flow: "column"; 
- justify-content: "center";
- cursor: pointer;
 }
 
 /* ---------- Dashboard ---------- */
 
 .wrapper-dashboard {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .root-dashboard {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
 }
 
-.vehicle-info-container {
-  display:flex;
+.vehicle-img {
+  width: 100%;
+}
+
+.no-vehicle-profiles {
+  display: flex;
   flex-flow: column nowrap;
   align-items: center;
+}
+
+.no-vehicle-profiles button {
+  width: 25%;
+}
+
+/* ---------- Register Car ---------- */
+.register-page {
+  height: 100vh;
+  width: 100vw;
+}
+
+.register-main-container {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
+  align-items: center;
+}
+
+.register-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: 30%;
+}
+
+.register-image-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 80%;
+  background-image: url(./assets/Blue-And-White-Modern-Car-Insurance-Instagram-Post-1-1024x1024.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+.register-form {
+  display: flex;
+  height: 200px;
+  width: 50%;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.register-form input {
+  margin-bottom: 5%;
 }
 
 /* ---------- Vehicle Profiles ---------- */
-
 .vehicle-profile-wrap-container {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 }
 
 .vehicle-profile-container {
-  display:flex;
+  width:40%;
+  height: 30%;
+  display: flex;
   flex-flow: column nowrap;
+  border: 5px solid blue;
+  border-radius: 30px;
+  margin-top: 5%;
   align-items: center;
   padding: 5%;
+  margin-bottom: 3%;
 }
 
 .vehicle-profile-container form {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
   align-items: center;
   padding: 5%;
 }
 
+.vehicle-profile-container form label {
+  display: flex;
+  flex-flow: row nowrap;
+}
 
+.profile-additional-buttons-container {
+display: flex;
+width: 40%;
+flex-flow: row wrap;
+align-items: center;
+justify-content: space-around;
+}
 
+.profile-additional-buttons {
+  width: 200px;
+  height: 200px;
+  border: 3px solid blue;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-bottom: 3%;
+}
 
+/* - Update Mileage - */
+.update-mileage-page {
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height:80vh;
+  margin-top: 3%;
+}
 
+.update-mileage-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:80%;
+  height:40%;
+}
+
+.update-mileage-form {
+  height: 95%;
+  width:80%;
+border: 1px solid red;
+flex-flow: column nowrap;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 2%;
+}
+
+.update-mileage-form label {
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3%;
+}
+
+.profiles-return-button-container {
+margin-top: 3%;
+}
+
+/* ---------- Scheduled Maintenance ---------- */
+.scheduled-maintenance-page {
+  width: 100vw;
+  height: 90vh;
+  padding: 15px;
+}
+
+.scheduled-heading {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.scheduled-mileage-threshold-heading {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  color: rgb(86, 153, 153);
+  /* text-decoration: underline; */
+  padding: 10px;
+}
+
+.scheduled-mileage-threshold-heading h4 {
+  margin: 0;
+  border-bottom: 2px solid rgb(86, 153, 153);
+}
+
+.scheduled-mileage-threshold-heading span {
+  width: 700px;
+  border-bottom: 2px dashed rgb(86, 153, 153);
+}
+
+.maintenance-cards {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 10px;
+}
+
+/* Card */
+
+.card {
+  width: 200px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  perspective: 800px;
+  transform-style: preserve-3d;
+  margin-right: 8%;
+  margin-top: 10px;
+}
+
+.abstract {
+  height: 200px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: white;
+  transition: 0.3s ease all;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+.repair-desc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  width: 95%;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 95%;
+}
+
+.repair-info {
+  width: 100%;
+}
+
+.repair-info section {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+.repair-sub-headings {
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+.repair-sub-headings-value {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.details-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  position: relative;
+  top: -50px;
+}
+
+.details {
+  background-color: #8d8686;
+  color: white;
+  border-top: 1px solid white;
+  width: 150px;
+  height: 125px;
+  border-radius: 6px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.parts-desc {
+  text-align: center;
+  width: 100%;
+  height: 30%;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 95%;
+}
+
+.parts-info section {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.parts-info p {
+  font-size: 100%;
+  margin-bottom: 0;
+}
+
+/* ---------- General Button ---------- */
+
+/* CSS */
+.button-82-pushable {
+  width: 75px;
+  height: 50px;
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: filter 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-82-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.button-82-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: linear-gradient(
+    to left,
+    hsl(239deg 100% 16%) 0%,
+    hsl(239deg 100% 32%) 8%,
+    hsl(239deg 100% 32%) 92%,
+    hsl(239deg 100% 16%) 100%
+  );
+}
+
+.button-82-front {
+  width: 75px;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  border-radius: 12px;
+  color: white;
+  background: hsl(239, 100%, 50%);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+@media (min-width: 768px) {
+  .button-82-front {
+    padding-top: 5px;
+    font-size: 15px;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+.button-82-pushable:hover {
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------- Repair Log ---------- */
+ /* Add Repair */
+ .repair-forms-container {    
+  width:100vw;
+  height: 80vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+ }
+
+ .repair-forms{
+  width: 350px;
+  height: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  border: 5px solid rgb(79, 79, 192);
+  padding: 10px;
+  border-radius: 16px;
+ }

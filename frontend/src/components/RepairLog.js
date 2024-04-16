@@ -1,108 +1,160 @@
-import React, {useEffect,useState} from "react"
-import axios from 'axios'
-import {useNavigate} from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
-    Container,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
-} from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete'
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import AddRepair from "./AddRepair";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import StickyHeadTable from "./RepairTable";
 
 function RepairLog() {
-    const navigate = useNavigate()
-    const {
-        isAuthenticated,
-        user,
-        getAccessTokenSilently
-      } = useAuth0()
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth0();
 
-      const auth0_id = user.sub.split('|')[1]
+  const user_id = user.sub.split("|")[1].toString();
 
-    const [repairs,setRepairs] = useState([])
+  const [repairs, setRepairs] = useState([]);
+  const [currentVId, setCurrentVId] = useState(null);
+  const [reload, setReload] = useState(false);
 
-    useEffect(() => {
-        const fetchRepairData = async () => {
-          try {
-            const response = await axios.get(`http://localhost:5000/repair/${auth0_id}`, {auth0_id});
-            setRepairs(response.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-      
-        fetchRepairData();
-      }, []);
+  useEffect(() => {
+    const fetchRepairData = async () => {
+      try {
+        const currentVehicleId = await fetchCurrentVehicle();
+        const vehicleRepairs = await axios.get(
+          `http://localhost:5000/repair/${user_id}/${currentVehicleId}`
+        );
+        setRepairs(vehicleRepairs.data);
+      } catch (error) {
+        return "Error: " + error;
+      }
+    };
 
-    
+    fetchRepairData();
+  }, [reload]);
 
-    const handleDelete =  (id) => {        
-        axios.delete(`http://localhost:5000/delete/`+id , {auth0_id})
-        .then(response => {
-            const newArr = repairs.filter(rep => rep.id !== id)
-          setRepairs(newArr)
-        })
-        .catch(err => {return err})
+  const fetchCurrentVehicle = async () => {
+    try {
+      const currentVehicleResponse = await axios.get(
+        `http://localhost:5000/getCurrentVehicle/${user_id}`
+      );
+
+      setCurrentVId(currentVehicleResponse.data[0].v_id);
+      return currentVehicleResponse.data[0].v_id;
+    } catch (e) {
+      return "Error: " + e
     }
+  };
 
-    
-    return (
-        <div>
-        <Container maxWidth="lg" className="car-container">
+  const handleDelete = async (repair_id) => {
+    try {
+      await axios.delete(`http://localhost:5000/delete/${repair_id}`);
+      const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
+      setRepairs(newArr);
+
+      setReload((currentState) => !currentState);
+      return;
+    } catch (e) {
+      return "Error: " + e
+    }
+  };
+
+  const onRepairDeleteReRender = () => {
+    setReload((currentState) => !currentState);
+  };
+
+
+  return (
+    <div>
+      <button
+        class="button-82-pushable"
+        onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
+      >
+        <span class="button-82-shadow"></span>
+        <span class="button-82-edge"></span>
+        <span class="button-82-front text">Add Repair</span>
+      </button>
+      <StickyHeadTable
+        repairs={repairs}
+        navigate={navigate}
+        handleDelete={handleDelete}
+        currentVId={currentVId}
+        userId={user_id}
+        reRenderPage={onRepairDeleteReRender}
+      ></StickyHeadTable>
+      {/* <Container maxWidth="lg" className="car-container">
         <div className="flex-container">
-            <button onClick={() => navigate('/create')}>Add Repair</button>
+          <button
+            class="button-82-pushable"
+            onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
+          >
+            <span class="button-82-shadow"></span>
+            <span class="button-82-edge"></span>
+            <span class="button-82-front text">Add Repair</span>
+          </button>
         </div>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Mileage</TableCell>
-                    <TableCell>Maintenance Description</TableCell>
-                    <TableCell>Performed by</TableCell>
-                    <TableCell>Contact #</TableCell>
-                    <TableCell>Material</TableCell>
-                    <TableCell>Labor</TableCell>
-                    <TableCell>Other</TableCell>
-                    <TableCell>Total</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-            {repairs.map((rep,idx) => (
-                <TableRow key={idx}>
-                    <TableCell component="th" scope="row">
-                        {idx +1}
-                    </TableCell>
-                    <TableCell>{rep.date}</TableCell>
-                    <TableCell>{rep.mileage}</TableCell>
-                    <TableCell>{rep.maintenance}</TableCell>
-                    <TableCell>{rep.performed_by}</TableCell>
-                    <TableCell>{rep.contact}</TableCell>
-                    <TableCell>{rep.material}</TableCell>
-                    <TableCell>{rep.labor}</TableCell>
-                    <TableCell>{rep.other}</TableCell>
-                    <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
-                    <TableCell>
-                        <EditIcon onClick={() => navigate(`/update/${auth0_id}/${rep.id}`)}/>
-                        <DeleteIcon
-                            // add onClick method here
-                            onClick={() => handleDelete(rep.id)}
-                            className="icon text-red" />
-                    </TableCell>
-                </TableRow>
+        <Table className="repair-table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Mileage</TableCell>
+              <TableCell>Maintenance Description</TableCell>
+              <TableCell>Performed by</TableCell>
+              <TableCell>Material</TableCell>
+              <TableCell>Labor</TableCell>
+              <TableCell>Other</TableCell>
+              <TableCell>Total</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {repairs.map((rep, idx) => (
+              <TableRow key={idx}>
+                <TableCell component="th" scope="row">
+                  {idx + 1}
+                </TableCell>
+                <TableCell>
+                  {new Date(rep.date).toLocaleDateString("en-US")}
+                </TableCell>
+                <TableCell>{rep.repair_mileage}</TableCell>
+                <TableCell>{rep.maintenance}</TableCell>
+                <TableCell>{rep.performed_by}</TableCell>
+                <TableCell>{rep.material}</TableCell>
+                <TableCell>{rep.labor}</TableCell>
+                <TableCell>{rep.other}</TableCell>
+                <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
+                <TableCell>
+                  <EditIcon
+                    onClick={() =>
+                      navigate(
+                        `/update/${user_id}/${currentVId}/${rep.repair_id}`
+                      )
+                    }
+                  />
+                  <DeleteIcon
+                    // add onClick method here
+                    onClick={() => {
+                      handleDelete(rep.repair_id);
+                      setReload((currentState) => !currentState);
+                    }}
+                    className="icon text-red"
+                  />
+                </TableCell>
+              </TableRow>
             ))}
-            </TableBody>
+          </TableBody>
         </Table>
-        </Container>
-        </div>
-        
-    )
+      </Container> */}
+    </div>
+  );
 }
 
-export default RepairLog
+export default RepairLog;
