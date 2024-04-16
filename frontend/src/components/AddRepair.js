@@ -20,7 +20,7 @@ function AddRepair() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/create/${user_id}/${v_id}`, {
+      await axios.post(`https://capstone-as3r.vercel.app/create/${user_id}/${v_id}`, {
         mileage,
         maintenance,
         performed_by,

@@ -30,7 +30,7 @@ function RepairLog() {
       try {
         const currentVehicleId = await fetchCurrentVehicle();
         const vehicleRepairs = await axios.get(
-          `http://localhost:5000/repair/${user_id}/${currentVehicleId}`
+          `https://capstone-as3r.vercel.app/repair/${user_id}/${currentVehicleId}`
         );
         setRepairs(vehicleRepairs.data);
       } catch (error) {
@@ -44,7 +44,7 @@ function RepairLog() {
   const fetchCurrentVehicle = async () => {
     try {
       const currentVehicleResponse = await axios.get(
-        `http://localhost:5000/getCurrentVehicle/${user_id}`
+        `https://capstone-as3r.vercel.app/getCurrentVehicle/${user_id}`
       );
 
       setCurrentVId(currentVehicleResponse.data[0].v_id);
@@ -56,7 +56,7 @@ function RepairLog() {
 
   const handleDelete = async (repair_id) => {
     try {
-      await axios.delete(`http://localhost:5000/delete/${repair_id}`);
+      await axios.delete(`https://capstone-as3r.vercel.app/delete/${repair_id}`);
       const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
       setRepairs(newArr);
 

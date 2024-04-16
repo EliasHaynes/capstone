@@ -22,10 +22,10 @@ function VehicleProfiles() {
     const getVehicleProfilesAndCurrent = async () => {
       try {
         const allVehiclesResponse = await axios.get(
-          `http://localhost:5000/getVehicles/${user_id}`
+          `https://capstone-as3r.vercel.app/getVehicles/${user_id}`
         );
         const currentVehicleResponse = await axios.get(
-          `http://localhost:5000/getCurrentVehicle/${user_id}`
+          `https://capstone-as3r.vercel.app/getCurrentVehicle/${user_id}`
         );
         setUsersVehiclesProfiles(allVehiclesResponse.data);
         setProfile(currentVehicleResponse.data[0].v_id);
@@ -49,7 +49,7 @@ function VehicleProfiles() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
+        `https://capstone-as3r.vercel.app/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,
         { selectedProfile }
       );
       switch (response.data.message) {
@@ -84,7 +84,7 @@ function VehicleProfiles() {
     setUsersVehiclesProfiles(updatedVehicles);
 
     axios
-      .delete(`http://localhost:5000/deleteVehicle/${v_id}`)
+      .delete(`https://capstone-as3r.vercel.app/deleteVehicle/${v_id}`)
       .then((response) => {
         // Check if the deletion was successful on the server
         // If the server sends back a not successful response, revert the change
