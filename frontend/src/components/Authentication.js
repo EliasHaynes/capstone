@@ -45,7 +45,7 @@ const Authentication = () => {
 
 
 
-              fetch('https://capstone-as3r.vercel.app/passUId', {
+              fetch('https://capstone-ten-lyart.vercel.app/passUId', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

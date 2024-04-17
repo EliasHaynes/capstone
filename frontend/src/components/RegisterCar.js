@@ -24,7 +24,7 @@ const RegisterCar = (props) => {
     const getVehicles = async () => {
       try {
         const response = await axios.get(
-          `https://capstone-as3r.vercel.app/getVehicles/${user_id}`
+          `https://capstone-ten-lyart.vercel.app/getVehicles/${user_id}`
         );
         setVehicles(response.data);
       } catch (e) {
@@ -51,7 +51,7 @@ const RegisterCar = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`https://capstone-as3r.vercel.app/addVehicle/${user_id}`, { vin, mileage })
+      .post(`https://capstone-ten-lyart.vercel.app/addVehicle/${user_id}`, { vin, mileage })
       .then((res) => {
         switch (res.status) {
           case 200:

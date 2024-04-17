@@ -16,11 +16,7 @@ app.use(routes)
 //   });
 
 app.get('/', (req,res) => {
-    const sql = "SELECT * FROM users";
-    pool.query(sql, (err,data) => {
-        if (err) return res.json("Error");
-        return res.json(data)
-    })
+    res.send("Hello")
 })
 
 

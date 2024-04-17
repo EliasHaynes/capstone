@@ -16,7 +16,7 @@ function UpdateMileage() {
     const fetchVehiclesMileage = async () => {
       try {
         const response = await axios.get(
-          `https://capstone-as3r.vercel.app/getMileage/${user_id}/${v_id}`
+          `https://capstone-ten-lyart.vercel.app/getMileage/${user_id}/${v_id}`
         );
         setMileage(response.data[0]);
         
@@ -40,7 +40,7 @@ function UpdateMileage() {
     e.preventDefault();
     try {
     const response = await axios.put(
-      `https://capstone-as3r.vercel.app/updateMileage/${user_id}/${v_id}`,
+      `https://capstone-ten-lyart.vercel.app/updateMileage/${user_id}/${v_id}`,
       {
         mileage,
       }
