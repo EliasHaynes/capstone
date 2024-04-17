@@ -66,7 +66,7 @@ async function initializeDatabase() {
     `CREATE TABLE IF NOT EXISTS repairLog (
       repair_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         user_id VARCHAR(100) NOT NULL UNIQUE KEY,
-        vehicle_id INT NOT NULL UNIQUE KEY,
+        v_id INT NOT NULL UNIQUE KEY,
         repair_mileage INT,
         date DATETIME DEFAULT CURRENT_TIMESTAMP,
         maintenance VARCHAR(200),
@@ -76,14 +76,25 @@ async function initializeDatabase() {
         labor INT,
         other INT,
         FOREIGN KEY(user_id) REFERENCES users(user_id),
-        FOREIGN KEY(vehicle_id) REFERENCES vehicles(v_id) ON DELETE CASCADE
+        FOREIGN KEY(v_id) REFERENCES vehicles(v_id) ON DELETE CASCADE
     );`
   ];
+
+  const alterStatements = [
+    `ALTER TABLE repairLog MODIFY CONSTRAINT FOREIGN KEY (v_id) REFERENCES vehicles(v_id) ON DELETE CASCADE;`,
+    `ALTER TABLE repairLog 
+    DROP FOREIGN KEY vehicle_id,
+    ADD CONSTRAINT v_id FOREIGN KEY (v_id) REFERENCES vehicles(v_id) ON DELETE CASCADE;
+    `
+];
 
   try {
     for (let statement of createStatements) {
       await con.execute(statement);
     }
+    for (let statement of alterStatements) {
+      await con.execute(statement);
+  }
     console.log("[MySQL] Database initialized successfully.");
   } catch (error) {
     console.error("[MySQL] Error initializing database:", error);
