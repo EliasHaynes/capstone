@@ -46,7 +46,7 @@ console.log("[MySQL] Initializing database...");
 async function initializeDatabase() {
 
   const dropTableStatements = [
-      `DROP TABLE IF EXISTS jobs, applications, users, resume;`
+      `DROP TABLE IF EXISTS users, vehicles, repairLog;`
   ];
   try {
       console.log('[MySQL] Deleting tables...');
