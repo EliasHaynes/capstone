@@ -76,30 +76,22 @@ function VehicleProfiles() {
     setProfile(newValue);
   };
 
-  const handleDelete = (v_id) => {
+  const handleDelete = async (v_id) => {
     // Optimistically remove the vehicle from the state
     const updatedVehicles = usersVehicleProfiles.filter(
       (vehicle) => vehicle.v_id !== v_id
     );
     setUsersVehiclesProfiles(updatedVehicles);
 
-    axios
+    try {
+    const response = await axios
       .delete(`https://capstone-ten-lyart.vercel.app/deleteVehicle/${v_id}`)
-      .then((response) => {
-        // Check if the deletion was successful on the server
-        // If the server sends back a not successful response, revert the change
-        if (!response.data.success) {
-          // This is just a placeholder, you'll need to adjust based on your actual API response
-
-          setUsersVehiclesProfiles(usersVehicleProfiles); // Revert to the original state
-        } else {
-        }
-      })
-      .catch((error) => {
-        return "Error: " + error
-        // Revert to the original state in case of an error
-        setUsersVehiclesProfiles(usersVehicleProfiles);
-      });
+      if (!response.data.success) {
+          setUsersVehiclesProfiles(usersVehicleProfiles);
+       }
+    } catch(e) {
+      console.log("Delete error:", e);
+    }
   };
 
   return (
