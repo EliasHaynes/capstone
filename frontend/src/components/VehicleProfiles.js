@@ -121,6 +121,7 @@ function VehicleProfiles() {
                   value={vehicle.v_id}
                 />{" "}
                 {vehicle.v_ymm}
+                {vehicle.v_id}
                 {vehicle.currentVProfile === 0 ? (
                   <DeleteIcon
                     className="icon text-red"

@@ -76,7 +76,7 @@ async function initializeDatabase() {
         labor INT,
         other INT,
         FOREIGN KEY(user_id) REFERENCES users(user_id),
-        FOREIGN KEY(vehicle_id) REFERENCES vehicles(v_id)
+        FOREIGN KEY(vehicle_id) REFERENCES vehicles(v_id) ON DELETE CASCADE
     );`
   ];
 
