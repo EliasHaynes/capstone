@@ -67,7 +67,7 @@ function VehicleProfiles() {
       return "Error: " + e
     }
 
-    setReload((currentState) => !currentState);
+    
   };
 
   //Handles selecting the
@@ -83,9 +83,8 @@ function VehicleProfiles() {
     );
 
     console.log("updated Vehicles:", updatedVehicles)
-    setUsersVehiclesProfiles(updatedVehicles);
-    console.log("Delete running...")
-    console.log("The v id:", v_id)
+     setUsersVehiclesProfiles(updatedVehicles);
+
     try { 
       console.log("Initial users vehicle profiles:", usersVehicleProfiles)   
 
@@ -94,6 +93,7 @@ function VehicleProfiles() {
       if (!response.data.success) {
         console.log("Success!!!")
           setUsersVehiclesProfiles(usersVehicleProfiles);
+          setReload((currentState) => !currentState);
        }
     } catch(e) {
       console.log("Delete error:", e);
