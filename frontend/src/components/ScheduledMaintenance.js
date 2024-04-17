@@ -66,7 +66,7 @@ function ScheduledMaintenance() {
 
 
         const response = await axios.get(
-          `http://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
+          `https://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
           {
             headers: {
               authorization: token,
