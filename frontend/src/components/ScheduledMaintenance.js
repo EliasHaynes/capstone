@@ -58,7 +58,7 @@ function ScheduledMaintenance() {
       try {
         
         const currentVehicleResponse = await axios.get(
-          `https://capstone-as3r.vercel.app/getCurrentVehicle/${user_id}`
+          `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
         );
         const mileage = await currentVehicleResponse.data[0].mileage;
         const vin = await currentVehicleResponse.data[0].vin;

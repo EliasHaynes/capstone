@@ -27,7 +27,7 @@ function UpdateRepair() {
     useEffect(() => {
         const fetchRepairDataById = async () => {
             try {
-            const response = await axios.get(`https://capstone-as3r.vercel.app/repair/${repair_id}`);
+            const response = await axios.get(`https://capstone-ten-lyart.vercel.app/repair/${repair_id}`);
                 setRepair(response.data[0])
                 setMileage(response.data[0].repair_mileage);
                 setMaintenance(response.data[0].maintenance);
@@ -54,7 +54,7 @@ function UpdateRepair() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await axios.put(`https://capstone-as3r.vercel.app/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
+            await axios.put(`https://capstone-ten-lyart.vercel.app/update/${user_id}/${repair_id}`, {mileage,maintenance, performed_by, contact, material, labor,other,v_id})
             navigate(`/repair`)
         } catch(e) {
             return "Error: " + e

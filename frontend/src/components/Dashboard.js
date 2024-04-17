@@ -17,7 +17,7 @@ function Dashboard() {
     const fetchCurrentVehicle = async () => {
       try {
         const currentVehicleResponse = await axios.get(
-          `https://capstone-as3r.vercel.app/getCurrentVehicle/${user_id}`
+          `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
         );
         if (currentVehicleResponse.data.length > 0) {
           setVehicle(currentVehicleResponse.data[0]);
