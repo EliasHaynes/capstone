@@ -102,15 +102,14 @@ const togglingPrevCurrentAndNewCurrent = async (req, res) => {
 
   const deleteVehicle = async (req, res) => {
     const sql = "DELETE FROM vehicles WHERE v_id = ?";
-    const v_id = req.params.v_id;
+    let v_id = req.params.v_id;
+    v_id = parseInt(v_id, 10);
     try {
-        const [result] = await pool.query(sql, [v_id]);
-        if (result.affectedRows > 0) {
-            res.json({ success: true, message: 'Vehicle deleted successfully.' });
-        } else {
-            // No rows affected means the vehicle was not found
-            res.json({ success: false, message: 'Vehicle not found.' });
-        }
+      const delVehicle = await pool.query(sql,[v_id], (err,data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+      });
+      return res.json(delVehicle);
     } catch (err) {
         res.status(500).json({ success: false, message: 'Deletion failed due to server error.' });
     }

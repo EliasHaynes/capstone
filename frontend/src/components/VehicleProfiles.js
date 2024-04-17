@@ -78,22 +78,29 @@ function VehicleProfiles() {
 
   const handleDelete = async (v_id) => {
     // Optimistically remove the vehicle from the state
-    const updatedVehicles = usersVehicleProfiles.filter(
+
+    console.log("Delete running...")
+    console.log("The v id:", v_id)
+    try { 
+      console.log("Initial users vehicle profiles:", usersVehicleProfiles)   
+      const updatedVehicles = usersVehicleProfiles.filter(
       (vehicle) => vehicle.v_id !== v_id
     );
-    setUsersVehiclesProfiles(updatedVehicles);
 
-    try {
-    const response = await axios
-      .delete(`https://capstone-ten-lyart.vercel.app/deleteVehicle/${v_id}`)
+    console.log("updated Vehicles:", updatedVehicles)
+    setUsersVehiclesProfiles(updatedVehicles);
+    const response = await axios.delete(`https://capstone-ten-lyart.vercel.app/deleteVehicle/${v_id}`)
+    console.log("response:", response)
       if (!response.data.success) {
+        console.log("Success!!!")
           setUsersVehiclesProfiles(usersVehicleProfiles);
        }
     } catch(e) {
       console.log("Delete error:", e);
     }
+    console.log("Exiting Delete function...")
   };
-
+  console.log("users vehicles profiles in component:", usersVehicleProfiles)
   return (
     <div className="vehicle-profile-wrap-container">
       {alert && (
