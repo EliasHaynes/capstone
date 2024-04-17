@@ -63,11 +63,13 @@ function VehicleProfiles() {
           break;
       }
       sendAlert(true);
+      
+
     } catch (e) {
       return "Error: " + e
     }
 
-    
+    setReload((currentState) => !currentState);
   };
 
   //Handles selecting the
