@@ -4,6 +4,8 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertTrigger from "./AlertTrigger";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearData,clearAlert } from "../redux/store";
 
 function VehicleProfiles() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function VehicleProfiles() {
 
   const { isAutheticated, user } = useAuth0();
 
+const dispatch = useDispatch()
   const user_id = user.sub.split("|")[1].toString();
 
   useEffect(() => {
@@ -47,6 +50,8 @@ function VehicleProfiles() {
 
   const handleSubmitOfUpdatingCurrentVehicle = async (e) => {
     e.preventDefault();
+    dispatch(clearData())
+    dispatch(clearAlert())
     try {
       const response = await axios.put(
         `https://capstone-ten-lyart.vercel.app/toggleCurrentAndNewCurrent/${user_id}/${selectedProfile}`,

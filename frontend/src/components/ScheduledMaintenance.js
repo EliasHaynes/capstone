@@ -6,24 +6,24 @@ import { useNavigate } from "react-router-dom";
 import MaintenanceCard from "./MaintenanceCard";
 import AlertTrigger from './AlertTrigger';
 import Spinner from "./Spinner";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDataStart, fetchDataSuccess, fetchDataFailure, clearAlert } from '../redux/store'
 
 function ScheduledMaintenance() {
   const navigate = useNavigate();
-  const [repairs, setRepairs] = useState([]);
+  const { isAutheticated, user } = useAuth0();
+  const user_id = user.sub.split("|")[1].toString();
+
+  //State
   const [currentVehicle, setCurrentVehicle] = useState();
   const [open, toggleOpen] = useState(false);
   const [difficultyColor, setDifficulty] = useState();
-  const [isParts, setParts] = useState();
-  const [groupedRepairs, setGroupedRepairs] = useState({});
-  const { isAutheticated, user } = useAuth0();
   const [active, setActive] = useState(null);
-  const [alert, sendAlert] = useState(false);
-  const [alertType, setAlert] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-  const [loading,isLoading] = useState(false)
 
-  const user_id = user.sub.split("|")[1].toString();
-
+  //Redux State
+  const dispatch = useDispatch();
+  const { repairs, groupedRepairs, loading, alert, alertType, alertMessage } = useSelector(state => state.maintenance);
+  
   //Env
   const token = process.env.REACT_APP_CAR_KEY;
   const key = process.env.REACT_APP_API_KEY;
@@ -38,7 +38,7 @@ function ScheduledMaintenance() {
     );
   };
 
-  //Functions
+  //Assign each of the repairs a difficulty rating
   const groupCardsByMileageThreshold = (repairs) => {
     const grouped = {};
 
@@ -53,42 +53,64 @@ function ScheduledMaintenance() {
   };
 
 
-  const handleClick = () => {
-    const fetchVehicleData = async () => {
-      try {
+  // const handleClick = () => {
+  //    const fetchVehicleData = async () => {
+  //     try {
         
-        const currentVehicleResponse = await axios.get(
-          `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
-        );
-        const mileage = await currentVehicleResponse.data[0].mileage;
-        const vin = await currentVehicleResponse.data[0].vin;
+  //       const currentVehicleResponse = await axios.get(
+  //         `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
+  //       );
+  //       const mileage = await currentVehicleResponse.data[0].mileage;
+  //       const vin = await currentVehicleResponse.data[0].vin;
 
 
 
-        const response = await axios.get(
-          `https://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
-          {
-            headers: {
-              authorization: token,
-              "partner-token": key,
-            },
-          }
-        );
-        if (response.data.data.length === 0) {
-          console.log("if ran")
-          sendAlert(true);
-          setAlert("error");
-          setAlertMessage("Unfortunately there is no repair data for your vehicle. May be too old or new.")
-        }
+  //       const response = await axios.get(
+  //         `https://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
+  //         {
+  //           headers: {
+  //             authorization: token,
+  //             "partner-token": key,
+  //           },
+  //         }
+  //       );
+  //       if (response.data.data.length === 0) {
+  //         console.log("if ran")
+  //         sendAlert(true);
+  //         setAlert("error");
+  //         setAlertMessage("Unfortunately there is no repair data for your vehicle. May be too old or new.")
+  //       }
+  //       const grouped = groupCardsByMileageThreshold(response.data.data);
+  //       setGroupedRepairs(grouped);
+  //       setRepairs(response.data.data);
+  //       isLoading(false);
+  //     } catch (error) {
+  //       return "Error: " + error
+  //     }
+  //   };
+  //   fetchVehicleData();
+  // };
+
+  const handleClick = async () => {
+    dispatch(fetchDataStart());
+    try {
+      const currentVehicleResponse = await axios.get(`https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`);
+      const mileage = currentVehicleResponse.data[0].mileage;
+      const vin = currentVehicleResponse.data[0].vin;
+
+      const response = await axios.get(`https://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`, {
+        headers: { authorization: token, "partner-token": key }
+      });
+
+      if (response.data.data.length === 0) {
+        dispatch(fetchDataFailure("Unfortunately there is no repair data for your vehicle. May be too old or new."));
+      } else {
         const grouped = groupCardsByMileageThreshold(response.data.data);
-        setGroupedRepairs(grouped);
-        setRepairs(response.data.data);
-        isLoading(false);
-      } catch (error) {
-        return "Error: " + error
+        dispatch(fetchDataSuccess({ repairs: response.data.data, groupedRepairs: grouped }));
       }
-    };
-    fetchVehicleData();
+    } catch (error) {
+      dispatch(fetchDataFailure("Error: " + error.message));
+    }
   };
 
 
@@ -104,7 +126,6 @@ function ScheduledMaintenance() {
         <button class="button-82-pushable"  onClick={() => {
             toggleOpen(true);
             handleClick();
-            isLoading(true);
           }}>
   <span class="button-82-shadow"></span>
   <span class="button-82-edge"></span>
