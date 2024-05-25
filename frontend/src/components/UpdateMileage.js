@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AlertTrigger from "./AlertTrigger";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearData,clearAlert } from "../redux/store";
 
 function UpdateMileage() {
   const { user_id, v_id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [mileage, setMileage] = useState();
   const [alert, sendAlert] = useState(false);
   const [alertType, setAlert] = useState("");
@@ -38,6 +42,8 @@ function UpdateMileage() {
 
   const handleUpdatingVehicleMileage = async (e,vin) => {
     e.preventDefault();
+    dispatch(clearData())
+    dispatch(clearAlert())
     try {
     const response = await axios.put(
       `https://capstone-ten-lyart.vercel.app/updateMileage/${user_id}/${v_id}`,
