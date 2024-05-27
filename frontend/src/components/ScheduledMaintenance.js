@@ -8,6 +8,7 @@ import AlertTrigger from './AlertTrigger';
 import Spinner from "./Spinner";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataStart, fetchDataSuccess, fetchDataFailure, clearAlert } from '../redux/store'
+import NoRegisteredCarsMessage from "./NoRegisteredCarsMessage";
 
 function ScheduledMaintenance() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function ScheduledMaintenance() {
   const [open, toggleOpen] = useState(false);
   const [difficultyColor, setDifficulty] = useState();
   const [active, setActive] = useState(null);
+  const [hasRegisteredVehicle, setHasRegisteredVehicle] = useState(null);
 
   //Redux State
   const dispatch = useDispatch();
@@ -38,10 +40,33 @@ function ScheduledMaintenance() {
     );
   };
 
+  useEffect(() => {
+    const doesUserHaveRegisteredVehicle = async () => {
+      await checkForRegisteredVehicles();
+    }
+    doesUserHaveRegisteredVehicle()
+  }, [])
+
+    //Check if user has registered a vehicle
+    const checkForRegisteredVehicles = async () => {
+      try {
+        const allVehiclesResponse = await axios.get(
+          `https://capstone-ten-lyart.vercel.app/getVehicles/${user_id}`
+        );
+        if (allVehiclesResponse.data.length === 0) {
+          setHasRegisteredVehicle(false);
+        } else {
+          setHasRegisteredVehicle(true)
+        }
+        return allVehiclesResponse.data;
+      } catch (e) {
+        return "Error" + e;
+      }
+    };
+
   //Assign each of the repairs a difficulty rating
   const groupCardsByMileageThreshold = (repairs) => {
     const grouped = {};
-
     repairs.forEach((repair) => {
       const mileage = repair.due_mileage;
       if (!grouped[mileage]) {
@@ -51,45 +76,6 @@ function ScheduledMaintenance() {
     });
     return grouped;
   };
-
-
-  // const handleClick = () => {
-  //    const fetchVehicleData = async () => {
-  //     try {
-        
-  //       const currentVehicleResponse = await axios.get(
-  //         `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
-  //       );
-  //       const mileage = await currentVehicleResponse.data[0].mileage;
-  //       const vin = await currentVehicleResponse.data[0].vin;
-
-
-
-  //       const response = await axios.get(
-  //         `https://api.carmd.com/v3.0/maint?vin=${vin}&mileage=${mileage}`,
-  //         {
-  //           headers: {
-  //             authorization: token,
-  //             "partner-token": key,
-  //           },
-  //         }
-  //       );
-  //       if (response.data.data.length === 0) {
-  //         console.log("if ran")
-  //         sendAlert(true);
-  //         setAlert("error");
-  //         setAlertMessage("Unfortunately there is no repair data for your vehicle. May be too old or new.")
-  //       }
-  //       const grouped = groupCardsByMileageThreshold(response.data.data);
-  //       setGroupedRepairs(grouped);
-  //       setRepairs(response.data.data);
-  //       isLoading(false);
-  //     } catch (error) {
-  //       return "Error: " + error
-  //     }
-  //   };
-  //   fetchVehicleData();
-  // };
 
   const handleClick = async () => {
     dispatch(fetchDataStart());
@@ -115,6 +101,10 @@ function ScheduledMaintenance() {
 
 
   return (
+    <>
+    {!hasRegisteredVehicle ? 
+    <NoRegisteredCarsMessage/>
+    :
     <div className="scheduled-maintenance-page">
             {alert && (
         <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
@@ -166,6 +156,8 @@ function ScheduledMaintenance() {
         </div>
                       )}
     </div>
+    }
+    </>
   );
 }
 

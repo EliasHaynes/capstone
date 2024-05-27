@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -14,20 +14,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddRepair from "./AddRepair";
 import { useAuth0 } from "@auth0/auth0-react";
 import StickyHeadTable from "./RepairTable";
+import NoRegisteredCarsMessage from "./NoRegisteredCarsMessage";
 
 function RepairLog() {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth0();
-
   const user_id = user.sub.split("|")[1].toString();
 
   const [repairs, setRepairs] = useState([]);
   const [currentVId, setCurrentVId] = useState(null);
   const [reload, setReload] = useState(false);
+  const [hasRegisteredVehicle, setHasRegisteredVehicle] = useState(null);
 
+  //Check first if user has registered vehicles. If so proceed to retrieving users current vehicles id and its repairs.
   useEffect(() => {
     const fetchRepairData = async () => {
       try {
+      await checkForRegisteredVehicles();
         const currentVehicleId = await fetchCurrentVehicle();
         const vehicleRepairs = await axios.get(
           `https://capstone-ten-lyart.vercel.app/repair/${user_id}/${currentVehicleId}`
@@ -39,34 +42,56 @@ function RepairLog() {
     };
 
     fetchRepairData();
+    //When user deletes a repair the dependency will trigger to rerender page.
   }, [reload]);
 
+  //Check if user has registered a vehicle
+  const checkForRegisteredVehicles = async () => {
+    try {
+      const allVehiclesResponse = await axios.get(
+        `https://capstone-ten-lyart.vercel.app/getVehicles/${user_id}`
+      );
+      if (allVehiclesResponse.data.length === 0) {
+        setHasRegisteredVehicle(false);
+      } else {
+        setHasRegisteredVehicle(true)
+      }
+      return allVehiclesResponse.data;
+    } catch (e) {
+      return "Error" + e;
+    }
+  };
+
+  //Retrive users current vehicle
   const fetchCurrentVehicle = async () => {
     try {
       const currentVehicleResponse = await axios.get(
         `https://capstone-ten-lyart.vercel.app/getCurrentVehicle/${user_id}`
       );
-
       setCurrentVId(currentVehicleResponse.data[0].v_id);
       return currentVehicleResponse.data[0].v_id;
     } catch (e) {
-      return "Error: " + e
+      return "Error: " + e;
     }
   };
 
+  //Handle deleting repair data
   const handleDelete = async (repair_id) => {
     try {
-      await axios.delete(`https://capstone-ten-lyart.vercel.app/delete/${repair_id}`);
+      await axios.delete(
+        `https://capstone-ten-lyart.vercel.app/delete/${repair_id}`
+      );
       const newArr = repairs.filter((rep) => rep.repair_id !== repair_id);
       setRepairs(newArr);
 
       setReload((currentState) => !currentState);
       return;
     } catch (e) {
-      return "Error: " + e
+      return "Error: " + e;
     }
   };
 
+  //When user deletes a repair trigger a rerender with 'reload' state variable.
   const onRepairDeleteReRender = () => {
     setReload((currentState) => !currentState);
   };
@@ -74,24 +99,11 @@ function RepairLog() {
 
   return (
     <div>
-      <button
-        class="button-82-pushable"
-        onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
-      >
-        <span class="button-82-shadow"></span>
-        <span class="button-82-edge"></span>
-        <span class="button-82-front text">Add Repair</span>
-      </button>
-      <StickyHeadTable
-        repairs={repairs}
-        navigate={navigate}
-        handleDelete={handleDelete}
-        currentVId={currentVId}
-        userId={user_id}
-        reRenderPage={onRepairDeleteReRender}
-      ></StickyHeadTable>
-      {/* <Container maxWidth="lg" className="car-container">
-        <div className="flex-container">
+      {/* Display based on condition on user having a registered vehicle */}
+      {!hasRegisteredVehicle ? (
+        <NoRegisteredCarsMessage />
+      ) : (
+        <div>
           <button
             class="button-82-pushable"
             onClick={() => navigate(`/create/${user_id}/${currentVId}`)}
@@ -100,59 +112,16 @@ function RepairLog() {
             <span class="button-82-edge"></span>
             <span class="button-82-front text">Add Repair</span>
           </button>
+          <StickyHeadTable
+            repairs={repairs}
+            navigate={navigate}
+            handleDelete={handleDelete}
+            currentVId={currentVId}
+            userId={user_id}
+            reRenderPage={onRepairDeleteReRender}
+          ></StickyHeadTable>
         </div>
-        <Table className="repair-table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Mileage</TableCell>
-              <TableCell>Maintenance Description</TableCell>
-              <TableCell>Performed by</TableCell>
-              <TableCell>Material</TableCell>
-              <TableCell>Labor</TableCell>
-              <TableCell>Other</TableCell>
-              <TableCell>Total</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {repairs.map((rep, idx) => (
-              <TableRow key={idx}>
-                <TableCell component="th" scope="row">
-                  {idx + 1}
-                </TableCell>
-                <TableCell>
-                  {new Date(rep.date).toLocaleDateString("en-US")}
-                </TableCell>
-                <TableCell>{rep.repair_mileage}</TableCell>
-                <TableCell>{rep.maintenance}</TableCell>
-                <TableCell>{rep.performed_by}</TableCell>
-                <TableCell>{rep.material}</TableCell>
-                <TableCell>{rep.labor}</TableCell>
-                <TableCell>{rep.other}</TableCell>
-                <TableCell>{rep.material + rep.labor + rep.other}</TableCell>
-                <TableCell>
-                  <EditIcon
-                    onClick={() =>
-                      navigate(
-                        `/update/${user_id}/${currentVId}/${rep.repair_id}`
-                      )
-                    }
-                  />
-                  <DeleteIcon
-                    // add onClick method here
-                    onClick={() => {
-                      handleDelete(rep.repair_id);
-                      setReload((currentState) => !currentState);
-                    }}
-                    className="icon text-red"
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Container> */}
+      )}
     </div>
   );
 }
