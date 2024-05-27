@@ -40,6 +40,7 @@ function ScheduledMaintenance() {
     );
   };
 
+  //Check if user has a registered vehicle on render
   useEffect(() => {
     const doesUserHaveRegisteredVehicle = async () => {
       await checkForRegisteredVehicles();
@@ -77,6 +78,7 @@ function ScheduledMaintenance() {
     return grouped;
   };
 
+  //Retrieve users current vehicle vin to serve API data
   const handleClick = async () => {
     dispatch(fetchDataStart());
     try {
