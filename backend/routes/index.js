@@ -3,7 +3,8 @@ const router = express.Router()
 import repairLogRoute from './RepairLog.js'
 import vehicleProfilesRoute from './VehicleProfiles.js';
 import registerCarRoute from './RegisterCar.js';
-import authRoute from './auth.js'
+import aiModalRoute from './aiModal.js';
+import authRoute from './auth.js';
 
 
 // Repair Log Routes
@@ -26,6 +27,9 @@ router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute)
 
 // Auth Route
 router.post('/passUId', authRoute)
+
+//AI Modal
+router.get('/aiModal', aiModalRoute)
 
     
 export default router

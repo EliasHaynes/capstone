@@ -30,6 +30,10 @@ code {
     monospace;
 }
 
+:root {
+  --bs-card-border-width: unset;
+}
+
 /* ---------- Nav Bar ---------- */
 
 .navbar-heading {
