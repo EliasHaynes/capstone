@@ -30,6 +30,12 @@ code {
     monospace;
 }
 
+:root {
+  --bs-card-border-width: unset;
+  --bs-body-line-height: unset;
+  --bs-card-border-color: unset;
+}
+
 /* ---------- Nav Bar ---------- */
 
 .navbar-heading {
@@ -496,6 +502,11 @@ margin-top: 3%;
   display: flex;
   flex-flow: row wrap;
   padding: 10px;
+}
+
+.ai-icon {
+  justify-content: end;
+  cursor: pointer;
 }
 
 /* Card */
