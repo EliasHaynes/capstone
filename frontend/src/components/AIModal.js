@@ -1,19 +1,37 @@
-
-  import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import axios from 'axios';
 
 
-function AIModal(args) {
+function AIModal({args, cardID, cardDesc}) {
     const [modal, setModal] = useState(false);
+    const [loading,setLoading] = useState()
+    const [aiResponse, storeAIResponse] = useState("")
+    const [cardDescription, setCardDesc] = useState("")
+  console.log("cardDesc:", cardDescription)
   
     const toggle = () => setModal(!modal);
+
+    
+
+    const getAIResponse = async () => {
+      const handleClick = () => {
+      setCardDesc(cardDesc);
+    }
+    handleClick()
+      try {
+        const response = await axios.get('http://localhost:5000/aiModal', {cardDescription});
+        console.log("response:", response.data)
+      } catch (e) {
+        console.error(e);
+      }
+    }
   
     return (
       <div>
-        <Button color="danger" onClick={toggle}>
-          Click Me
-        </Button>
+        <AutoAwesomeIcon className='ai-icon' onClick={() => {toggle(); getAIResponse();}}></AutoAwesomeIcon>
         <Modal isOpen={modal} toggle={toggle} {...args}>
           <ModalHeader toggle={toggle}>Modal title</ModalHeader>
           <ModalBody>

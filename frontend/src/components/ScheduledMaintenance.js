@@ -11,14 +11,11 @@ import { fetchDataStart, fetchDataSuccess, fetchDataFailure, clearAlert } from '
 import NoRegisteredCarsMessage from "./NoRegisteredCarsMessage";
 
 function ScheduledMaintenance() {
-  const navigate = useNavigate();
-  const { isAutheticated, user } = useAuth0();
+  const { user } = useAuth0();
   const user_id = user.sub.split("|")[1].toString();
 
   //State
-  const [currentVehicle, setCurrentVehicle] = useState();
   const [open, toggleOpen] = useState(false);
-  const [difficultyColor, setDifficulty] = useState();
   const [active, setActive] = useState(null);
   const [hasRegisteredVehicle, setHasRegisteredVehicle] = useState(null);
 
@@ -65,7 +62,7 @@ function ScheduledMaintenance() {
       }
     };
 
-  //Assign each of the repairs a difficulty rating
+  //Seperate repairs by mileage thresholds
   const groupCardsByMileageThreshold = (repairs) => {
     const grouped = {};
     repairs.forEach((repair) => {
@@ -140,6 +137,7 @@ function ScheduledMaintenance() {
                         key={repIdx}
                         onClick={() => setActive(repIdx)}
                         className={`card ${active == repIdx && 'is-active'}`}
+                        repairID={repIdx}
                         repairDesc={rep.desc}
                         repairMileage={rep.due_mileage}
                         repairLabor={rep.repair ? rep.repair.labor_cost : 0}

@@ -3,6 +3,7 @@ import AIModal from './AIModal.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MaintenanceCard({
+  repairID,
   repairDesc,
   repairMileage,
   repairLabor,
@@ -41,6 +42,10 @@ function MaintenanceCard({
     );
   };
 
+  const propDrillCardDesc = () => {
+
+  }
+
 
 
   return (
@@ -62,7 +67,7 @@ function MaintenanceCard({
             <p className="repair-sub-headings-value">{repairLabor}</p>
           </section>
         </div>
-        <AIModal></AIModal>
+        <AIModal cardID={repairID} cardDesc={repairDesc}></AIModal>
       </div>
       {parts && parts.length > 0 && (
         <div className="details-wrapper">
