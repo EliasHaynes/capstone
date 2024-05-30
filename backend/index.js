@@ -5,13 +5,12 @@ import mysql from 'mysql2/promise'
 import pool from './mysql/connection.js'
 const port = 5000;
 import routes from './routes/index.js'
-import OpenAI from 'openai';
 
 app.use(cors())
 app.use(express.json())
 app.use(routes)
 
-export const openai = new OpenAI();
+
 
 
 // app.get('*', (req, res) => {
