@@ -20,8 +20,8 @@ function AIModal({ args, cardID, cardDesc }) {
   const getAIResponse = async () => {
     try {
       console.log("card desc:", cardDesc); 
-      const response = await axios.post("http://localhost:5000/aiModal", {
-        cardDesc: cardDesc, // Send cardDesc as part of the request body
+      const response = await axios.post("https://capstone-ten-lyart.vercel.app/aiModal", {
+        cardDesc: cardDesc,
       });
       console.log("response:", response.data);
       storeAIResponse(response.data);
