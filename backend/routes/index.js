@@ -29,7 +29,7 @@ router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute)
 router.post('/passUId', authRoute)
 
 //AI Modal
-router.get('/aiModal', aiModalRoute)
+router.post('/aiModal', aiModalRoute)
 
     
 export default router
