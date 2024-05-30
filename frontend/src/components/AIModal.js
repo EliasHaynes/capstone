@@ -11,6 +11,7 @@ function AIModal({ args, cardID, cardDesc }) {
   const [aiResponse, storeAIResponse] = useState("");
   const [cardDescription, setCardDesc] = useState("");
 
+  console.log("work?")
   const toggle = () => setModal(!modal);
 
   const handleClick = () => {
