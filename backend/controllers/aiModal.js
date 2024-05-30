@@ -3,7 +3,9 @@ import pool from "../mysql/connection.js";
 import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
-import { openai } from "../index.js";
+
+import OpenAI from 'openai';
+const openai = new OpenAI();
 
 const getAIResponseOnRepairs = async (req,res) => {
   const cardDesc = req.body.cardDesc;
@@ -30,4 +32,4 @@ const getAIResponseOnRepairs = async (req,res) => {
   }
 };
 
-export default { getAIResponseOnRepairs };
+export default {getAIResponseOnRepairs} ;
