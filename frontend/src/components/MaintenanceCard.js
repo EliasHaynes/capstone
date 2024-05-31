@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import AIModal from './AIModal.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MaintenanceCard({
+  repair,
   repairID,
-  repairDesc,
-  repairMileage,
-  repairLabor,
+  repairDescs,
   repairDifficulty,
   parts,
-  partsDesc,
-  partsCost,
-  partsQuantity,
-  isActive
 }) {
 
+  console.log("repair descs:", repairDescs)
 
   const getDifficultyColor = (difficulty) => {
     switch(difficulty) {
@@ -26,27 +22,6 @@ function MaintenanceCard({
   };  
   const backgroundColor = getDifficultyColor(repairDifficulty);
 
-  //Parts component
-  const PartsCard = () => {
-    return (
-      <div className="parts-card">
-        <h1 className="parts-desc">Part Desc</h1>
-
-        <section>
-          <h4>Price: </h4>
-          <h4> $100</h4>
-          <h4>Quantity: </h4>
-          <h4>8</h4>
-        </section>
-      </div>
-    );
-  };
-
-  const propDrillCardDesc = () => {
-
-  }
-
-
 
   return (
     <>
@@ -55,42 +30,48 @@ function MaintenanceCard({
           className="repair-desc"
           style={{ backgroundColor}}
         >
-          {repairDesc}
+          {repair.desc}
         </h4>
         <div className="repair-info">
           <section>
             <p className="repair-sub-headings">Due Mileage: </p>
-            <p className="repair-sub-headings-value">{repairMileage}</p>
+            <p className="repair-sub-headings-value">{repair.due_mileage}</p>
           </section>
           <section>
             <p className="repair-sub-headings">Labor Cost: </p>
-            <p className="repair-sub-headings-value">{repairLabor}</p>
+            <p className="repair-sub-headings-value">{repair.repair ? repair.repair.labor_cost : 0}</p>
           </section>
         </div>
-        <AIModal cardID={repairID} cardDesc={repairDesc}></AIModal>
+        <AIModal cardID={repairID} cardDescs={repairDescs}></AIModal>
       </div>
       {parts && parts.length > 0 && (
-        <div className="details-wrapper">
-            {parts.map((part,index) => (
-                <div key={index} className="details">
-                <h4 className="parts-desc">{part.desc}</h4>
-        <div className="parts-info">
-          <section>
-            <p className="parts-sub-headings">Price: </p>
-            <p className="parts-sub-headings-value">{part.price}</p>
-          </section>
-          <section>
-            <p className="parts-sub-headings">Quantity: </p>
-            <p className="parts-sub-headings-value">{part.qty}</p>
-          </section>
-        </div >
-                </div>
-            ))}
-        
-      </div>
+        <PartsCard parts={repair.parts}></PartsCard>
       )}
       
     </>
+  );
+}
+
+function PartsCard({ parts }) {
+  return (
+    <div className="details-wrapper">
+    {parts.map((part,index) => (
+        <div key={index} className="details">
+        <h4 className="parts-desc">{part.desc}</h4>
+<div className="parts-info">
+  <section>
+    <p className="parts-sub-headings">Price: </p>
+    <p className="parts-sub-headings-value">{part.price}</p>
+  </section>
+  <section>
+    <p className="parts-sub-headings">Quantity: </p>
+    <p className="parts-sub-headings-value">{part.qty}</p>
+  </section>
+</div >
+        </div>
+    ))}
+
+</div>
   );
 }
 

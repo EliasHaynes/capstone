@@ -1,68 +1,60 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import axios from "axios";
-import store from "../redux/store";
 
-function AIModal({ args, cardID, cardDesc }) {
+function AIModal({ cardID, cardDescs }) {
   const [modal, setModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [aiResponse, storeAIResponse] = useState("");
-  const [cardDescription, setCardDesc] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [aiResponse, setAIResponse] = useState("");
 
-  console.log("work?")
-  const toggle = () => setModal(!modal);
+  console.log("card descs:",cardDescs)
 
-  const handleClick = () => {
-    setCardDesc(cardDesc)
-  }
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
-  const getAIResponse = async () => {
+  const handleIconClick = () => {
+    if (!modal) {  // Only fetch data if the modal is not currently open
+      fetchAIResponse(cardID);
+    }
+    toggleModal();
+  };
+
+  const fetchAIResponse = async (index) => {
+    setLoading(true);
+    const cardDesc = cardDescs[index]; // Get the description using cardID as index
+    console.log("CARD DESC:", cardDesc)
     try {
-      console.log("card desc:", cardDesc); 
       const response = await axios.post(`https://capstone-ten-lyart.vercel.app/aiModal`, {
-        cardDesc: cardDesc,
+        desc: cardDesc  // Send the description as part of the request body
+      }, {
+        headers: { "Content-Type": "application/json" }
       });
-      console.log("response:", response.data);
-      storeAIResponse(response.data);
+      setAIResponse(response.data);
+    } catch (error) {
+      console.error('Error fetching AI response:', error);
+      setAIResponse("Failed to fetch AI data.");
+    } finally {
       setLoading(false);
-
-    } catch (e) {
-      console.error(e);
     }
   };
 
   return (
     <div>
-      <AutoAwesomeIcon
-        className="ai-icon"
-        onClick={() => {
-          toggle();
-          handleClick();
-          getAIResponse(); // You don't need to pass cardDescription here
-        }}
-      ></AutoAwesomeIcon>
-
-      <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>{cardDescription}</ModalHeader>
-        <ModalBody>{loading ? "Loading AI Response..." : aiResponse}</ModalBody>
+      <AutoAwesomeIcon className="ai-icon" onClick={handleIconClick} />
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>Details for: {cardDescs[cardID]}</ModalHeader>
+        <ModalBody>
+          {loading ? "Loading AI Response..." : aiResponse || "No AI response available."}
+        </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
+          <Button color="primary" onClick={toggleModal}>Close</Button>
+          <Button color="secondary" onClick={toggleModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </div>
   );
 }
-
-// List of things AI can inform user of:
-// 1. Typical lifespan and service intervals of parts
-// 2. What a part does and why its important
-// 3.
 
 export default AIModal;
