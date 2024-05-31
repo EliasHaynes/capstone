@@ -12,6 +12,7 @@ import UpdateRepair from "./components/UpdateRepair";
 import ScheduledMaintenance from "./components/ScheduledMaintenance";
 import VehicleProfiles from "./components/VehicleProfiles";
 import UpdateMileage from "./components/UpdateMileage";
+import AIModal from "./components/AIModal";
 
 
 
@@ -45,6 +46,7 @@ function Router() {
             <Route path="/repair" element={<ProtectedRoute component={RepairLog} />} />
             <Route path='/create/:user_id/:v_id' element={<ProtectedRoute component={AddRepair} />} />
             <Route path="/update/:user_id/:v_id/:repair_id" element={<ProtectedRoute component={UpdateRepair} />} />
+            <Route path="/aiModal" element={<ProtectedRoute component={AIModal} />} />
             
             {/* Auth Components */}
             <Route path="/registerCar" element={<ProtectedRoute component={RegisterCar} />} />

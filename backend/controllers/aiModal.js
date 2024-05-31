@@ -1,14 +1,13 @@
-import mysql from "mysql2";
-import pool from "../mysql/connection.js";
-import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
 import OpenAI from 'openai';
-const openai = new OpenAI();
+export const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
-const getAIResponseOnRepairs = async (req,res) => {
-  const cardDesc = req.body.cardDesc;
+export const getAIResponseOnRepairs = async (req,res) => {
+  const cardDesc = req.body.cardDesc
   console.log("card desc:", cardDesc);
   try {
     const response = await openai.chat.completions.create({
@@ -32,4 +31,4 @@ const getAIResponseOnRepairs = async (req,res) => {
   }
 };
 
-export default {getAIResponseOnRepairs} ;
+ ;
