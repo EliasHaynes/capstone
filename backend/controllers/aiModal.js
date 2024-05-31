@@ -7,9 +7,17 @@ export const openai = new OpenAI({
 });
 
 export const getAIResponseOnRepairs = async (req,res) => {
-  const cardDesc = req.body.cardDesc
+  console.log("Running...");
+  const cardDesc = req.body.desc; // Ensure this matches the frontend structure
   console.log("card desc:", cardDesc);
+  
+  if (!cardDesc) {
+    return res.status(400).json({ error: "Description not provided" });
+  }
+  console.log("card desc:", cardDesc);
+  
   try {
+    console.log("In async")
     const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
@@ -25,10 +33,12 @@ export const getAIResponseOnRepairs = async (req,res) => {
     })
     const content = response.choices[0].message.content;
     console.log("Content:", content)
+    console.log("Finished async")
     return res.json(content)
   } catch (e) {
     console.error("Error: ", e);
   }
+  console.log("Exiting...")
 };
 
  ;
