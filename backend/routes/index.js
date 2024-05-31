@@ -17,6 +17,9 @@ router.delete('/delete/:repair_id', repairLogRoute)
 // Register Car Route
 router.post('/addVehicle/:user_id', registerCarRoute)
 
+//AI Modal
+router.post('/aiModal', aiModalRoute)
+
 // Vehicle Profiles Routes
 router.get("/getVehicles/:user_id", vehicleProfilesRoute)
 router.get("/getCurrentVehicle/:user_id", vehicleProfilesRoute)
@@ -28,8 +31,7 @@ router.delete("/deleteVehicle/:v_id", vehicleProfilesRoute)
 // Auth Route
 router.post('/passUId', authRoute)
 
-//AI Modal
-router.post('/aiModal', aiModalRoute)
+
 
     
 export default router
