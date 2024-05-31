@@ -23,21 +23,33 @@ function AIModal({ cardID, cardDescs }) {
 
   const fetchAIResponse = async (index) => {
     setLoading(true);
-    const cardDesc = cardDescs[index]; // Get the description using cardID as index
-    console.log("CARD DESC:", cardDesc)
-    try {
-      const response = await axios.post(`https://capstone-ten-lyart.vercel.app/aiModal`, {
-        desc: cardDesc  // Send the description as part of the request body
-      }, {
-        headers: { "Content-Type": "application/json" }
-      });
-      setAIResponse(response.data);
-    } catch (error) {
-      console.error('Error fetching AI response:', error);
-      setAIResponse("Failed to fetch AI data.");
-    } finally {
-      setLoading(false);
-    }
+    const cardDesc = cardDescs[index];
+    let attempts = 0;
+  
+    const makeRequest = async () => {
+      try {
+        const response = await axios.post(`https://capstone-ten-lyart.vercel.app/aiModal`, {
+          desc: cardDesc
+        }, {
+          headers: { "Content-Type": "application/json" }
+        });
+        setAIResponse(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 504 && attempts < 3) { // Check for 504 status and limit retries
+          attempts++;
+          const delay = Math.pow(2, attempts) * 1000; // Exponential backoff formula
+          console.log(`Waiting ${delay} ms before retrying...`);
+          setTimeout(makeRequest, delay);
+        } else {
+          console.error('Error fetching AI response:', error);
+          setAIResponse("Failed to fetch AI data.");
+        }
+      } finally {
+        if (attempts < 3) setLoading(false);
+      }
+    };
+  
+    makeRequest();
   };
 
   return (
