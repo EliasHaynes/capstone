@@ -1,6 +1,6 @@
 {
   "functions": {
-    "backend/api/aiModal.js": {
+    "/api/aiModal": {
       "maxDuration": 20 
     }
   },
