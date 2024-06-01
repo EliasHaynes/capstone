@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import authController from '../controllers/auth.js'
+import authController from '../api/controllers/auth.js'
 
 router.post('/passUId', authController.passUId)
 

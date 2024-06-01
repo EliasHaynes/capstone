@@ -7,7 +7,7 @@
     }
   ],
   "functions": {
-    "backend/controllers/aiModal.js": {
+    "api/controllers/aiModal.js": {
       "maxDuration": 20
     }
   }
