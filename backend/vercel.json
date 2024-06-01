@@ -2,14 +2,8 @@
   "version": 2,
   "routes": [
     {
-      "src": "/api/aiModal",
-      "dest": "/api/aiModal.js"
+      "src": "/(.*)",
+      "dest": "/"
     }
-  ],
-  "functions": {
-    "api/aiModal.js": {
-      "maxDuration": 20
-    }
-  }
+  ]
 }
-
