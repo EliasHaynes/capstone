@@ -6,9 +6,7 @@ import pool from './mysql/connection.js'
 const port = 5000;
 import routes from './routes/index.js'
 
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://capstone-as3r.vercel.app']
-}));
+app.use(cors())
 
 app.use(express.json())
 app.use(routes)
