@@ -1,5 +1,5 @@
 import mysql from 'mysql2';
-import pool from '../../mysql/connection.js'
+import pool from '../mysql/connection.js'
 
 
 const getVehicles = async (req, res) => {

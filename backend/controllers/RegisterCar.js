@@ -1,5 +1,5 @@
 import mysql from 'mysql2';
-import pool from '../../mysql/connection.js';
+import pool from '../mysql/connection.js';
 import axios from 'axios'
 import * as dotenv from 'dotenv';
 dotenv.config();

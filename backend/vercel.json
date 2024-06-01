@@ -2,8 +2,8 @@
   "version": 2,
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/"
+      "src": "/api/aiModal",
+      "dest": "/api/aiModal.js"
     }
   ],
   "functions": {
@@ -12,3 +12,4 @@
     }
   }
 }
+
