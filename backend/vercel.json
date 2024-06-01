@@ -1,6 +1,6 @@
 {
   "functions": {
-    "/api/aiModal": {
+    "api/aiModal": {
       "maxDuration": 20 
     }
   },
