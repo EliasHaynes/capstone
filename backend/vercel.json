@@ -3,11 +3,5 @@
     "api/aiModal.js": {
       "maxDuration": 20 
     }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ]
+  }
 }
