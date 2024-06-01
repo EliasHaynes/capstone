@@ -6,7 +6,7 @@ export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-export const getAIResponseOnRepairs = async (req,res) => {
+const getAIResponseOnRepairs = async (req,res) => {
   console.log("Running...");
   const cardDesc = req.body.desc; // Ensure this matches the frontend structure
   console.log("card desc:", cardDesc);
@@ -41,4 +41,5 @@ export const getAIResponseOnRepairs = async (req,res) => {
   console.log("Exiting...")
 };
 
- ;
+
+export default getAIResponseOnRepairs;
