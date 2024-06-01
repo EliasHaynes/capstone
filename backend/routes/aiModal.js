@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAIResponseOnRepairs} from '../controllers/aiModal.js';
+import getAIResponseOnRepairs from '../api/aiModal.js';
 const router = express.Router()
 
 router.post('/aiModal', getAIResponseOnRepairs);

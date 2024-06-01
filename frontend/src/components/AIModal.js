@@ -24,7 +24,7 @@ function AIModal({ cardID, cardDescs }) {
   const fetchAIResponse = async (index) => {
     setLoading(true);
     const cardDesc = cardDescs[index]; // Get the description using cardID as index
-    console.log("CARD DESC:", cardDesc)
+    console.log("CARD DESC:", cardDesc);
     try {
       const response = await axios.post(`https://capstone-ten-lyart.vercel.app/aiModal`, {
         desc: cardDesc  // Send the description as part of the request body
