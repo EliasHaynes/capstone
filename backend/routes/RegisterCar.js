@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router()
-import registerCarController from '../api/controllers/RegisterCar.js'
+import registerCarController from '../controllers/RegisterCar.js'
 
 
 router.post("/addVehicle/:user_id", registerCarController.addVehicle)

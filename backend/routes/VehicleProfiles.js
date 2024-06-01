@@ -1,5 +1,5 @@
 import express from 'express'
-import vehicleProfileControllers from '../api/controllers/VehicleProfiles.js'
+import vehicleProfileControllers from '../controllers/VehicleProfiles.js'
 const router = express.Router()
 
 router.get("/getVehicles/:user_id", vehicleProfileControllers.getVehicles)
