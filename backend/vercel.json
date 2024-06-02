@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/aiModal.js": {
-      "maxDuration": 20
+      "maxDuration": 15
     }
   }
 }
