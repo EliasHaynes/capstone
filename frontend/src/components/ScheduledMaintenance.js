@@ -427,9 +427,9 @@ const arrayOfCardDescs = repairs.map(repair => repair.desc)
 
   return (
     <>
-    {/* {!hasRegisteredVehicle ? 
+    {!hasRegisteredVehicle ? 
     <NoRegisteredCarsMessage/>
-    : */}
+    :
     <div className="scheduled-maintenance-page">
             {alert && (
         <AlertTrigger alertType={alertType} alertMessage={alertMessage} />
@@ -478,7 +478,7 @@ const arrayOfCardDescs = repairs.map(repair => repair.desc)
         </div>
                       )}
     </div>
-    {/* } */}
+    }
     </>
   );
 }
