@@ -1,5 +1,5 @@
 import express from 'express';
-import repairLogController from '../controllers/RepairLog.js'
+import repairLogController from '../api/RepairLog.js'
 const router = express.Router()
 
 
